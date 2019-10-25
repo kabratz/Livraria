@@ -15,7 +15,6 @@ public class Usuario {
     private String login;
     private String senha;
     private int nivel;
-    private String user;
 
     public String getNome() {
         return nome;
@@ -47,16 +46,6 @@ public class Usuario {
 
     public void setNivel(int nivel) {
         this.nivel = nivel;
-    }
-
-    public String getUser() {
-        return user;
-    }
-
-    public void setUser(String user) {
-        this.user = user;
-    }
-
-    
+    }  
     
 }
