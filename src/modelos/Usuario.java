@@ -11,8 +11,19 @@ package modelos;
  */
 public class Usuario {
     
-    private String login;
     private String nome;
+    private String login;
+    private String senha;
+    private int nivel;
+    private String user;
+
+    public String getNome() {
+        return nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
 
     public String getLogin() {
         return login;
@@ -22,12 +33,30 @@ public class Usuario {
         this.login = login;
     }
 
-    public String getNome() {
-        return nome;
+    public String getSenha() {
+        return senha;
     }
 
-    public void setNome(String nome) {
-        this.nome = nome;
+    public void setSenha(String senha) {
+        this.senha = senha;
     }
+
+    public int getNivel() {
+        return nivel;
+    }
+
+    public void setNivel(int nivel) {
+        this.nivel = nivel;
+    }
+
+    public String getUser() {
+        return user;
+    }
+
+    public void setUser(String user) {
+        this.user = user;
+    }
+
+    
     
 }
