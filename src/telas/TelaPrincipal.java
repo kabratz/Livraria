@@ -22,34 +22,96 @@ public class TelaPrincipal extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jMenu2 = new javax.swing.JMenu();
         jMenuBar1 = new javax.swing.JMenuBar();
-        jMenu1 = new javax.swing.JMenu();
-        mnLiv = new javax.swing.JMenuItem();
-        mnCandidatos = new javax.swing.JMenuItem();
+        mnCad = new javax.swing.JMenu();
+        mnCadLivraria = new javax.swing.JMenuItem();
+        mnCadLivro = new javax.swing.JMenuItem();
+        mnCadFunc = new javax.swing.JMenuItem();
+        mnCadCid = new javax.swing.JMenuItem();
+        mnConsulta = new javax.swing.JMenu();
+        mnConsLivros = new javax.swing.JMenuItem();
+        mnConsLivraria = new javax.swing.JMenuItem();
+        mnConsFunc = new javax.swing.JMenuItem();
+        mnConsCid = new javax.swing.JMenuItem();
         mnSair = new javax.swing.JMenu();
+
+        jMenu2.setText("jMenu2");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
 
-        jMenu1.setText("Cadastros");
+        mnCad.setText("Cadastros");
 
-        mnLiv.setText("Livraria...");
-        mnLiv.addActionListener(new java.awt.event.ActionListener() {
+        mnCadLivraria.setText("Livraria");
+        mnCadLivraria.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                mnLivActionPerformed(evt);
+                mnCadLivrariaActionPerformed(evt);
             }
         });
-        jMenu1.add(mnLiv);
+        mnCad.add(mnCadLivraria);
 
-        mnCandidatos.setText("Livros");
-        mnCandidatos.addActionListener(new java.awt.event.ActionListener() {
+        mnCadLivro.setText("Livro");
+        mnCadLivro.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                mnCandidatosActionPerformed(evt);
+                mnCadLivroActionPerformed(evt);
             }
         });
-        jMenu1.add(mnCandidatos);
+        mnCad.add(mnCadLivro);
 
-        jMenuBar1.add(jMenu1);
+        mnCadFunc.setText("Funcionário");
+        mnCadFunc.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mnCadFuncActionPerformed(evt);
+            }
+        });
+        mnCad.add(mnCadFunc);
+
+        mnCadCid.setText("Cidade");
+        mnCadCid.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mnCadCidActionPerformed(evt);
+            }
+        });
+        mnCad.add(mnCadCid);
+
+        jMenuBar1.add(mnCad);
+
+        mnConsulta.setText("Consulta");
+
+        mnConsLivros.setText("Livros");
+        mnConsLivros.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mnConsLivrosActionPerformed(evt);
+            }
+        });
+        mnConsulta.add(mnConsLivros);
+
+        mnConsLivraria.setText("Livraria");
+        mnConsLivraria.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mnConsLivrariaActionPerformed(evt);
+            }
+        });
+        mnConsulta.add(mnConsLivraria);
+
+        mnConsFunc.setText("Funcionário");
+        mnConsFunc.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mnConsFuncActionPerformed(evt);
+            }
+        });
+        mnConsulta.add(mnConsFunc);
+
+        mnConsCid.setText("Cidade");
+        mnConsCid.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mnConsCidActionPerformed(evt);
+            }
+        });
+        mnConsulta.add(mnConsCid);
+
+        jMenuBar1.add(mnConsulta);
 
         mnSair.setText("Sair");
         mnSair.addActionListener(new java.awt.event.ActionListener() {
@@ -75,21 +137,45 @@ public class TelaPrincipal extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void mnLivActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnLivActionPerformed
+    private void mnCadLivrariaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnCadLivrariaActionPerformed
         // TODO add your handling code here:
         
     //    CadBairros tela_bairros = new CadBairros();
       //  tela_bairros.setVisible(true);
-    }//GEN-LAST:event_mnLivActionPerformed
+    }//GEN-LAST:event_mnCadLivrariaActionPerformed
 
-    private void mnCandidatosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnCandidatosActionPerformed
+    private void mnCadLivroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnCadLivroActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_mnCandidatosActionPerformed
+    }//GEN-LAST:event_mnCadLivroActionPerformed
 
 
     private void mnSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnSairActionPerformed
         dispose();
     }//GEN-LAST:event_mnSairActionPerformed
+
+    private void mnConsLivrosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnConsLivrosActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_mnConsLivrosActionPerformed
+
+    private void mnConsLivrariaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnConsLivrariaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_mnConsLivrariaActionPerformed
+
+    private void mnCadFuncActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnCadFuncActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_mnCadFuncActionPerformed
+
+    private void mnCadCidActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnCadCidActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_mnCadCidActionPerformed
+
+    private void mnConsFuncActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnConsFuncActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_mnConsFuncActionPerformed
+
+    private void mnConsCidActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnConsCidActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_mnConsCidActionPerformed
 
 
     /**
@@ -131,10 +217,18 @@ public class TelaPrincipal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JMenu jMenu1;
+    private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JMenuItem mnCandidatos;
-    private javax.swing.JMenuItem mnLiv;
+    private javax.swing.JMenu mnCad;
+    private javax.swing.JMenuItem mnCadCid;
+    private javax.swing.JMenuItem mnCadFunc;
+    private javax.swing.JMenuItem mnCadLivraria;
+    private javax.swing.JMenuItem mnCadLivro;
+    private javax.swing.JMenuItem mnConsCid;
+    private javax.swing.JMenuItem mnConsFunc;
+    private javax.swing.JMenuItem mnConsLivraria;
+    private javax.swing.JMenuItem mnConsLivros;
+    private javax.swing.JMenu mnConsulta;
     private javax.swing.JMenu mnSair;
     // End of variables declaration//GEN-END:variables
 }
