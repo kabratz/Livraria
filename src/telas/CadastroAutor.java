@@ -24,6 +24,43 @@ public class CadastroAutor extends javax.swing.JFrame {
      
     }
 
+        private void limparTela(){
+        try{
+            lblId.setText("ID");
+            txtNome.setText("");       
+            btnSalvar.setEnabled(true);
+            atualizarTabela();
+            
+        }catch(Exception ex){
+            CaixaDeDialogo.obterinstancia().exibirMensagem("Erro: " + ex.getMessage());
+        }
+    }   
+    
+    private void preencherCampos(){
+        try{
+            lblId.setText(String.valueOf(objAutor.getID()));
+            txtNome.setText(objAutor.getNome());
+            
+            
+            btnSalvar.setEnabled(true);
+            
+            atualizarTabela();
+            
+        }catch(Exception ex){
+            CaixaDeDialogo.obterinstancia().exibirMensagem("Erro: " + ex.getMessage());
+        }
+    }   
+    private void atualizarTabela(){
+        try{
+            
+            objAutorController = new AutorController(null, jtbCandidatos);
+            objAutorController.preencher();
+            //ola
+            
+        }catch(Exception ex){
+            CaixaDeDialogo.obterinstancia().exibirMensagem("ERRO:" + ex.getMessage());
+        }
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -34,7 +71,6 @@ public class CadastroAutor extends javax.swing.JFrame {
     private void initComponents() {
 
         txtNome = new javax.swing.JTextField();
-        cbBairro = new javax.swing.JComboBox<>();
         btnSair = new javax.swing.JButton();
         btnSalvar = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -45,8 +81,8 @@ public class CadastroAutor extends javax.swing.JFrame {
         lblId = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-
-        cbBairro.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        getContentPane().add(txtNome, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 54, 356, -1));
 
         btnSair.setText("Sair");
         btnSair.addActionListener(new java.awt.event.ActionListener() {
@@ -54,6 +90,7 @@ public class CadastroAutor extends javax.swing.JFrame {
                 btnSairActionPerformed(evt);
             }
         });
+        getContentPane().add(btnSair, new org.netbeans.lib.awtextra.AbsoluteConstraints(283, 277, 83, -1));
 
         btnSalvar.setBackground(new java.awt.Color(0, 153, 102));
         btnSalvar.setText("SALVAR");
@@ -62,6 +99,7 @@ public class CadastroAutor extends javax.swing.JFrame {
                 btnSalvarActionPerformed(evt);
             }
         });
+        getContentPane().add(btnSalvar, new org.netbeans.lib.awtextra.AbsoluteConstraints(34, 101, 160, -1));
 
         jtbCandidatos.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         jtbCandidatos.setModel(new javax.swing.table.DefaultTableModel(
@@ -82,9 +120,12 @@ public class CadastroAutor extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(jtbCandidatos);
 
+        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 154, 372, 92));
+
         jLabel5.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(255, 51, 0));
         jLabel5.setText("Campos com * são obrigatórios");
+        getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 283, -1, -1));
 
         btnLimpar.setBackground(new java.awt.Color(255, 0, 0));
         btnLimpar.setText("LIMPAR");
@@ -93,78 +134,15 @@ public class CadastroAutor extends javax.swing.JFrame {
                 btnLimparActionPerformed(evt);
             }
         });
+        getContentPane().add(btnLimpar, new org.netbeans.lib.awtextra.AbsoluteConstraints(206, 101, 160, -1));
 
         lblNome.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         lblNome.setText("Nome *");
+        getContentPane().add(lblNome, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 34, -1, -1));
 
         lblId.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         lblId.setText("ID");
-
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap(26, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(lblNome)
-                                .addGap(301, 301, 301)
-                                .addComponent(lblId))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(txtNome, javax.swing.GroupLayout.PREFERRED_SIZE, 356, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(cbBairro, javax.swing.GroupLayout.PREFERRED_SIZE, 208, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(18, 18, 18))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(btnLimpar, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(26, 26, 26))))
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(layout.createSequentialGroup()
-                    .addContainerGap()
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(jScrollPane1)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addComponent(jLabel5)
-                                .addGap(346, 346, 346)
-                                .addComponent(btnSair, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(24, 24, 24)
-                                .addComponent(btnSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                    .addContainerGap()))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(34, 34, 34)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lblNome)
-                    .addComponent(lblId))
-                .addGap(6, 6, 6)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(cbBairro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(28, 28, 28)
-                .addComponent(btnLimpar)
-                .addContainerGap(175, Short.MAX_VALUE))
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(layout.createSequentialGroup()
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(layout.createSequentialGroup()
-                            .addGap(101, 101, 101)
-                            .addComponent(btnSalvar)
-                            .addGap(30, 30, 30)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 37, Short.MAX_VALUE)
-                            .addComponent(jLabel5))
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                            .addContainerGap(274, Short.MAX_VALUE)
-                            .addComponent(btnSair)))
-                    .addGap(3, 3, 3)))
-        );
+        getContentPane().add(lblId, new org.netbeans.lib.awtextra.AbsoluteConstraints(353, 34, -1, -1));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -302,7 +280,6 @@ public class CadastroAutor extends javax.swing.JFrame {
     private javax.swing.JButton btnLimpar;
     private javax.swing.JButton btnSair;
     private javax.swing.JButton btnSalvar;
-    private javax.swing.JComboBox<String> cbBairro;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jtbCandidatos;

@@ -10,6 +10,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.ParseException;
+import java.util.Vector;
 import javax.swing.JTable;
 import modelos.Autor;
 
@@ -27,30 +29,134 @@ public class AutorController {
         this.jtbAutor = jtbAutor;
 
     }
-     public boolean incluir() throws ParseException{
+
+    public boolean incluir() throws ParseException {
         Connection con = Conexao.obterConexao();
         PreparedStatement stmt = null;
-        Date parsed = formato.parse(objCandidato.getDataNascimento());
-        java.sql.Date dataFormatada = new java.sql.Date(parsed.getTime());
-        try{
-            stmt = con.prepareStatement("INSERT INTO candidatos(nome, data_nascimento, id_bairro) VALUES(?, ?, ?)");
-            stmt.setString(1, objCandidato.getNome());
-            stmt.setDate(2, dataFormatada);
-            stmt.setInt(3, objCandidato.getIdBairro());
-            
+        try {
+            stmt = con.prepareStatement("INSERT INTO autor(nome) VALUES(?)");
+            stmt.setString(1, objAutor.getNome());
+
             stmt.executeUpdate();
-            
+
             return true;
-            
-        }catch (SQLException ex) {
+
+        } catch (SQLException ex) {
             System.out.println(ex.getMessage());
             return false;
-        }finally{
+        } finally {
             Conexao.fecharConexao(con, stmt);
         }
     }
-    
 
+    public boolean alterar() throws ParseException {
+        Conexao.abreConexao();
+        Connection con = Conexao.obterConexao();
+        PreparedStatement stmt = null;
+
+        try {
+            stmt = con.prepareStatement("UPDATE candidatos SET nome=? WHERE id=?");
+            stmt.setString(1, objAutor.getNome());
+            stmt.setInt(2, objAutor.getID());
+
+            stmt.executeUpdate();
+
+            return true;
+
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+            return false;
+        } finally {
+            Conexao.fecharConexao(con, stmt);
+        }
+
+    }
+
+    
+        public void preencher() {
+
+        Conexao.abreConexao();
+        
+        Vector<String> cabecalhos = new Vector<String>();
+        Vector dadosTabela = new Vector(); //receber os dados do banco
+        
+        cabecalhos.add("Código");
+        cabecalhos.add("Nome");
+
+        
+        ResultSet result = null;
+        
+        try {
+
+            String SQL = "";
+            SQL = " SELECT a.id, a.nome ";
+            SQL += " FROM autor a";
+            SQL += " ORDER BY a.nome ";
+            
+            result = Conexao.stmt.executeQuery(SQL);
+
+            Vector<Object> linha;
+            while(result.next()) {
+                linha = new Vector<Object>();
+                
+                linha.add(result.getInt(1));
+                linha.add(result.getString(2));
+                
+                dadosTabela.add(linha);
+            }
+            
+        } catch (Exception e) {
+            System.out.println("problemas para popular tabela...");
+            System.out.println(e);
+        }
+
+        jtbCandidatos.setModel(new DefaultTableModel(dadosTabela, cabecalhos) {
+
+            @Override
+            public boolean isCellEditable(int row, int column) {
+              return false;
+            }
+            // permite seleção de apenas uma linha da tabela
+        });
+
+        // permite seleção de apenas uma linha da tabela
+        jtbCandidatos.setSelectionMode(0);
+
+        // redimensiona as colunas de uma tabela
+        TableColumn column = null;
+        for (int i = 0; i <= 2; i++) {
+            column = jtbCandidatos.getColumnModel().getColumn(i);
+            switch (i) {
+                case 0:
+                    column.setPreferredWidth(60);
+                    break;
+                case 1:
+                    column.setPreferredWidth(230);
+                    break;
+                case 2:
+                    column.setPreferredWidth(10);
+                    break;
+            }
+        }
+        
+        jtbCandidatos.setDefaultRenderer(Object.class, new DefaultTableCellRenderer() {
+
+            @Override
+            public Component getTableCellRendererComponent(JTable table, Object value,
+                    boolean isSelected, boolean hasFocus, int row, int column) {
+                super.getTableCellRendererComponent(table, value, isSelected,
+                        hasFocus, row, column);
+                if (row % 2 == 0) {
+                    setBackground(Color.LIGHT_GRAY);
+                } else {
+                    setBackground(Color.WHITE);
+                }
+                return this;
+            }
+        });
+        //return (true);
+    }
+    
     public Autor autor(String id, String nome) {
         //INÍCIO CONEXÃO COM O BANCO DE DADOS
         System.out.println("Vai abrir a conexão com o banco de dados");
