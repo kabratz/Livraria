@@ -18,20 +18,20 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
-import modelos.Autor;
+import modelos.Cidade;
 
 /**
  *
  * @author karoline.bratz
  */
-public class AutorController {
+public class CidadeController {
 
-    Autor objAutor;
-    JTable jtbAutor = null;
+    Cidade objCidade;
+    JTable jtbCidade = null;
 
-    public AutorController(Autor objAutor, JTable jtbAutor) {
-        this.objAutor = objAutor;
-        this.jtbAutor = jtbAutor;
+    public CidadeController(Cidade objCidade, JTable jtbCidade) {
+        this.objCidade = objCidade;
+        this.jtbCidade = jtbCidade;
 
     }
 
@@ -39,8 +39,9 @@ public class AutorController {
         Connection con = Conexao.obterConexao();
         PreparedStatement stmt = null;
         try {
-            stmt = con.prepareStatement("INSERT INTO autor(nome) VALUES(?)");
-            stmt.setString(1, objAutor.getNome());
+            stmt = con.prepareStatement("INSERT INTO cidade(nome, cep) VALUES(?, ?)");
+            stmt.setString(1, objCidade.getNome());
+            stmt.setInt(2, objCidade.getCep());
 
             stmt.executeUpdate();
 
@@ -60,9 +61,10 @@ public class AutorController {
         PreparedStatement stmt = null;
 
         try {
-            stmt = con.prepareStatement("UPDATE candidatos SET nome=? WHERE id=?");
-            stmt.setString(1, objAutor.getNome());
-            stmt.setInt(2, objAutor.getID());
+            stmt = con.prepareStatement("UPDATE cidade SET nome=?, cep=? WHERE id_cidade=?");
+            stmt.setString(1, objCidade.getNome());
+            stmt.setInt(2, objCidade.getCep());
+            stmt.setInt(3, objCidade.getId());
 
             stmt.executeUpdate();
 
@@ -87,6 +89,7 @@ public class AutorController {
         
         cabecalhos.add("Código");
         cabecalhos.add("Nome");
+        cabecalhos.add("CEP");
 
         
         ResultSet result = null;
@@ -94,9 +97,9 @@ public class AutorController {
         try {
 
             String SQL = "";
-            SQL = " SELECT a.id, a.nome ";
-            SQL += " FROM autor a";
-            SQL += " ORDER BY a.nome ";
+            SQL = " SELECT id_cidade, nome, cep ";
+            SQL += " FROM cidade";
+            SQL += " ORDER BY nome ";
             
             result = Conexao.stmt.executeQuery(SQL);
 
@@ -106,6 +109,7 @@ public class AutorController {
                 
                 linha.add(result.getInt(1));
                 linha.add(result.getString(2));
+                linha.add(result.getString(3));
                 
                 dadosTabela.add(linha);
             }
@@ -115,7 +119,7 @@ public class AutorController {
             System.out.println(e);
         }
 
-        jtbAutor.setModel(new DefaultTableModel(dadosTabela, cabecalhos) {
+        jtbCidade.setModel(new DefaultTableModel(dadosTabela, cabecalhos) {
 
             @Override
             public boolean isCellEditable(int row, int column) {
@@ -125,12 +129,12 @@ public class AutorController {
         });
 
         // permite seleção de apenas uma linha da tabela
-        jtbAutor.setSelectionMode(0);
+        jtbCidade.setSelectionMode(0);
 
         // redimensiona as colunas de uma tabela
         TableColumn column = null;
         for (int i = 0; i <= 2; i++) {
-            column = jtbAutor.getColumnModel().getColumn(i);
+            column = jtbCidade.getColumnModel().getColumn(i);
             switch (i) {
                 case 0:
                     column.setPreferredWidth(60);
@@ -144,7 +148,7 @@ public class AutorController {
             }
         }
         
-        jtbAutor.setDefaultRenderer(Object.class, new DefaultTableCellRenderer() {
+        jtbCidade.setDefaultRenderer(Object.class, new DefaultTableCellRenderer() {
 
             @Override
             public Component getTableCellRendererComponent(JTable table, Object value,
@@ -161,27 +165,28 @@ public class AutorController {
         });
         //return (true);
     }
-         public Autor buscar(String id)
+         public Cidade buscar(String id)
     {
         try {
             Conexao.abreConexao();
             ResultSet rs = null;
 
             String SQL = "";
-            SQL = " SELECT id, nome ";
-            SQL += " FROM autor ";
-            SQL += " WHERE id = '" + id + "'";
+            SQL = " SELECT id_cidade, nome, cep ";
+            SQL += " FROM cidade ";
+            SQL += " WHERE id_cidade = '" + id + "'";
 
             try{
                 System.out.println("Vai Executar Conexão em buscar");
                 rs = Conexao.stmt.executeQuery(SQL);
                 System.out.println("Executou Conexão em buscar");
 
-                objAutor = new Autor();
+                objCidade = new Cidade();
                 if(rs.next() == true)
                 {
-                    objAutor.setID(rs.getInt(1));
-                    objAutor.setNome(rs.getString(2));
+                    objCidade.setId(rs.getInt(1));
+                    objCidade.setNome(rs.getString(2));
+                    objCidade.setCep(rs.getInt(3));
                 }
             }
 
@@ -197,47 +202,28 @@ public class AutorController {
         }
         
         System.out.println ("Executou buscar area com sucesso");
-        return objAutor;
+        return objCidade;
     }
          
          
    
-         public boolean excluir(){
-        
-        Conexao.abreConexao();
-        Connection con = Conexao.obterConexao();
-        PreparedStatement stmt = null;
-        
-        try {
-            stmt = con.prepareStatement("UPDATE candidatos SET data_exclusao= now() WHERE id=?");
-            stmt.setInt(1, objAutor.getID());
-                        
-            stmt.executeUpdate();
-            
-            return true;
-            
-        } catch (SQLException ex) {
-            System.out.println(ex.getMessage());
-            return false;
-        }finally{
-            Conexao.fecharConexao(con, stmt);
-        }
-    }
+       
 
          
     
-    public Autor autor(String id, String nome) {
+    public Cidade cidade(String id, String nome) {
         //INÍCIO CONEXÃO COM O BANCO DE DADOS
         System.out.println("Vai abrir a conexão com o banco de dados");
         Conexao.abreConexao();
 
-        Autor aut = null;
+        Cidade aut = null;
         ResultSet rs = null;
 
         StringBuilder comandoSQL = new StringBuilder();
-        comandoSQL.append(" SELECT id, nome");
-        comandoSQL.append(" FROM autor");
-        comandoSQL.append(" WHERE id = '" + id + "'");
+        comandoSQL.append(" SELECT id_cidade, nome, cep");
+        comandoSQL.append(" FROM cidade");
+        comandoSQL.append(" WHERE id_cidade = '" + id + "'");
+ 
 
         try {
             System.out.println("Vai Executar Conexão em buscar area");
@@ -245,8 +231,9 @@ public class AutorController {
             System.out.println("Executou Conexão em buscar area");
 
             if (rs.next() == true) {
-                aut = new Autor();
+                aut = new Cidade();
                 aut.setNome(rs.getString("nome"));
+                
             }
         } catch (SQLException ex) {
             System.out.println("ERRO de SQL: " + ex.getMessage().toString());

@@ -237,6 +237,10 @@ public class CadastroAutor extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jtbCandidatosMousePressed
 
+    private boolean verifPermission(String tipo){
+        
+    }
+    
     private void btnLimparActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimparActionPerformed
         limparTela();
     }//GEN-LAST:event_btnLimparActionPerformed

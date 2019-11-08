@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package controles;
 
 import banco.Conexao;
@@ -12,73 +7,77 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.Vector;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
-import modelos.Autor;
-
+import modelos.Bairro;
 /**
  *
- * @author karoline.bratz
+ * @author Jonas Dhein
  */
-public class AutorController {
-
-    Autor objAutor;
-    JTable jtbAutor = null;
-
-    public AutorController(Autor objAutor, JTable jtbAutor) {
-        this.objAutor = objAutor;
-        this.jtbAutor = jtbAutor;
-
+public class BairroController {
+    
+    Bairro objBairro;
+    JTable jtbBairros = null;
+    
+    public BairroController(Bairro objBairro, JTable jtbBairros) {
+        this.objBairro = objBairro;
+        this.jtbBairros = jtbBairros;
     }
-
-    public boolean incluir() throws ParseException {
-        Connection con = Conexao.obterConexao();
-        PreparedStatement stmt = null;
-        try {
-            stmt = con.prepareStatement("INSERT INTO autor(nome) VALUES(?)");
-            stmt.setString(1, objAutor.getNome());
-
-            stmt.executeUpdate();
-
-            return true;
-
-        } catch (SQLException ex) {
-            System.out.println(ex.getMessage());
-            return false;
-        } finally {
-            Conexao.fecharConexao(con, stmt);
-        }
-    }
-
-    public boolean alterar() throws ParseException {
+    
+    public boolean incluir(){
+        
         Conexao.abreConexao();
         Connection con = Conexao.obterConexao();
         PreparedStatement stmt = null;
-
-        try {
-            stmt = con.prepareStatement("UPDATE candidatos SET nome=? WHERE id=?");
-            stmt.setString(1, objAutor.getNome());
-            stmt.setInt(2, objAutor.getID());
-
+        
+        try{
+            stmt = con.prepareStatement("INSERT INTO bairros(nome) VALUES(?)");
+            stmt.setString(1, objBairro.getNome());
+            
             stmt.executeUpdate();
-
+            
             return true;
-
+            
+        }catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+            return false;
+        }finally{
+            Conexao.fecharConexao(con, stmt);
+        }
+    }
+    
+    public boolean alterar(){
+        
+        Conexao.abreConexao();
+        Connection con = Conexao.obterConexao();
+        PreparedStatement stmt = null;
+        
+        try {
+            stmt = con.prepareStatement("UPDATE bairros SET nome=? WHERE id=?");
+            stmt.setString(1, objBairro.getNome());
+            stmt.setInt(2, objBairro.getId());
+            
+            stmt.executeUpdate();
+            
+            return true;
+            
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
             return false;
-        } finally {
+        }finally{
             Conexao.fecharConexao(con, stmt);
         }
-
+        
     }
-
     
-        public void preencher() {
+    public void preencher() {
 
         Conexao.abreConexao();
         
@@ -87,16 +86,17 @@ public class AutorController {
         
         cabecalhos.add("Código");
         cabecalhos.add("Nome");
-
+        cabecalhos.add("Excluir");
         
         ResultSet result = null;
         
         try {
 
             String SQL = "";
-            SQL = " SELECT a.id, a.nome ";
-            SQL += " FROM autor a";
-            SQL += " ORDER BY a.nome ";
+            SQL = " SELECT id, nome ";
+            SQL += " FROM bairros ";
+            SQL += " WHERE data_exclusao IS NULL ";
+            SQL += " ORDER BY id ";
             
             result = Conexao.stmt.executeQuery(SQL);
 
@@ -106,6 +106,7 @@ public class AutorController {
                 
                 linha.add(result.getInt(1));
                 linha.add(result.getString(2));
+                linha.add("X");
                 
                 dadosTabela.add(linha);
             }
@@ -115,7 +116,7 @@ public class AutorController {
             System.out.println(e);
         }
 
-        jtbAutor.setModel(new DefaultTableModel(dadosTabela, cabecalhos) {
+        jtbBairros.setModel(new DefaultTableModel(dadosTabela, cabecalhos) {
 
             @Override
             public boolean isCellEditable(int row, int column) {
@@ -125,12 +126,12 @@ public class AutorController {
         });
 
         // permite seleção de apenas uma linha da tabela
-        jtbAutor.setSelectionMode(0);
+        jtbBairros.setSelectionMode(0);
 
         // redimensiona as colunas de uma tabela
         TableColumn column = null;
         for (int i = 0; i <= 2; i++) {
-            column = jtbAutor.getColumnModel().getColumn(i);
+            column = jtbBairros.getColumnModel().getColumn(i);
             switch (i) {
                 case 0:
                     column.setPreferredWidth(60);
@@ -144,7 +145,7 @@ public class AutorController {
             }
         }
         
-        jtbAutor.setDefaultRenderer(Object.class, new DefaultTableCellRenderer() {
+        jtbBairros.setDefaultRenderer(Object.class, new DefaultTableCellRenderer() {
 
             @Override
             public Component getTableCellRendererComponent(JTable table, Object value,
@@ -161,7 +162,8 @@ public class AutorController {
         });
         //return (true);
     }
-         public Autor buscar(String id)
+    
+    public Bairro buscar(String id)
     {
         try {
             Conexao.abreConexao();
@@ -169,19 +171,20 @@ public class AutorController {
 
             String SQL = "";
             SQL = " SELECT id, nome ";
-            SQL += " FROM autor ";
+            SQL += " FROM bairros ";
             SQL += " WHERE id = '" + id + "'";
+            SQL += " AND COALESCE(data_exclusao,'') = '' ";
 
             try{
                 System.out.println("Vai Executar Conexão em buscar");
                 rs = Conexao.stmt.executeQuery(SQL);
                 System.out.println("Executou Conexão em buscar");
 
-                objAutor = new Autor();
+                objBairro = new Bairro();
                 if(rs.next() == true)
                 {
-                    objAutor.setID(rs.getInt(1));
-                    objAutor.setNome(rs.getString(2));
+                    objBairro.setId(rs.getInt(1));
+                    objBairro.setNome(rs.getString(2));
                 }
             }
 
@@ -197,20 +200,18 @@ public class AutorController {
         }
         
         System.out.println ("Executou buscar area com sucesso");
-        return objAutor;
+        return objBairro;
     }
-         
-         
-   
-         public boolean excluir(){
+    
+    public boolean excluir(){
         
         Conexao.abreConexao();
         Connection con = Conexao.obterConexao();
         PreparedStatement stmt = null;
         
         try {
-            stmt = con.prepareStatement("UPDATE candidatos SET data_exclusao= now() WHERE id=?");
-            stmt.setInt(1, objAutor.getID());
+            stmt = con.prepareStatement("UPDATE bairros SET data_exclusao= now() WHERE id=?");
+            stmt.setInt(1, objBairro.getId());
                         
             stmt.executeUpdate();
             
@@ -223,42 +224,42 @@ public class AutorController {
             Conexao.fecharConexao(con, stmt);
         }
     }
-
-         
     
-    public Autor autor(String id, String nome) {
-        //INÍCIO CONEXÃO COM O BANCO DE DADOS
-        System.out.println("Vai abrir a conexão com o banco de dados");
-        Conexao.abreConexao();
+    /*
+    public ArrayList<Area> listar() {
 
-        Autor aut = null;
-        ResultSet rs = null;
-
-        StringBuilder comandoSQL = new StringBuilder();
-        comandoSQL.append(" SELECT id, nome");
-        comandoSQL.append(" FROM autor");
-        comandoSQL.append(" WHERE id = '" + id + "'");
-
+        ConnectionFactory.abreConexao();
+        
+        ArrayList<Area> listagem_areas = new ArrayList();
+        Area area_item = null;
+        
+        ResultSet result = null;
+        
         try {
-            System.out.println("Vai Executar Conexão em buscar area");
-            rs = Conexao.stmt.executeQuery(comandoSQL.toString());
-            System.out.println("Executou Conexão em buscar area");
 
-            if (rs.next() == true) {
-                aut = new Autor();
-                aut.setNome(rs.getString("nome"));
+            String SQL = "";
+            SQL = " SELECT id, nome AS nomeArea ";
+            SQL += " FROM area ";
+            SQL += " ORDER BY nome ";
+            
+            result = ConnectionFactory.stmt.executeQuery(SQL);
+
+            while (result.next()) {
+                area_item = new Area();
+                area_item.setId(result.getInt("id"));
+                area_item.setNome(result.getString("nomeArea"));
+                listagem_areas.add(area_item);
             }
-        } catch (SQLException ex) {
-            System.out.println("ERRO de SQL: " + ex.getMessage().toString());
-            return aut;
-        } finally {
-            Connection con = Conexao.obterConexao();
-            System.out.println("Vai fechar a conexão com o banco de dados");
-            Conexao.fecharConexao(con);
+            
+        } catch (Exception e) {
+            System.out.println("problemas para popular tabela...");
+            System.out.println(e);
+            return null;
         }
-
-        return aut;
-
+        
+        return listagem_areas;
     }
-
+    
+    
+    */
 }

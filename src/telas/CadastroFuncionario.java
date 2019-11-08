@@ -45,7 +45,6 @@ public class CadastroFuncionario extends javax.swing.JFrame {
         cbLivraria = new javax.swing.JComboBox<>();
         btnSalvar = new javax.swing.JButton();
         btnLimpar = new javax.swing.JButton();
-        jdcDtNasc = new com.toedter.calendar.JDateChooser();
         jScrollPane1 = new javax.swing.JScrollPane();
         jtbFuncionarios = new javax.swing.JTable();
         lblId = new javax.swing.JLabel();
@@ -93,7 +92,6 @@ public class CadastroFuncionario extends javax.swing.JFrame {
             }
         });
         jPanel1.add(btnLimpar, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 230, 160, -1));
-        jPanel1.add(jdcDtNasc, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 110, 210, -1));
 
         jtbFuncionarios.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -121,9 +119,9 @@ public class CadastroFuncionario extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+            .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 365, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addGap(0, 22, Short.MAX_VALUE))
         );
 
         pack();
@@ -162,7 +160,7 @@ public class CadastroFuncionario extends javax.swing.JFrame {
 
             if (retorno = true) {
                 CaixaDeDialogo.obterinstancia().exibirMensagem("Registro salvo");
-                atualizarTabela();
+                //atualizarTabela();
             } else {
                 CaixaDeDialogo.obterinstancia().exibirMensagem("Erro ao tentar salvar");
             }
@@ -174,7 +172,7 @@ public class CadastroFuncionario extends javax.swing.JFrame {
     }//GEN-LAST:event_btnSalvarActionPerformed
 
     private void btnLimparActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimparActionPerformed
-        limparTela();
+      //  limparTela();
     }//GEN-LAST:event_btnLimparActionPerformed
 
     /**
@@ -222,7 +220,6 @@ public class CadastroFuncionario extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private com.toedter.calendar.JDateChooser jdcDtNasc;
     private javax.swing.JTable jtbFuncionarios;
     private javax.swing.JLabel lblId;
     private javax.swing.JTextField txtCpf;
