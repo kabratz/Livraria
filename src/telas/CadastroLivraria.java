@@ -5,13 +5,18 @@
  */
 package telas;
 
+import controles.LivrariaController;
 import ferramentas.CaixaDeDialogo;
+import modelos.Livraria;
 
 /**
  *
  * @author karoline.bratz
  */
 public class CadastroLivraria extends javax.swing.JFrame {
+
+    Livraria objLivraria;
+    LivrariaController objLivrariaController;
 
     /**
      * Creates new form CadastroLivraria
@@ -206,48 +211,47 @@ public class CadastroLivraria extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
-        
 
-        try{
+        try {
             boolean retorno;
             //validar os campos
-            if(txtNome.getText().trim().length() == 0){
+            if (txtNome.getText().trim().length() == 0) {
                 CaixaDeDialogo.obterinstancia().exibirMensagem("Informe um candidato corretamente", 'a');
                 return;
             }
 
-            objCand = new Candidato();
+            objLivraria = new Candidato();
 
-            if(!lblId.getText().equals("ID")){
-                objCand.setId(Integer.parseInt(lblId.getText()));
-                objCandControle = new CandidatoControle(objCand, null);
+            if (!lblId.getText().equals("ID")) {
+                objLivraria.setId(Integer.parseInt(lblId.getText()));
+                objLivrariaController = new LivrariaController(objLivraria, null);
                 Combos c = (Combos) cbBairro.getSelectedItem();
                 String codBairro = c.getCodigo();
-                objCand.setIdBairro(Integer.parseInt(codBairro));
-                objCand.setNome(txtNome.getText());
-                objCand.setDataNascimento(formato.format(jdcDtNascimento.getDate()));
-                objCand.setIdBairro(Integer.parseInt(codBairro));
-                retorno = objCandControle.alterar();
+                objLivraria.setIdBairro(Integer.parseInt(codBairro));
+                objLivraria.setNome(txtNome.getText());
+                objLivraria.setDataNascimento(formato.format(jdcDtNascimento.getDate()));
+                objLivraria.setIdBairro(Integer.parseInt(codBairro));
+                retorno = objLivrariaController.alterar();
                 atualizarTabela();
-            }else{
-                objCand = new Candidato();
+            } else {
+                objLivraria = new Candidato();
                 Combos c = (Combos) cbBairro.getSelectedItem();
                 String codBairro = c.getCodigo();
-                objCandControle = new CandidatoControle(objCand, null);
-                objCand.setNome(txtNome.getText());
-                objCand.setDataNascimento(formato.format(jdcDtNascimento.getDate()));
-                objCand.setIdBairro(Integer.parseInt(codBairro));
-                retorno = objCandControle.incluir();
+                objLivrariaController = new LivrariaController(objLivraria, null);
+                objLivraria.setNome(txtNome.getText());
+                objLivraria.setDataNascimento(formato.format(jdcDtNascimento.getDate()));
+                objLivraria.setIdBairro(Integer.parseInt(codBairro));
+                retorno = objLivrariaController.incluir();
             }
 
-            if(retorno = true){
+            if (retorno = true) {
                 CaixaDeDialogo.obterinstancia().exibirMensagem("Registro salvo");
                 atualizarTabela();
-            }else{
+            } else {
                 CaixaDeDialogo.obterinstancia().exibirMensagem("Erro ao tentar salvar");
             }
 
-        }catch(Exception ex){
+        } catch (Exception ex) {
             CaixaDeDialogo.obterinstancia().exibirMensagem("Erro ao tentar incluir");
             System.out.println("ERRO: " + ex.getMessage().toString());
         }
@@ -255,46 +259,46 @@ public class CadastroLivraria extends javax.swing.JFrame {
     }//GEN-LAST:event_btnSalvarActionPerformed
 
     private void jtbCandidatosMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtbCandidatosMousePressed
-        try{
+        try {
 
             int linhaSelecionada = jtbCandidatos.getSelectedRow();//pega a linha selecionada
             String codigo = jtbCandidatos.getModel().getValueAt(linhaSelecionada, 0).toString(); // Primeira coluna da linha
 
             //Verifica se clicou na coluna 2 = EXCLUIR
-            if(jtbCandidatos.isColumnSelected(4)){
-                try{
+            if (jtbCandidatos.isColumnSelected(4)) {
+                try {
 
-                    boolean wPergunta = CaixaDeDialogo.obterinstancia().pedirConfirmacao("Tem certeza de que deseja excluir?","",'p');
-                    if (wPergunta == true){
+                    boolean wPergunta = CaixaDeDialogo.obterinstancia().pedirConfirmacao("Tem certeza de que deseja excluir?", "", 'p');
+                    if (wPergunta == true) {
                         lblId.setText(codigo);
-                        objCand = new Candidato();
-                        objCand.setId(Integer.parseInt(codigo));
+                        objLivraria = new Candidato();
+                        objLivraria.setId(Integer.parseInt(codigo));
                         lblId.setText("ID");
-                        objCandControle = new CandidatoControle(objCand, null);
-                        boolean wControle = objCandControle.excluir();
-                        if (wControle){
+                        objLivrariaController = new LivrariaController(objLivraria, null);
+                        boolean wControle = objLivrariaController.excluir();
+                        if (wControle) {
                             CaixaDeDialogo.obterinstancia().exibirMensagem("Excluído com Sucesso!");
-                        }else{
+                        } else {
                             CaixaDeDialogo.obterinstancia().exibirMensagem("Erro ao excluir!");
                         }
                     }
                     atualizarTabela();
 
-                }catch(Exception ex){
+                } catch (Exception ex) {
                     CaixaDeDialogo.obterinstancia().exibirMensagem("Erro: " + ex.getMessage());
                 }
-            }else{
+            } else {
 
-                objCandControle = new CandidatoControle(null, null);
-                objCand = objCandControle.buscar(codigo);
-                if (objCand != null && objCand.getId() > 0){
+                objLivrariaController = new LivrariaController(null, null);
+                objLivraria = objLivrariaController.buscar(codigo);
+                if (objLivraria != null && objLivraria.getId() > 0) {
                     preencherCampos();
-                }else{
+                } else {
                     CaixaDeDialogo.obterinstancia().exibirMensagem("Erro ao buscar no BD!");
                 }
             }
 
-        }catch(Exception ex){
+        } catch (Exception ex) {
             CaixaDeDialogo.obterinstancia().exibirMensagem(ex.getMessage(), 'e');
         }
     }//GEN-LAST:event_jtbCandidatosMousePressed
