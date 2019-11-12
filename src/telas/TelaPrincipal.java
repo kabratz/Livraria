@@ -1,10 +1,16 @@
 package telas;
 
+import ferramentas.Consulta;
+import modelos.Usuario;
+
 /**
  *
  * @author karoline.bratz
  */
 public class TelaPrincipal extends javax.swing.JFrame {
+
+    Usuario objUsuario;
+    //Consulta objConsulta = new Consulta();
 
     /**
      * Creates new form TelaPrincipal
@@ -12,6 +18,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
     public TelaPrincipal() {
         initComponents();
         this.setExtendedState(TelaPrincipal.MAXIMIZED_BOTH);
+
     }
 
     /**
@@ -30,18 +37,24 @@ public class TelaPrincipal extends javax.swing.JFrame {
         mnCadLivro = new javax.swing.JMenuItem();
         mnCadFunc = new javax.swing.JMenuItem();
         mnCadCid = new javax.swing.JMenuItem();
-        Bairro = new javax.swing.JMenuItem();
+        CadBairro = new javax.swing.JMenuItem();
         mnConsulta = new javax.swing.JMenu();
-        mnConsLivros = new javax.swing.JMenuItem();
         mnConsLivraria = new javax.swing.JMenuItem();
+        mnConsLivros = new javax.swing.JMenuItem();
         mnConsFunc = new javax.swing.JMenuItem();
         mnConsCid = new javax.swing.JMenuItem();
+        mnConsBairro = new javax.swing.JMenuItem();
         mnSair = new javax.swing.JMenu();
 
         jMenu2.setText("jMenu2");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
+            }
+        });
 
         mnCad.setText("Cadastros");
 
@@ -77,25 +90,17 @@ public class TelaPrincipal extends javax.swing.JFrame {
         });
         mnCad.add(mnCadCid);
 
-        Bairro.setText("Bairro");
-        Bairro.addActionListener(new java.awt.event.ActionListener() {
+        CadBairro.setText("Bairro");
+        CadBairro.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                BairroActionPerformed(evt);
+                CadBairroActionPerformed(evt);
             }
         });
-        mnCad.add(Bairro);
+        mnCad.add(CadBairro);
 
         jMenuBar1.add(mnCad);
 
         mnConsulta.setText("Consulta");
-
-        mnConsLivros.setText("Livros");
-        mnConsLivros.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                mnConsLivrosActionPerformed(evt);
-            }
-        });
-        mnConsulta.add(mnConsLivros);
 
         mnConsLivraria.setText("Livraria");
         mnConsLivraria.addActionListener(new java.awt.event.ActionListener() {
@@ -104,6 +109,14 @@ public class TelaPrincipal extends javax.swing.JFrame {
             }
         });
         mnConsulta.add(mnConsLivraria);
+
+        mnConsLivros.setText("Livros");
+        mnConsLivros.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mnConsLivrosActionPerformed(evt);
+            }
+        });
+        mnConsulta.add(mnConsLivros);
 
         mnConsFunc.setText("Funcionário");
         mnConsFunc.addActionListener(new java.awt.event.ActionListener() {
@@ -120,6 +133,14 @@ public class TelaPrincipal extends javax.swing.JFrame {
             }
         });
         mnConsulta.add(mnConsCid);
+
+        mnConsBairro.setText("Bairro");
+        mnConsBairro.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mnConsBairroActionPerformed(evt);
+            }
+        });
+        mnConsulta.add(mnConsBairro);
 
         jMenuBar1.add(mnConsulta);
 
@@ -150,11 +171,13 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private void mnCadLivrariaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnCadLivrariaActionPerformed
         CadastroLivraria frame = new CadastroLivraria();
         frame.setVisible(true);
+       // Consulta.setConsulta(false) ;
     }//GEN-LAST:event_mnCadLivrariaActionPerformed
 
     private void mnCadLivroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnCadLivroActionPerformed
         // CadastroLivro frame = new CadastroLivro();
         // frame.setVisible(true);
+        //consulta = false;
     }//GEN-LAST:event_mnCadLivroActionPerformed
 
 
@@ -163,34 +186,77 @@ public class TelaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_mnSairActionPerformed
 
     private void mnConsLivrosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnConsLivrosActionPerformed
-        // TODO add your handling code here:
+        // CadastroLivro frame = new CadastroLivro();
+        // frame.setVisible(true);
+       //consulta = true;
     }//GEN-LAST:event_mnConsLivrosActionPerformed
 
     private void mnConsLivrariaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnConsLivrariaActionPerformed
-        // TODO add your handling code here:
+        CadastroLivraria frame = new CadastroLivraria();
+        frame.setVisible(true);
+        //consulta = true;
+
     }//GEN-LAST:event_mnConsLivrariaActionPerformed
 
     private void mnCadFuncActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnCadFuncActionPerformed
         CadastroFuncionario frame = new CadastroFuncionario();
         frame.setVisible(true);
+        //consulta = false;
     }//GEN-LAST:event_mnCadFuncActionPerformed
 
     private void mnCadCidActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnCadCidActionPerformed
         CadastroCidade frame = new CadastroCidade();
         frame.setVisible(true);
+        //consulta = false;
     }//GEN-LAST:event_mnCadCidActionPerformed
 
     private void mnConsFuncActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnConsFuncActionPerformed
-        // TODO add your handling code here:
+        CadastroFuncionario frame = new CadastroFuncionario();
+        frame.setVisible(true);
+        //consulta = true;
     }//GEN-LAST:event_mnConsFuncActionPerformed
 
     private void mnConsCidActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnConsCidActionPerformed
-        // TODO add your handling code here:
+        CadastroCidade frame = new CadastroCidade();
+        frame.setVisible(true);
+        ///consulta = true;
     }//GEN-LAST:event_mnConsCidActionPerformed
 
-    private void BairroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BairroActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_BairroActionPerformed
+    private void CadBairroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CadBairroActionPerformed
+        CadastroBairro frame = new CadastroBairro();
+        frame.setVisible(true);
+        //consulta = false;
+    }//GEN-LAST:event_CadBairroActionPerformed
+
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        /*
+        1-administrador
+        2-gerente
+        3-funcionário
+        4-cliente
+         */
+
+        int nivel = objUsuario.getNivel();
+        if (nivel == 1) {
+
+        } else if (nivel == 2) {
+            mnCadFunc.setVisible(false);
+        } else if (nivel == 3) {
+            mnCadLivraria.setVisible(false);
+            mnCadFunc.setVisible(false);
+        } else if (nivel == 4) {
+            mnCad.setVisible(false);
+            mnConsFunc.setVisible(false);
+            mnConsCid.setVisible(false);
+        }
+
+    }//GEN-LAST:event_formWindowOpened
+
+    private void mnConsBairroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnConsBairroActionPerformed
+        CadastroBairro frame = new CadastroBairro();
+        frame.setVisible(true);
+        //consulta = true;
+    }//GEN-LAST:event_mnConsBairroActionPerformed
 
     /**
      * @param args the command line arguments
@@ -206,16 +272,24 @@ public class TelaPrincipal extends javax.swing.JFrame {
                 if ("Nimbus".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
+
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(TelaPrincipal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TelaPrincipal.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(TelaPrincipal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TelaPrincipal.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(TelaPrincipal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TelaPrincipal.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(TelaPrincipal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TelaPrincipal.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
         //</editor-fold>
@@ -231,7 +305,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JMenuItem Bairro;
+    private javax.swing.JMenuItem CadBairro;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenu mnCad;
@@ -239,6 +313,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem mnCadFunc;
     private javax.swing.JMenuItem mnCadLivraria;
     private javax.swing.JMenuItem mnCadLivro;
+    private javax.swing.JMenuItem mnConsBairro;
     private javax.swing.JMenuItem mnConsCid;
     private javax.swing.JMenuItem mnConsFunc;
     private javax.swing.JMenuItem mnConsLivraria;

@@ -24,9 +24,8 @@ public class Validacao {
         soma = 11 - soma % 11;
         return soma > 9 ? 0 : soma;
     }
-    
-    public static boolean validarEmail(String email)
-    {
+
+    public static boolean validarEmail(String email) {
         boolean isEmailIdValid = false;
         if (email != null && email.length() > 0) {
             String expression = "^[\\w\\.-]+@([\\w\\-]+\\.)+[A-Z]{2,4}$";
@@ -72,12 +71,14 @@ public class Validacao {
             sdf.parse(data);
             //se nada deu errado retorna true (verdadeiro)
             return true;
-            
+
         } catch (ParseException ex) {
             //se algum passo dentro do "try" der errado quer dizer que sua data é falsa, então,
             //retorna falso
             return false;
         }
- }
+    }
+
+   
 
 }

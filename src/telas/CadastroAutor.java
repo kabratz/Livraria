@@ -7,6 +7,7 @@ package telas;
 
 import controles.AutorController;
 import ferramentas.CaixaDeDialogo;
+import ferramentas.Consulta;
 import modelos.Autor;
 
 /**
@@ -16,6 +17,7 @@ import modelos.Autor;
 public class CadastroAutor extends javax.swing.JFrame {
     Autor objAutor;
     AutorController objAutorController;
+    
     /**
      * Creates new form CadastroAutor
      */
@@ -81,6 +83,11 @@ public class CadastroAutor extends javax.swing.JFrame {
         lblId = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
+            }
+        });
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
         getContentPane().add(txtNome, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 54, 356, -1));
 
@@ -242,6 +249,11 @@ public class CadastroAutor extends javax.swing.JFrame {
     private void btnLimparActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimparActionPerformed
         limparTela();
     }//GEN-LAST:event_btnLimparActionPerformed
+
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+    
+        
+    }//GEN-LAST:event_formWindowOpened
 
     /**
      * @param args the command line arguments
