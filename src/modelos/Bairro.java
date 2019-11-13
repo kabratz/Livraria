@@ -5,10 +5,19 @@ package modelos;
  * @author jdhein
  */
 public class Bairro {
-    
+
     private int id;
     private String nome;
     private int cidade;
+    private int uf;
+
+    public int getUf() {
+        return uf;
+    }
+
+    public void setUf(int uf) {
+        this.uf = uf;
+    }
 
     public int getCidade() {
         return cidade;
@@ -33,5 +42,5 @@ public class Bairro {
     public void setNome(String nome) {
         this.nome = nome;
     }
-    
+
 }

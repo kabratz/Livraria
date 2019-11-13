@@ -17,10 +17,11 @@ import modelos.Bairro;
  */
 public class CadastroBairro extends javax.swing.JFrame {
 
-    Combos obCidade;
+    Combos obCidade, obUf;
     Bairro objBairro;
     BairroController objBairroController;
     Consulta objConsulta;
+
     /**
      * Creates new form CadastroBairro
      */
@@ -40,6 +41,7 @@ public class CadastroBairro extends javax.swing.JFrame {
             lblId.setText("ID");
             txtNome.setText("");
             cbCidade.setSelectedIndex(0);
+            cbUF.setSelectedIndex(0);
             btnSalvar.setEnabled(true);
             atualizarTabela();
 
@@ -53,6 +55,8 @@ public class CadastroBairro extends javax.swing.JFrame {
             lblId.setText(String.valueOf(objBairro.getId()));
             txtNome.setText(objBairro.getNome());
             obCidade.SetaComboBox(String.valueOf(objBairro.getCidade()));
+            obUf.SetaComboBox(String.valueOf(objBairro.getUf()));
+
             btnSalvar.setEnabled(true);
 
             atualizarTabela();
@@ -65,7 +69,7 @@ public class CadastroBairro extends javax.swing.JFrame {
     private void atualizarTabela() {
         try {
 
-            objBairroController = new BairroController(null, jtbCidade);
+            objBairroController = new BairroController(null, jtbBairro);
             objBairroController.preencher();
             //ola
 
@@ -83,7 +87,7 @@ public class CadastroBairro extends javax.swing.JFrame {
         btnSalvar = new javax.swing.JButton();
         txtNome = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jtbCidade = new javax.swing.JTable();
+        jtbBairro = new javax.swing.JTable();
         btnLimpar = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         lblTitulo = new javax.swing.JLabel();
@@ -113,8 +117,8 @@ public class CadastroBairro extends javax.swing.JFrame {
             }
         });
 
-        jtbCidade.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        jtbCidade.setModel(new javax.swing.table.DefaultTableModel(
+        jtbBairro.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        jtbBairro.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -125,12 +129,12 @@ public class CadastroBairro extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jtbCidade.addMouseListener(new java.awt.event.MouseAdapter() {
+        jtbBairro.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
-                jtbCidadeMousePressed(evt);
+                jtbBairroMousePressed(evt);
             }
         });
-        jScrollPane1.setViewportView(jtbCidade);
+        jScrollPane1.setViewportView(jtbBairro);
 
         btnLimpar.setBackground(new java.awt.Color(255, 0, 0));
         btnLimpar.setText("LIMPAR");
@@ -147,24 +151,14 @@ public class CadastroBairro extends javax.swing.JFrame {
         lblTitulo.setFont(new java.awt.Font("Verdana", 1, 24)); // NOI18N
         lblTitulo.setForeground(new java.awt.Color(255, 255, 255));
         lblTitulo.setText("Cadastro de Bairro");
-        jPanel1.add(lblTitulo, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 20, -1, -1));
+        jPanel1.add(lblTitulo, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 20, -1, -1));
 
         cbCidade.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        cbCidade.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cbCidadeActionPerformed(evt);
-            }
-        });
 
         lblNome1.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         lblNome1.setText("Cidade");
 
         cbUF.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        cbUF.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cbUFActionPerformed(evt);
-            }
-        });
 
         lblUF.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         lblUF.setText("UF *");
@@ -174,33 +168,30 @@ public class CadastroBairro extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addGap(69, 69, 69)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(57, 57, 57)
                         .addComponent(btnSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(47, 47, 47)
+                        .addGap(30, 30, 30)
                         .addComponent(btnLimpar, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(69, 69, 69)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(lblUF)
-                                    .addComponent(cbUF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(78, 78, 78)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(lblNome1)
-                                    .addComponent(cbCidade, javax.swing.GroupLayout.PREFERRED_SIZE, 208, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addComponent(lblId)
-                            .addComponent(lblNome)
-                            .addComponent(txtNome, javax.swing.GroupLayout.PREFERRED_SIZE, 342, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(97, Short.MAX_VALUE))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lblUF)
+                            .addComponent(cbUF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(78, 78, 78)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lblNome1)
+                            .addComponent(cbCidade, javax.swing.GroupLayout.PREFERRED_SIZE, 208, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(lblId)
+                    .addComponent(lblNome)
+                    .addComponent(txtNome, javax.swing.GroupLayout.PREFERRED_SIZE, 342, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(148, Short.MAX_VALUE))
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
                     .addContainerGap()
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 501, Short.MAX_VALUE))
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 547, Short.MAX_VALUE))
                     .addContainerGap()))
         );
         layout.setVerticalGroup(
@@ -222,16 +213,16 @@ public class CadastroBairro extends javax.swing.JFrame {
                         .addComponent(lblUF)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(cbUF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(26, 26, 26)
+                .addGap(79, 79, 79)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnSalvar)
                     .addComponent(btnLimpar))
-                .addContainerGap(131, Short.MAX_VALUE))
+                .addContainerGap(184, Short.MAX_VALUE))
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
                     .addContainerGap()
                     .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 211, Short.MAX_VALUE)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 317, Short.MAX_VALUE)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addContainerGap()))
         );
@@ -255,15 +246,17 @@ public class CadastroBairro extends javax.swing.JFrame {
                 objBairro.setId(Integer.parseInt(lblId.getText()));
                 objBairroController = new BairroController(objBairro, null);
                 objBairro.setNome(txtNome.getText());
-                objBairro.setCep(Integer.parseInt(txtCep.getText()));
+                objBairro.setUf(cbUF.getSelectedIndex());
+                objBairro.setCidade(cbCidade.getSelectedIndex());
+
                 retorno = objBairroController.alterar();
                 atualizarTabela();
             } else {
                 objBairro = new Bairro();
                 objBairroController = new BairroController(objBairro, null);
                 objBairro.setNome(txtNome.getText());
-                objBairro.setCep(Integer.parseInt(txtCep.getText()));
-
+                objBairro.setUf(cbUF.getSelectedIndex());
+                objBairro.setCidade(cbCidade.getSelectedIndex());
                 retorno = objBairroController.incluir();
             }
 
@@ -281,19 +274,19 @@ public class CadastroBairro extends javax.swing.JFrame {
 
     }//GEN-LAST:event_btnSalvarActionPerformed
 
-    private void jtbCidadeMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtbCidadeMousePressed
-        int linhaSelecionada = jtbCandidatos.getSelectedRow();//pega a linha selecionada
-        String codigo = jtbCandidatos.getModel().getValueAt(linhaSelecionada, 0).toString(); // Primeira coluna da linha
-        if (jtbCandidatos.isColumnSelected(4)) {
+    private void jtbBairroMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtbBairroMousePressed
+        int linhaSelecionada = jtbBairro.getSelectedRow();//pega a linha selecionada
+        String codigo = jtbBairro.getModel().getValueAt(linhaSelecionada, 0).toString(); // Primeira coluna da linha
+        if (jtbBairro.isColumnSelected(4)) {
             try {
                 boolean wPergunta = CaixaDeDialogo.obterinstancia().pedirConfirmacao("Tem certeza de que deseja excluir?", "", 'p');
                 if (wPergunta == true) {
                     lblId.setText(codigo);
-                    objCand = new Candidato();
-                    objCand.setId(Integer.parseInt(codigo));
+                    objBairro = new Bairro();
+                    objBairro.setId(Integer.parseInt(codigo));
                     lblId.setText("ID");
-                    objCandControle = new CandidatoControle(objCand, null);
-                    boolean wControle = objCandControle.excluir();
+                    objBairroController = new BairroController(objBairro, null);
+                    boolean wControle = objBairroController.excluir();
                     if (wControle) {
                         CaixaDeDialogo.obterinstancia().exibirMensagem("Excluído com Sucesso!");
                     } else {
@@ -306,10 +299,10 @@ public class CadastroBairro extends javax.swing.JFrame {
                 CaixaDeDialogo.obterinstancia().exibirMensagem("Erro: " + ex.getMessage());
             }
         } else {
-            int linhaSelecionada = jtbCidade.getSelectedRow();
-            String codigo = jtbCidade.getModel().getValueAt(linhaSelecionada, 0).toString();
+            //  int linhaSelecionada = jtbBairro.getSelectedRow();
+            //String codigo = jtbBairro.getModel().getValueAt(linhaSelecionada, 0).toString();
 
-            if (jtbCidade.isColumnSelected(4)) {
+            if (jtbBairro.isColumnSelected(4)) {
                 try {
                     objBairroController = new BairroController(null, null);
                     objBairro = objBairroController.buscar(codigo);
@@ -322,15 +315,7 @@ public class CadastroBairro extends javax.swing.JFrame {
                 } catch (Exception ex) {
                     CaixaDeDialogo.obterinstancia().exibirMensagem(ex.getMessage(), 'e');
                 }
-    }//GEN-LAST:event_jtbCidadeMousePressed
-
-    private void btnLimparActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimparActionPerformed
-        limparTela();
-    }//GEN-LAST:event_btnLimparActionPerformed
-
-    private void cbCidadeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbCidadeActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_cbCidadeActionPerformed
+    }//GEN-LAST:event_jtbBairroMousePressed
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         char c = objConsulta.getConsulta();
@@ -338,13 +323,13 @@ public class CadastroBairro extends javax.swing.JFrame {
         if (c == 's') {
             btnSalvar.setVisible(false);
             btnLimpar.setVisible(false);
-            lblCampos.setVisible(false);
+            //lblCampos.setVisible(false);
         }
     }//GEN-LAST:event_formWindowOpened
 
-    private void cbUFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbUFActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_cbUFActionPerformed
+    private void btnLimparActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimparActionPerformed
+       limparTela();
+    }//GEN-LAST:event_btnLimparActionPerformed
 
     /**
      * @param args the command line arguments
@@ -388,7 +373,7 @@ public class CadastroBairro extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> cbUF;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jtbCidade;
+    private javax.swing.JTable jtbBairro;
     private javax.swing.JLabel lblId;
     private javax.swing.JLabel lblNome;
     private javax.swing.JLabel lblNome1;
