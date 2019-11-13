@@ -15,54 +15,56 @@ import modelos.Autor;
  * @author User
  */
 public class CadastroAutor extends javax.swing.JFrame {
+
     Autor objAutor;
     AutorController objAutorController;
-    
+    Consulta objConsulta;
     /**
      * Creates new form CadastroAutor
      */
     public CadastroAutor() {
         initComponents();
-     
+
     }
 
-        private void limparTela(){
-        try{
+    private void limparTela() {
+        try {
             lblId.setText("ID");
-            txtNome.setText("");       
+            txtNome.setText("");
             btnSalvar.setEnabled(true);
             atualizarTabela();
-            
-        }catch(Exception ex){
+
+        } catch (Exception ex) {
             CaixaDeDialogo.obterinstancia().exibirMensagem("Erro: " + ex.getMessage());
         }
-    }   
-    
-    private void preencherCampos(){
-        try{
+    }
+
+    private void preencherCampos() {
+        try {
             lblId.setText(String.valueOf(objAutor.getID()));
             txtNome.setText(objAutor.getNome());
-            
-            
+
             btnSalvar.setEnabled(true);
-            
+
             atualizarTabela();
-            
-        }catch(Exception ex){
+
+        } catch (Exception ex) {
             CaixaDeDialogo.obterinstancia().exibirMensagem("Erro: " + ex.getMessage());
         }
-    }   
-    private void atualizarTabela(){
-        try{
-            
+    }
+
+    private void atualizarTabela() {
+        try {
+
             objAutorController = new AutorController(null, jtbCandidatos);
             objAutorController.preencher();
             //ola
-            
-        }catch(Exception ex){
+
+        } catch (Exception ex) {
             CaixaDeDialogo.obterinstancia().exibirMensagem("ERRO:" + ex.getMessage());
         }
     }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -77,7 +79,7 @@ public class CadastroAutor extends javax.swing.JFrame {
         btnSalvar = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jtbCandidatos = new javax.swing.JTable();
-        jLabel5 = new javax.swing.JLabel();
+        lblCampos = new javax.swing.JLabel();
         btnLimpar = new javax.swing.JButton();
         lblNome = new javax.swing.JLabel();
         lblId = new javax.swing.JLabel();
@@ -129,10 +131,10 @@ public class CadastroAutor extends javax.swing.JFrame {
 
         getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 154, 372, 92));
 
-        jLabel5.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        jLabel5.setForeground(new java.awt.Color(255, 51, 0));
-        jLabel5.setText("Campos com * são obrigatórios");
-        getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 283, -1, -1));
+        lblCampos.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        lblCampos.setForeground(new java.awt.Color(255, 51, 0));
+        lblCampos.setText("Campos com * são obrigatórios");
+        getContentPane().add(lblCampos, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 283, -1, -1));
 
         btnLimpar.setBackground(new java.awt.Color(255, 0, 0));
         btnLimpar.setText("LIMPAR");
@@ -172,16 +174,16 @@ public class CadastroAutor extends javax.swing.JFrame {
             if (!lblId.getText().equals("ID")) {
                 objAutor.setID(Integer.parseInt(lblId.getText()));
                 objAutorController = new AutorController(objAutor, null);
-           
+
                 objAutor.setNome(txtNome.getText());
-                 retorno = objAutorController.alterar();
+                retorno = objAutorController.alterar();
                 atualizarTabela();
             } else {
                 objAutor = new Autor();
-               
+
                 objAutorController = new AutorController(objAutor, null);
                 objAutor.setNome(txtNome.getText());
-             
+
                 retorno = objAutorController.incluir();
             }
 
@@ -244,15 +246,19 @@ public class CadastroAutor extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jtbCandidatosMousePressed
 
-  
-    
+
     private void btnLimparActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimparActionPerformed
         limparTela();
     }//GEN-LAST:event_btnLimparActionPerformed
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
-    
+        char c = objConsulta.getConsulta();
         
+        if(c == 's'){
+            btnSalvar.setVisible(false);        
+            btnLimpar.setVisible(false);
+            lblCampos.setVisible(false);
+        }
     }//GEN-LAST:event_formWindowOpened
 
     /**
@@ -294,9 +300,9 @@ public class CadastroAutor extends javax.swing.JFrame {
     private javax.swing.JButton btnLimpar;
     private javax.swing.JButton btnSair;
     private javax.swing.JButton btnSalvar;
-    private javax.swing.JLabel jLabel5;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jtbCandidatos;
+    private javax.swing.JLabel lblCampos;
     private javax.swing.JLabel lblId;
     private javax.swing.JLabel lblNome;
     private javax.swing.JTextField txtNome;

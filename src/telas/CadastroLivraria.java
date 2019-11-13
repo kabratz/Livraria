@@ -7,6 +7,7 @@ package telas;
 
 import controles.LivrariaController;
 import ferramentas.CaixaDeDialogo;
+import ferramentas.Consulta;
 import modelos.Livraria;
 
 /**
@@ -17,6 +18,7 @@ public class CadastroLivraria extends javax.swing.JFrame {
 
     Livraria objLivraria;
     LivrariaController objLivrariaController;
+    Consulta objConsulta;
 
     /**
      * Creates new form CadastroLivraria
@@ -37,7 +39,7 @@ public class CadastroLivraria extends javax.swing.JFrame {
         btnSalvar = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jtbCandidatos = new javax.swing.JTable();
-        jLabel5 = new javax.swing.JLabel();
+        lblCampos = new javax.swing.JLabel();
         btnLimpar = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         lblTitulo = new javax.swing.JLabel();
@@ -53,6 +55,11 @@ public class CadastroLivraria extends javax.swing.JFrame {
         lblNome3 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
+            }
+        });
 
         btnSalvar.setBackground(new java.awt.Color(0, 153, 102));
         btnSalvar.setText("SALVAR");
@@ -81,9 +88,9 @@ public class CadastroLivraria extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(jtbCandidatos);
 
-        jLabel5.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        jLabel5.setForeground(new java.awt.Color(255, 51, 0));
-        jLabel5.setText("Campos com * são obrigatórios");
+        lblCampos.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        lblCampos.setForeground(new java.awt.Color(255, 51, 0));
+        lblCampos.setText("Campos com * são obrigatórios");
 
         btnLimpar.setBackground(new java.awt.Color(255, 0, 0));
         btnLimpar.setText("LIMPAR");
@@ -139,7 +146,7 @@ public class CadastroLivraria extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(jLabel5)
+                        .addComponent(lblCampos)
                         .addGap(346, 346, 346)
                         .addComponent(btnSair, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
@@ -201,7 +208,7 @@ public class CadastroLivraria extends javax.swing.JFrame {
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(33, 33, 33)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(lblCampos, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(btnSair)
                         .addContainerGap())))
@@ -311,6 +318,16 @@ public class CadastroLivraria extends javax.swing.JFrame {
         dispose();
     }//GEN-LAST:event_btnSairActionPerformed
 
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        char c = objConsulta.getConsulta();
+
+        if (c == 's') {
+            btnSalvar.setVisible(false);
+            btnLimpar.setVisible(false);
+            lblCampos.setVisible(false);
+        }
+    }//GEN-LAST:event_formWindowOpened
+
     /**
      * @param args the command line arguments
      */
@@ -353,10 +370,10 @@ public class CadastroLivraria extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> cbBairro;
     private javax.swing.JComboBox<String> cbBairro1;
     private javax.swing.JComboBox<String> cbBairro2;
-    private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jtbCandidatos;
+    private javax.swing.JLabel lblCampos;
     private javax.swing.JLabel lblId;
     private javax.swing.JLabel lblNome;
     private javax.swing.JLabel lblNome1;

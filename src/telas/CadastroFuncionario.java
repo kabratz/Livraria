@@ -9,15 +9,20 @@ package telas;
 import controles.AutorController;
 import controles.FuncionarioController;
 import ferramentas.CaixaDeDialogo;
+import ferramentas.Consulta;
 import modelos.Autor;
 import modelos.Funcionario;
+
 /**
  *
  * @author jean.brum
  */
 public class CadastroFuncionario extends javax.swing.JFrame {
+
     Funcionario objFuncionario;
     FuncionarioController objFuncionarioControle;
+    Consulta objConsulta;
+
     /**
      * Creates new form CadastroFuncionario
      */
@@ -50,6 +55,11 @@ public class CadastroFuncionario extends javax.swing.JFrame {
         lblId = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
+            }
+        });
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -172,8 +182,17 @@ public class CadastroFuncionario extends javax.swing.JFrame {
     }//GEN-LAST:event_btnSalvarActionPerformed
 
     private void btnLimparActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimparActionPerformed
-      //  limparTela();
+        //  limparTela();
     }//GEN-LAST:event_btnLimparActionPerformed
+
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        char c = objConsulta.getConsulta();
+        
+        if(c == 's'){
+            btnSalvar.setVisible(false);        
+            btnLimpar.setVisible(false);
+        }
+    }//GEN-LAST:event_formWindowOpened
 
     /**
      * @param args the command line arguments

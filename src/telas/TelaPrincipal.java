@@ -10,7 +10,8 @@ import modelos.Usuario;
 public class TelaPrincipal extends javax.swing.JFrame {
 
     Usuario objUsuario;
-    //Consulta objConsulta = new Consulta();
+    Character consulta;
+    Consulta objConsulta = new Consulta();
 
     /**
      * Creates new form TelaPrincipal
@@ -171,13 +172,13 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private void mnCadLivrariaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnCadLivrariaActionPerformed
         CadastroLivraria frame = new CadastroLivraria();
         frame.setVisible(true);
-       // Consulta.setConsulta(false) ;
+       objConsulta.setConsulta('n');
     }//GEN-LAST:event_mnCadLivrariaActionPerformed
 
     private void mnCadLivroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnCadLivroActionPerformed
         // CadastroLivro frame = new CadastroLivro();
         // frame.setVisible(true);
-        //consulta = false;
+        objConsulta.setConsulta('n');
     }//GEN-LAST:event_mnCadLivroActionPerformed
 
 
@@ -188,32 +189,32 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private void mnConsLivrosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnConsLivrosActionPerformed
         // CadastroLivro frame = new CadastroLivro();
         // frame.setVisible(true);
-       //consulta = true;
+       objConsulta.setConsulta('s');
     }//GEN-LAST:event_mnConsLivrosActionPerformed
 
     private void mnConsLivrariaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnConsLivrariaActionPerformed
         CadastroLivraria frame = new CadastroLivraria();
         frame.setVisible(true);
-        //consulta = true;
+        objConsulta.setConsulta('s');
 
     }//GEN-LAST:event_mnConsLivrariaActionPerformed
 
     private void mnCadFuncActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnCadFuncActionPerformed
         CadastroFuncionario frame = new CadastroFuncionario();
         frame.setVisible(true);
-        //consulta = false;
+        objConsulta.setConsulta('n');
     }//GEN-LAST:event_mnCadFuncActionPerformed
 
     private void mnCadCidActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnCadCidActionPerformed
         CadastroCidade frame = new CadastroCidade();
         frame.setVisible(true);
-        //consulta = false;
+        objConsulta.setConsulta('f');
     }//GEN-LAST:event_mnCadCidActionPerformed
 
     private void mnConsFuncActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnConsFuncActionPerformed
         CadastroFuncionario frame = new CadastroFuncionario();
         frame.setVisible(true);
-        //consulta = true;
+        objConsulta.setConsulta('s');
     }//GEN-LAST:event_mnConsFuncActionPerformed
 
     private void mnConsCidActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnConsCidActionPerformed
@@ -225,7 +226,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private void CadBairroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CadBairroActionPerformed
         CadastroBairro frame = new CadastroBairro();
         frame.setVisible(true);
-        //consulta = false;
+        objConsulta.setConsulta('n');
     }//GEN-LAST:event_CadBairroActionPerformed
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
@@ -255,7 +256,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private void mnConsBairroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnConsBairroActionPerformed
         CadastroBairro frame = new CadastroBairro();
         frame.setVisible(true);
-        //consulta = true;
+        objConsulta.setConsulta('s');
     }//GEN-LAST:event_mnConsBairroActionPerformed
 
     /**

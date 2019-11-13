@@ -5,11 +5,15 @@
  */
 package telas;
 
+import ferramentas.Consulta;
+
 /**
  *
  * @author karoline.bratz
  */
 public class CadastroCliente extends javax.swing.JFrame {
+
+    Consulta objConsulta;
 
     /**
      * Creates new form CadastroCliente
@@ -30,19 +34,23 @@ public class CadastroCliente extends javax.swing.JFrame {
         btnSalvar = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jtbCandidatos = new javax.swing.JTable();
-        jLabel5 = new javax.swing.JLabel();
+        lblCampos = new javax.swing.JLabel();
         btnLimpar = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         lblTitulo = new javax.swing.JLabel();
         lblNome = new javax.swing.JLabel();
         lblId = new javax.swing.JLabel();
-        jdcDtNascimento = new com.toedter.calendar.JDateChooser();
         txtNome = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
         cbBairro = new javax.swing.JComboBox<>();
         btnSair = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
+            }
+        });
 
         btnSalvar.setBackground(new java.awt.Color(0, 153, 102));
         btnSalvar.setText("SALVAR");
@@ -71,9 +79,9 @@ public class CadastroCliente extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(jtbCandidatos);
 
-        jLabel5.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        jLabel5.setForeground(new java.awt.Color(255, 51, 0));
-        jLabel5.setText("Campos com * são obrigatórios");
+        lblCampos.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        lblCampos.setForeground(new java.awt.Color(255, 51, 0));
+        lblCampos.setText("Campos com * são obrigatórios");
 
         btnLimpar.setBackground(new java.awt.Color(255, 0, 0));
         btnLimpar.setText("LIMPAR");
@@ -116,40 +124,38 @@ public class CadastroCliente extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                 .addContainerGap()
-                                .addComponent(jLabel5)
+                                .addComponent(lblCampos)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(btnSair, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(24, 24, 24)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(txtNome, javax.swing.GroupLayout.PREFERRED_SIZE, 356, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addGroup(layout.createSequentialGroup()
-                                        .addComponent(btnSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(cbBairro, javax.swing.GroupLayout.PREFERRED_SIZE, 208, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(btnLimpar, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addGroup(layout.createSequentialGroup()
-                                                .addGap(24, 24, 24)
-                                                .addComponent(lblNome)
-                                                .addGap(301, 301, 301)
-                                                .addComponent(lblId))
-                                            .addComponent(txtNome, javax.swing.GroupLayout.PREFERRED_SIZE, 356, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addGap(31, 31, 31)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                            .addComponent(jLabel1)
-                                            .addComponent(jdcDtNascimento, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addGap(0, 35, Short.MAX_VALUE)))))
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addGap(89, 89, 89))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addGap(24, 24, 24)
+                                        .addComponent(lblNome)
+                                        .addGap(301, 301, 301)
+                                        .addComponent(lblId)))
+                                .addGap(31, 31, 31)
+                                .addComponent(jLabel1)
+                                .addGap(0, 72, Short.MAX_VALUE)))
+                        .addGap(0, 79, Short.MAX_VALUE))
+                    .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane1)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(24, 24, 24)
+                                .addComponent(btnSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(cbBairro, javax.swing.GroupLayout.PREFERRED_SIZE, 208, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btnLimpar, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -166,21 +172,18 @@ public class CadastroCliente extends javax.swing.JFrame {
                         .addComponent(txtNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel1)
-                        .addGap(6, 6, 6)
-                        .addComponent(jdcDtNascimento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(22, 22, 22)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 125, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnSalvar)
+                    .addComponent(btnLimpar)
+                    .addComponent(cbBairro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(30, 30, 30)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(59, 59, 59)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(btnSalvar)
-                            .addComponent(btnLimpar)
-                            .addComponent(cbBairro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(30, 30, 30)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 34, Short.MAX_VALUE)
-                        .addComponent(jLabel5))
+                    .addComponent(lblCampos, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnSair)
                         .addContainerGap())))
         );
@@ -191,17 +194,17 @@ public class CadastroCliente extends javax.swing.JFrame {
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
         SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
 
-        try{
+        try {
             boolean retorno;
             //validar os campos
-            if(txtNome.getText().trim().length() == 0){
+            if (txtNome.getText().trim().length() == 0) {
                 CaixaDeDialogo.obterinstancia().exibirMensagem("Informe um candidato corretamente", 'a');
                 return;
             }
 
             objCand = new Candidato();
 
-            if(!lblId.getText().equals("ID")){
+            if (!lblId.getText().equals("ID")) {
                 objCand.setId(Integer.parseInt(lblId.getText()));
                 objCandControle = new CandidatoControle(objCand, null);
                 Combos c = (Combos) cbBairro.getSelectedItem();
@@ -212,7 +215,7 @@ public class CadastroCliente extends javax.swing.JFrame {
                 objCand.setIdBairro(Integer.parseInt(codBairro));
                 retorno = objCandControle.alterar();
                 atualizarTabela();
-            }else{
+            } else {
                 objCand = new Candidato();
                 Combos c = (Combos) cbBairro.getSelectedItem();
                 String codBairro = c.getCodigo();
@@ -223,14 +226,14 @@ public class CadastroCliente extends javax.swing.JFrame {
                 retorno = objCandControle.incluir();
             }
 
-            if(retorno = true){
+            if (retorno = true) {
                 CaixaDeDialogo.obterinstancia().exibirMensagem("Registro salvo");
                 atualizarTabela();
-            }else{
+            } else {
                 CaixaDeDialogo.obterinstancia().exibirMensagem("Erro ao tentar salvar");
             }
 
-        }catch(Exception ex){
+        } catch (Exception ex) {
             CaixaDeDialogo.obterinstancia().exibirMensagem("Erro ao tentar incluir");
             System.out.println("ERRO: " + ex.getMessage().toString());
         }
@@ -238,46 +241,46 @@ public class CadastroCliente extends javax.swing.JFrame {
     }//GEN-LAST:event_btnSalvarActionPerformed
 
     private void jtbCandidatosMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtbCandidatosMousePressed
-        try{
+        try {
 
             int linhaSelecionada = jtbCandidatos.getSelectedRow();//pega a linha selecionada
             String codigo = jtbCandidatos.getModel().getValueAt(linhaSelecionada, 0).toString(); // Primeira coluna da linha
 
             //Verifica se clicou na coluna 2 = EXCLUIR
-            if(jtbCandidatos.isColumnSelected(4)){
-                try{
+            if (jtbCandidatos.isColumnSelected(4)) {
+                try {
 
-                    boolean wPergunta = CaixaDeDialogo.obterinstancia().pedirConfirmacao("Tem certeza de que deseja excluir?","",'p');
-                    if (wPergunta == true){
+                    boolean wPergunta = CaixaDeDialogo.obterinstancia().pedirConfirmacao("Tem certeza de que deseja excluir?", "", 'p');
+                    if (wPergunta == true) {
                         lblId.setText(codigo);
                         objCand = new Candidato();
                         objCand.setId(Integer.parseInt(codigo));
                         lblId.setText("ID");
                         objCandControle = new CandidatoControle(objCand, null);
                         boolean wControle = objCandControle.excluir();
-                        if (wControle){
+                        if (wControle) {
                             CaixaDeDialogo.obterinstancia().exibirMensagem("Excluído com Sucesso!");
-                        }else{
+                        } else {
                             CaixaDeDialogo.obterinstancia().exibirMensagem("Erro ao excluir!");
                         }
                     }
                     atualizarTabela();
 
-                }catch(Exception ex){
+                } catch (Exception ex) {
                     CaixaDeDialogo.obterinstancia().exibirMensagem("Erro: " + ex.getMessage());
                 }
-            }else{
+            } else {
 
                 objCandControle = new CandidatoControle(null, null);
                 objCand = objCandControle.buscar(codigo);
-                if (objCand != null && objCand.getId() > 0){
+                if (objCand != null && objCand.getId() > 0) {
                     preencherCampos();
-                }else{
+                } else {
                     CaixaDeDialogo.obterinstancia().exibirMensagem("Erro ao buscar no BD!");
                 }
             }
 
-        }catch(Exception ex){
+        } catch (Exception ex) {
             CaixaDeDialogo.obterinstancia().exibirMensagem(ex.getMessage(), 'e');
         }
     }//GEN-LAST:event_jtbCandidatosMousePressed
@@ -289,6 +292,16 @@ public class CadastroCliente extends javax.swing.JFrame {
     private void btnSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSairActionPerformed
         dispose();
     }//GEN-LAST:event_btnSairActionPerformed
+
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        char c = objConsulta.getConsulta();
+
+        if (c == 's') {
+            btnSalvar.setVisible(false);
+            btnLimpar.setVisible(false);
+            lblCampos.setVisible(false);
+        }
+    }//GEN-LAST:event_formWindowOpened
 
     /**
      * @param args the command line arguments
@@ -331,11 +344,10 @@ public class CadastroCliente extends javax.swing.JFrame {
     private javax.swing.JButton btnSalvar;
     private javax.swing.JComboBox<String> cbBairro;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private com.toedter.calendar.JDateChooser jdcDtNascimento;
     private javax.swing.JTable jtbCandidatos;
+    private javax.swing.JLabel lblCampos;
     private javax.swing.JLabel lblId;
     private javax.swing.JLabel lblNome;
     private javax.swing.JLabel lblTitulo;

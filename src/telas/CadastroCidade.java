@@ -8,6 +8,7 @@ package telas;
 import controles.CidadeController;
 import ferramentas.CaixaDeDialogo;
 import ferramentas.Combos;
+import ferramentas.Consulta;
 import modelos.Cidade;
 
 /**
@@ -18,6 +19,7 @@ public class CadastroCidade extends javax.swing.JFrame {
 
     Cidade objCidade;
     CidadeController objCidadeController;
+    Consulta objConsulta;
 
     /**
      * Creates new form CadastroCidade
@@ -78,7 +80,7 @@ public class CadastroCidade extends javax.swing.JFrame {
         btnSalvar = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jtbCidade = new javax.swing.JTable();
-        jLabel5 = new javax.swing.JLabel();
+        lblCampos = new javax.swing.JLabel();
         btnLimpar = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         lblTitulo = new javax.swing.JLabel();
@@ -123,9 +125,9 @@ public class CadastroCidade extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(jtbCidade);
 
-        jLabel5.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        jLabel5.setForeground(new java.awt.Color(255, 51, 0));
-        jLabel5.setText("Campos com * são obrigatórios");
+        lblCampos.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        lblCampos.setForeground(new java.awt.Color(255, 51, 0));
+        lblCampos.setText("Campos com * são obrigatórios");
 
         btnLimpar.setBackground(new java.awt.Color(255, 0, 0));
         btnLimpar.setText("LIMPAR");
@@ -176,7 +178,7 @@ public class CadastroCidade extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(jLabel5)
+                        .addComponent(lblCampos)
                         .addGap(173, 173, 173)
                         .addComponent(btnSair, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
@@ -221,7 +223,7 @@ public class CadastroCidade extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jLabel5))
+                        .addComponent(lblCampos))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGap(144, 144, 144)
                         .addComponent(btnSair)
@@ -279,17 +281,15 @@ public class CadastroCidade extends javax.swing.JFrame {
         try {
 
             int linhaSelecionada = jtbCidade.getSelectedRow();
-            String codigo = jtbCidade.getModel().getValueAt(linhaSelecionada, 0).toString(); 
+            String codigo = jtbCidade.getModel().getValueAt(linhaSelecionada, 0).toString();
 
-
-                objCidadeController = new CidadeController(null, null);
-                objCidade = objCidadeController.buscar(codigo);
-                if (objCidade != null && objCidade.getId() > 0) {
-                    preencherCampos();
-                } else {
-                    CaixaDeDialogo.obterinstancia().exibirMensagem("Erro ao buscar no BD!");
-                }
-            
+            objCidadeController = new CidadeController(null, null);
+            objCidade = objCidadeController.buscar(codigo);
+            if (objCidade != null && objCidade.getId() > 0) {
+                preencherCampos();
+            } else {
+                CaixaDeDialogo.obterinstancia().exibirMensagem("Erro ao buscar no BD!");
+            }
 
         } catch (Exception ex) {
             CaixaDeDialogo.obterinstancia().exibirMensagem(ex.getMessage(), 'e');
@@ -309,9 +309,16 @@ public class CadastroCidade extends javax.swing.JFrame {
     }//GEN-LAST:event_txtCepActionPerformed
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
-        try{atualizarTabela();
-        
-        }catch (Exception e) {
+        try {
+            atualizarTabela();
+            char c = objConsulta.getConsulta();
+
+            if (c == 's') {
+                btnSalvar.setVisible(false);
+                btnLimpar.setVisible(false);
+                lblCampos.setVisible(false);
+            }
+        } catch (Exception e) {
             CaixaDeDialogo.obterinstancia().exibirMensagem(e.getMessage(), 'e');
         }
     }//GEN-LAST:event_formWindowOpened
@@ -356,10 +363,10 @@ public class CadastroCidade extends javax.swing.JFrame {
     private javax.swing.JButton btnSair;
     private javax.swing.JButton btnSalvar;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jtbCidade;
+    private javax.swing.JLabel lblCampos;
     private javax.swing.JLabel lblId;
     private javax.swing.JLabel lblNome;
     private javax.swing.JLabel lblTitulo;

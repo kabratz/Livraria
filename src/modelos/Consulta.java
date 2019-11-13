@@ -3,11 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package ferramentas;
+package modelos;
 
 /**
  *
- * @author karoline.bratz
+ * @author User
  */
 public class Consulta {
     char consulta;
@@ -20,5 +20,5 @@ public class Consulta {
         this.consulta = consulta;
     }
     
-            
+    
 }
