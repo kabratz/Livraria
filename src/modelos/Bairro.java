@@ -2,7 +2,7 @@ package modelos;
 
 /**
  *
- * @author jdhein
+ * @author karoline.bratz
  */
 public class Bairro {
 

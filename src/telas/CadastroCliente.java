@@ -12,7 +12,7 @@ import ferramentas.Consulta;
  * @author karoline.bratz
  */
 public class CadastroCliente extends javax.swing.JFrame {
-
+    
     Consulta objConsulta;
 
     /**

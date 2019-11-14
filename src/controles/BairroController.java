@@ -19,7 +19,7 @@ import javax.swing.table.TableColumn;
 import modelos.Bairro;
 /**
  *
- * @author Jonas Dhein
+ * @author karoline.bratz
  */
 public class BairroController {
     
