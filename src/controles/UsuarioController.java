@@ -32,8 +32,8 @@ public class UsuarioController {
         PreparedStatement stmt = null;
         
         try{
-            stmt = con.prepareStatement("INSERT INTO autor(nome) VALUES(?)");
-            stmt.setString(1, objAutor.getNome());
+            stmt = con.prepareStatement("INSERT INTO usuarios(lo) VALUES(?)");
+            stmt.setString(1, objUsuario.getNome());
 
             
             stmt.executeUpdate();
