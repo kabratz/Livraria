@@ -9,16 +9,25 @@ package modelos;
  *
  * @author USER
  */
-public class Autor {
-    private int id_autor;
+public class Editora {
+    private int id_editora;
+    private String cnpj;
     private String nome;
 
-    public int getId_autor() {
-        return id_autor;
+    public int getId_editora() {
+        return id_editora;
     }
 
-    public void setId_autor(int id_autor) {
-        this.id_autor = id_autor;
+    public void setId_editora(int id_editora) {
+        this.id_editora = id_editora;
+    }
+
+    public String getCnpj() {
+        return cnpj;
+    }
+
+    public void setCnpj(String cnpj) {
+        this.cnpj = cnpj;
     }
 
     public String getNome() {

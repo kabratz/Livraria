@@ -1,4 +1,3 @@
-
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -6,28 +5,39 @@
  */
 package telas;
 
-import controles.AutorController;
 import controles.FuncionarioController;
 import ferramentas.CaixaDeDialogo;
-import ferramentas.Consulta;
-import modelos.Autor;
+import ferramentas.Combos;
+import java.text.SimpleDateFormat;
 import modelos.Funcionario;
 
 /**
  *
- * @author jean.brum
+ * @author USER
  */
 public class CadastroFuncionario extends javax.swing.JFrame {
-
+    
     Funcionario objFuncionario;
     FuncionarioController objFuncionarioControle;
-    Consulta objConsulta;
-
+    Combos cbFuncionarios;
     /**
      * Creates new form CadastroFuncionario
      */
     public CadastroFuncionario() {
         initComponents();
+        atualizarTabela();
+        preencherCombos();
+    }
+    
+             private void atualizarTabela(){
+        try{
+            
+            objFuncionarioControle = new FuncionarioController(null, jtbFuncionario);
+            objFuncionarioControle.preencher();
+            
+        }catch(Exception ex){
+            CaixaDeDialogo.obterinstancia().exibirMensagem("ERRO:" + ex.getMessage());
+        }
     }
 
     /**
@@ -39,71 +49,26 @@ public class CadastroFuncionario extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel1 = new javax.swing.JPanel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTable1 = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
+        cbCidadeLivraria = new javax.swing.JComboBox<>();
         jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
-        txtNome = new javax.swing.JTextField();
-        txtCpf = new javax.swing.JTextField();
         txtPis = new javax.swing.JTextField();
-        cbLivraria = new javax.swing.JComboBox<>();
+        jLabel3 = new javax.swing.JLabel();
+        jdcDataNascimento = new com.toedter.calendar.JDateChooser();
+        jLabel4 = new javax.swing.JLabel();
+        txtCpf = new javax.swing.JTextField();
+        jLabel5 = new javax.swing.JLabel();
+        txtNome = new javax.swing.JTextField();
+        jLabel6 = new javax.swing.JLabel();
         btnSalvar = new javax.swing.JButton();
         btnLimpar = new javax.swing.JButton();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jtbFuncionarios = new javax.swing.JTable();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jtbFuncionario = new javax.swing.JTable();
         lblId = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        addWindowListener(new java.awt.event.WindowAdapter() {
-            public void windowOpened(java.awt.event.WindowEvent evt) {
-                formWindowOpened(evt);
-            }
-        });
-
-        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(102, 102, 255));
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/180693.png"))); // NOI18N
-        jLabel1.setText("CADASTRO DE FUNCIONÁRIOS");
-        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 11, -1, -1));
-
-        jLabel2.setText("Nome:");
-        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(34, 76, -1, -1));
-
-        jLabel3.setText("PIS:");
-        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(34, 114, -1, -1));
-
-        jLabel4.setText("CPF:");
-        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(34, 152, -1, -1));
-        jPanel1.add(txtNome, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 70, 216, -1));
-        jPanel1.add(txtCpf, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 150, 216, -1));
-        jPanel1.add(txtPis, new org.netbeans.lib.awtextra.AbsoluteConstraints(69, 111, 216, -1));
-
-        cbLivraria.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        jPanel1.add(cbLivraria, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 70, 210, -1));
-
-        btnSalvar.setBackground(new java.awt.Color(0, 153, 102));
-        btnSalvar.setText("SALVAR");
-        btnSalvar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnSalvarActionPerformed(evt);
-            }
-        });
-        jPanel1.add(btnSalvar, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 230, 160, -1));
-
-        btnLimpar.setBackground(new java.awt.Color(255, 0, 0));
-        btnLimpar.setText("LIMPAR");
-        btnLimpar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnLimparActionPerformed(evt);
-            }
-        });
-        jPanel1.add(btnLimpar, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 230, 160, -1));
-
-        jtbFuncionarios.setModel(new javax.swing.table.DefaultTableModel(
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -114,86 +79,277 @@ public class CadastroFuncionario extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane1.setViewportView(jtbFuncionarios);
+        jScrollPane1.setViewportView(jTable1);
 
-        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(2, 270, 520, 90));
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabel1.setText("CIDADE DA LIVRARIA");
+
+        cbCidadeLivraria.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
+        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabel2.setText("PIS");
+
+        jLabel3.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabel3.setText("DATA DE NASCIMENTO");
+
+        jLabel4.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabel4.setText("CPF");
+
+        jLabel5.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabel5.setText("NOME");
+
+        jLabel6.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabel6.setText("CADASTRO DE FUNCIONARIO");
+
+        btnSalvar.setText("SALVAR");
+        btnSalvar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSalvarActionPerformed(evt);
+            }
+        });
+
+        btnLimpar.setText("LIMPAR");
+        btnLimpar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLimparActionPerformed(evt);
+            }
+        });
+
+        jtbFuncionario.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jtbFuncionario.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jtbFuncionarioMousePressed(evt);
+            }
+        });
+        jScrollPane2.setViewportView(jtbFuncionario);
+
+        lblId.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         lblId.setText("ID");
-        jPanel1.add(lblId, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 150, -1, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jScrollPane2)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(199, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(56, 56, 56)
+                        .addComponent(jLabel6))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addGap(101, 101, 101)
+                        .addComponent(jLabel3))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(cbCidadeLivraria, javax.swing.GroupLayout.PREFERRED_SIZE, 198, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(22, 22, 22)
+                        .addComponent(jdcDataNascimento, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel5)
+                    .addComponent(txtNome, javax.swing.GroupLayout.PREFERRED_SIZE, 370, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel4)
+                        .addGap(190, 190, 190)
+                        .addComponent(jLabel2))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(txtCpf, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(9, 9, 9)
+                        .addComponent(txtPis, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(190, 190, 190)
+                        .addComponent(lblId))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(3, 3, 3)
+                        .addComponent(btnSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(175, 175, 175)
+                        .addComponent(btnLimpar, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(149, 149, 149))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 365, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 22, Short.MAX_VALUE))
+                .addGap(11, 11, 11)
+                .addComponent(jLabel6)
+                .addGap(47, 47, 47)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel1)
+                    .addComponent(jLabel3))
+                .addGap(6, 6, 6)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(cbCidadeLivraria, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jdcDataNascimento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(10, 10, 10)
+                .addComponent(jLabel5)
+                .addGap(6, 6, 6)
+                .addComponent(txtNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(20, 20, 20)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel4)
+                    .addComponent(jLabel2))
+                .addGap(6, 6, 6)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(txtCpf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtPis, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(10, 10, 10)
+                .addComponent(lblId)
+                .addGap(26, 26, 26)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(2, 2, 2)
+                        .addComponent(btnSalvar))
+                    .addComponent(btnLimpar))
+                .addGap(80, 80, 80)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 117, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
-        try {
+        SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
+        try{
             boolean retorno;
             //validar os campos
-            if (txtNome.getText().trim().length() == 0) {
-                CaixaDeDialogo.obterinstancia().exibirMensagem("Informe um autor corretamente", 'a');
+            if(txtNome.getText().trim().length() == 0 || txtCpf.getText().trim().length() == 0 || txtPis.getText().trim().length() == 0 ||
+                    jdcDataNascimento.getDate() == null){
+                CaixaDeDialogo.obterinstancia().exibirMensagem("Informe os dados corretamente", 'a');
                 return;
             }
 
             objFuncionario = new Funcionario();
-
-            if (!lblId.getText().equals("ID")) {
-                objFuncionario.setIdFuncionario(Integer.parseInt(lblId.getText()));
+            Combos c = (Combos) cbCidadeLivraria.getSelectedItem();
+            String codCidade = c.getCodigo();
+            objFuncionario.setId_livraria(Integer.parseInt(codCidade));
+            objFuncionario.setCpf(txtCpf.getText().trim());
+            objFuncionario.setPis(txtPis.getText().trim());
+            objFuncionario.setData_nascimento(formato.format(jdcDataNascimento.getDate()));
+            objFuncionario.setNome(txtNome.getText());
+            if(!lblId.getText().equals("ID")){
+                objFuncionario.setId_funcionario(Integer.parseInt(lblId.getText()));
                 objFuncionarioControle = new FuncionarioController(objFuncionario, null);
-
-                objFuncionario.setNome(txtNome.getText());
-                objFuncionario.setCpf(txtCpf.getText());
-                objFuncionario.setPis(txtPis.getText());
-                // Id livraria
-                // data
                 retorno = objFuncionarioControle.alterar();
-                //atualizarTabela();
-            } else {
-                objFuncionario = new Funcionario();
-
+            }else{
                 objFuncionarioControle = new FuncionarioController(objFuncionario, null);
-                objFuncionario.setNome(txtNome.getText());
-
+   
                 retorno = objFuncionarioControle.incluir();
             }
-
-            if (retorno = true) {
+            
+            if(retorno = true){
                 CaixaDeDialogo.obterinstancia().exibirMensagem("Registro salvo");
-                //atualizarTabela();
-            } else {
+            }else{
                 CaixaDeDialogo.obterinstancia().exibirMensagem("Erro ao tentar salvar");
             }
+            
+            atualizarTabela();
 
-        } catch (Exception ex) {
+        }catch(Exception ex){
             CaixaDeDialogo.obterinstancia().exibirMensagem("Erro ao tentar incluir");
             System.out.println("ERRO: " + ex.getMessage().toString());
         }
     }//GEN-LAST:event_btnSalvarActionPerformed
 
     private void btnLimparActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimparActionPerformed
-        //  limparTela();
+        limparTela();
     }//GEN-LAST:event_btnLimparActionPerformed
 
-    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
-        char c = objConsulta.getConsulta();
-        
-        if(c == 's'){
-            btnSalvar.setVisible(false);        
-            btnLimpar.setVisible(false);
-        }
-    }//GEN-LAST:event_formWindowOpened
+    private void jtbFuncionarioMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtbFuncionarioMousePressed
+         try{
+            
+            int linhaSelecionada = jtbFuncionario.getSelectedRow();//pega a linha selecionada
+            String codigo = jtbFuncionario.getModel().getValueAt(linhaSelecionada, 0).toString(); // Primeira coluna da linha
+            String pis = jtbFuncionario.getModel().getValueAt(linhaSelecionada, 2).toString();
+            String cpf = jtbFuncionario.getModel().getValueAt(linhaSelecionada, 4).toString();
+            String nome = jtbFuncionario.getModel().getValueAt(linhaSelecionada, 5).toString();
 
+            //Verifica se clicou na coluna 2 = EXCLUIR
+            if(jtbFuncionario.getSelectedColumn() == 7){
+                try{
+                    
+                    boolean wPergunta = CaixaDeDialogo.obterinstancia().pedirConfirmacao("Tem certeza de que deseja excluir?","",'p');
+                    if (wPergunta == true){
+                        lblId.setText(codigo);
+                        objFuncionario = new Funcionario();
+                        objFuncionario.setId_funcionario(Integer.parseInt(codigo));
+                        
+                        objFuncionarioControle = new FuncionarioController(objFuncionario, null);
+                        boolean wControle = objFuncionarioControle.excluir();
+                        if (wControle){
+                            CaixaDeDialogo.obterinstancia().exibirMensagem("Excluído com Sucesso!");
+                        }else{
+                            CaixaDeDialogo.obterinstancia().exibirMensagem("Erro ao excluir!");
+                        }
+                    }
+
+                }catch(Exception ex){
+                    CaixaDeDialogo.obterinstancia().exibirMensagem("Erro: " + ex.getMessage());
+                }
+            }else {
+                lblId.setText(codigo);   
+                txtCpf.setText(cpf);
+                txtNome.setText(nome);
+                txtPis.setText(pis);
+            }
+        
+        }catch(Exception ex){
+            CaixaDeDialogo.obterinstancia().exibirMensagem(ex.getMessage(), 'e');
+        }
+        atualizarTabela();
+    }//GEN-LAST:event_jtbFuncionarioMousePressed
+
+            private void preencherCombos() {
+        try {
+            cbFuncionarios = new Combos(cbCidadeLivraria);        
+            cbFuncionarios.PreencheCombo("SELECT c.id_cidade, c.nome FROM cidade c, livraria l WHERE c.id_cidade = l.id_cidade");
+        } catch (Exception e) {
+            CaixaDeDialogo.obterinstancia().exibirMensagem(e.getMessage());
+        }
+            }
+        
+        private void limparTela(){
+        try{
+            lblId.setText("ID");
+            txtCpf.setText("");
+            txtNome.setText("");
+            txtPis.setText("");
+            jdcDataNascimento.setDate(null);
+            cbCidadeLivraria.setSelectedIndex(0);
+           
+            btnSalvar.setEnabled(true);
+            
+            atualizarTabela();
+            
+        }catch(Exception ex){
+            CaixaDeDialogo.obterinstancia().exibirMensagem("Erro: " + ex.getMessage());
+        }
+    }
+                
+        private void preencherCampos(){
+        try{
+            lblId.setText(String.valueOf(objFuncionario.getId_funcionario()));
+            txtCpf.setText(String.valueOf(objFuncionario.getId_livraria()));
+            txtCpf.setText(objFuncionario.getCpf());
+            txtCpf.setText(objFuncionario.getCpf());
+            btnSalvar.setEnabled(true);
+            
+            atualizarTabela();
+            
+        }catch(Exception ex){
+            CaixaDeDialogo.obterinstancia().exibirMensagem("Erro: " + ex.getMessage());
+        }
+   
+    }
     /**
      * @param args the command line arguments
      */
@@ -232,14 +388,18 @@ public class CadastroFuncionario extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnLimpar;
     private javax.swing.JButton btnSalvar;
-    private javax.swing.JComboBox<String> cbLivraria;
+    private javax.swing.JComboBox<String> cbCidadeLivraria;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JPanel jPanel1;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jtbFuncionarios;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JTable jTable1;
+    private com.toedter.calendar.JDateChooser jdcDataNascimento;
+    private javax.swing.JTable jtbFuncionario;
     private javax.swing.JLabel lblId;
     private javax.swing.JTextField txtCpf;
     private javax.swing.JTextField txtNome;

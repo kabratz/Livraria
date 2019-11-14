@@ -6,61 +6,33 @@
 package telas;
 
 import controles.AutorController;
+import controles.CidadeController;
 import ferramentas.CaixaDeDialogo;
-import ferramentas.Consulta;
 import modelos.Autor;
+import modelos.Cidade;
 
 /**
  *
- * @author User
+ * @author USER
  */
 public class CadastroAutor extends javax.swing.JFrame {
-
     Autor objAutor;
-    AutorController objAutorController;
-    Consulta objConsulta;
+    AutorController objAutorControle;
     /**
      * Creates new form CadastroAutor
      */
     public CadastroAutor() {
         initComponents();
-
+        atualizarTabela();
     }
-
-    private void limparTela() {
-        try {
-            lblId.setText("ID");
-            txtNome.setText("");
-            btnSalvar.setEnabled(true);
-            atualizarTabela();
-
-        } catch (Exception ex) {
-            CaixaDeDialogo.obterinstancia().exibirMensagem("Erro: " + ex.getMessage());
-        }
-    }
-
-    private void preencherCampos() {
-        try {
-            lblId.setText(String.valueOf(objAutor.getID()));
-            txtNome.setText(objAutor.getNome());
-
-            btnSalvar.setEnabled(true);
-
-            atualizarTabela();
-
-        } catch (Exception ex) {
-            CaixaDeDialogo.obterinstancia().exibirMensagem("Erro: " + ex.getMessage());
-        }
-    }
-
-    private void atualizarTabela() {
-        try {
-
-            objAutorController = new AutorController(null, jtbCandidatos);
-            objAutorController.preencher();
-            //ola
-
-        } catch (Exception ex) {
+    
+    private void atualizarTabela(){
+        try{
+            
+            objAutorControle = new AutorController(null, jtbAutor);
+            objAutorControle.preencher();
+            
+        }catch(Exception ex){
             CaixaDeDialogo.obterinstancia().exibirMensagem("ERRO:" + ex.getMessage());
         }
     }
@@ -74,44 +46,41 @@ public class CadastroAutor extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jLabel1 = new javax.swing.JLabel();
         txtNome = new javax.swing.JTextField();
-        btnSair = new javax.swing.JButton();
         btnSalvar = new javax.swing.JButton();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jtbCandidatos = new javax.swing.JTable();
-        lblCampos = new javax.swing.JLabel();
         btnLimpar = new javax.swing.JButton();
-        lblNome = new javax.swing.JLabel();
         lblId = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jtbAutor = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        addWindowListener(new java.awt.event.WindowAdapter() {
-            public void windowOpened(java.awt.event.WindowEvent evt) {
-                formWindowOpened(evt);
-            }
-        });
-        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-        getContentPane().add(txtNome, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 54, 356, -1));
 
-        btnSair.setText("Sair");
-        btnSair.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnSairActionPerformed(evt);
-            }
-        });
-        getContentPane().add(btnSair, new org.netbeans.lib.awtextra.AbsoluteConstraints(283, 277, 83, -1));
+        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabel1.setText("NOME");
 
-        btnSalvar.setBackground(new java.awt.Color(0, 153, 102));
         btnSalvar.setText("SALVAR");
         btnSalvar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnSalvarActionPerformed(evt);
             }
         });
-        getContentPane().add(btnSalvar, new org.netbeans.lib.awtextra.AbsoluteConstraints(34, 101, 160, -1));
 
-        jtbCandidatos.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        jtbCandidatos.setModel(new javax.swing.table.DefaultTableModel(
+        btnLimpar.setText("LIMPAR");
+        btnLimpar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLimparActionPerformed(evt);
+            }
+        });
+
+        lblId.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        lblId.setText("ID");
+
+        jLabel3.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabel3.setText("CADASTRO DE AUTOR");
+
+        jtbAutor.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -122,145 +91,169 @@ public class CadastroAutor extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jtbCandidatos.addMouseListener(new java.awt.event.MouseAdapter() {
+        jtbAutor.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
-                jtbCandidatosMousePressed(evt);
+                jtbAutorMousePressed(evt);
             }
         });
-        jScrollPane1.setViewportView(jtbCandidatos);
+        jScrollPane1.setViewportView(jtbAutor);
 
-        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 154, 372, 92));
-
-        lblCampos.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        lblCampos.setForeground(new java.awt.Color(255, 51, 0));
-        lblCampos.setText("Campos com * são obrigatórios");
-        getContentPane().add(lblCampos, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 283, -1, -1));
-
-        btnLimpar.setBackground(new java.awt.Color(255, 0, 0));
-        btnLimpar.setText("LIMPAR");
-        btnLimpar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnLimparActionPerformed(evt);
-            }
-        });
-        getContentPane().add(btnLimpar, new org.netbeans.lib.awtextra.AbsoluteConstraints(206, 101, 160, -1));
-
-        lblNome.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        lblNome.setText("Nome *");
-        getContentPane().add(lblNome, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 34, -1, -1));
-
-        lblId.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        lblId.setText("ID");
-        getContentPane().add(lblId, new org.netbeans.lib.awtextra.AbsoluteConstraints(353, 34, -1, -1));
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(111, 111, 111)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel3)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel1)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(lblId))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(btnSalvar)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(btnLimpar))
+                            .addComponent(txtNome, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 0, Short.MAX_VALUE))))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(35, 35, 35)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 375, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 40, Short.MAX_VALUE))
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel3)
+                .addGap(49, 49, 49)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(lblId))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(txtNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(51, 51, 51)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnSalvar)
+                    .addComponent(btnLimpar))
+                .addGap(67, 67, 67)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void btnSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSairActionPerformed
-        dispose();
-    }//GEN-LAST:event_btnSairActionPerformed
-
-    private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
-        try {
-            boolean retorno;
-            //validar os campos
-            if (txtNome.getText().trim().length() == 0) {
-                CaixaDeDialogo.obterinstancia().exibirMensagem("Informe um autor corretamente", 'a');
-                return;
-            }
-
-            objAutor = new Autor();
-
-            if (!lblId.getText().equals("ID")) {
-                objAutor.setID(Integer.parseInt(lblId.getText()));
-                objAutorController = new AutorController(objAutor, null);
-
-                objAutor.setNome(txtNome.getText());
-                retorno = objAutorController.alterar();
-                atualizarTabela();
-            } else {
-                objAutor = new Autor();
-
-                objAutorController = new AutorController(objAutor, null);
-                objAutor.setNome(txtNome.getText());
-
-                retorno = objAutorController.incluir();
-            }
-
-            if (retorno = true) {
-                CaixaDeDialogo.obterinstancia().exibirMensagem("Registro salvo");
-                atualizarTabela();
-            } else {
-                CaixaDeDialogo.obterinstancia().exibirMensagem("Erro ao tentar salvar");
-            }
-
-        } catch (Exception ex) {
-            CaixaDeDialogo.obterinstancia().exibirMensagem("Erro ao tentar incluir");
-            System.out.println("ERRO: " + ex.getMessage().toString());
-        }
-
-    }//GEN-LAST:event_btnSalvarActionPerformed
-
-    private void jtbCandidatosMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtbCandidatosMousePressed
-        try {
-
-            int linhaSelecionada = jtbCandidatos.getSelectedRow();//pega a linha selecionada
-            String codigo = jtbCandidatos.getModel().getValueAt(linhaSelecionada, 0).toString(); // Primeira coluna da linha
-
-            //Verifica se clicou na coluna 2 = EXCLUIR
-            if (jtbCandidatos.isColumnSelected(4)) {
-                try {
-
-                    boolean wPergunta = CaixaDeDialogo.obterinstancia().pedirConfirmacao("Tem certeza de que deseja excluir?", "", 'p');
-                    if (wPergunta == true) {
-                        lblId.setText(codigo);
-                        objAutor = new Autor();
-                        objAutor.setID(Integer.parseInt(codigo));
-                        lblId.setText("ID");
-                        objAutorController = new AutorController(objAutor, null);
-                        boolean wControle = objAutorController.excluir();
-                        if (wControle) {
-                            CaixaDeDialogo.obterinstancia().exibirMensagem("Excluído com Sucesso!");
-                        } else {
-                            CaixaDeDialogo.obterinstancia().exibirMensagem("Erro ao excluir!");
-                        }
-                    }
-                    atualizarTabela();
-
-                } catch (Exception ex) {
-                    CaixaDeDialogo.obterinstancia().exibirMensagem("Erro: " + ex.getMessage());
-                }
-            } else {
-
-                objAutorController = new AutorController(null, null);
-                objAutor = objAutorController.buscar(codigo);
-                if (objAutor != null && objAutor.getID() > 0) {
-                    preencherCampos();
-                } else {
-                    CaixaDeDialogo.obterinstancia().exibirMensagem("Erro ao buscar no BD!");
-                }
-            }
-
-        } catch (Exception ex) {
-            CaixaDeDialogo.obterinstancia().exibirMensagem(ex.getMessage(), 'e');
-        }
-    }//GEN-LAST:event_jtbCandidatosMousePressed
-
 
     private void btnLimparActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimparActionPerformed
         limparTela();
     }//GEN-LAST:event_btnLimparActionPerformed
 
-    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
-        char c = objConsulta.getConsulta();
-        
-        if(c == 's'){
-            btnSalvar.setVisible(false);        
-            btnLimpar.setVisible(false);
-            lblCampos.setVisible(false);
-        }
-    }//GEN-LAST:event_formWindowOpened
+    private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
+        try{
+            boolean retorno;
+            //validar os campos
+            if(txtNome.getText().trim().length() == 0){
+                CaixaDeDialogo.obterinstancia().exibirMensagem("Informe um autor corretamente", 'a');
+                return;
+            }
 
+            objAutor = new Autor();
+            objAutor.setNome(txtNome.getText().trim());
+            if(!lblId.getText().equals("ID")){
+                objAutor.setId_autor(Integer.parseInt(lblId.getText()));
+                objAutorControle = new AutorController(objAutor, null);
+                retorno = objAutorControle.alterar();
+            }else{
+                objAutorControle = new AutorController(objAutor, null);
+   
+                retorno = objAutorControle.incluir();
+            }
+            
+            if(retorno = true){
+                CaixaDeDialogo.obterinstancia().exibirMensagem("Registro salvo");
+            }else{
+                CaixaDeDialogo.obterinstancia().exibirMensagem("Erro ao tentar salvar");
+            }
+            
+            atualizarTabela();
+
+        }catch(Exception ex){
+            CaixaDeDialogo.obterinstancia().exibirMensagem("Erro ao tentar incluir");
+            System.out.println("ERRO: " + ex.getMessage().toString());
+        }
+    }//GEN-LAST:event_btnSalvarActionPerformed
+
+    private void jtbAutorMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtbAutorMousePressed
+        try{
+            
+            int linhaSelecionada = jtbAutor.getSelectedRow();//pega a linha selecionada
+            String codigo = jtbAutor.getModel().getValueAt(linhaSelecionada, 0).toString(); // Primeira coluna da linha
+            String nome = jtbAutor.getModel().getValueAt(linhaSelecionada, 1).toString();
+            //Verifica se clicou na coluna 2 = EXCLUIR
+            if(jtbAutor.getSelectedColumn() == 2){
+                try{
+                    
+                    boolean wPergunta = CaixaDeDialogo.obterinstancia().pedirConfirmacao("Tem certeza de que deseja excluir?","",'p');
+                    if (wPergunta == true){
+                        lblId.setText(codigo);
+                        objAutor = new Autor();
+                        objAutor.setId_autor(Integer.parseInt(lblId.getText()));
+                        
+                        objAutorControle = new AutorController(objAutor, null);
+                        boolean wControle = objAutorControle.excluir();
+                        if (wControle){
+                            CaixaDeDialogo.obterinstancia().exibirMensagem("Excluído com Sucesso!");
+                        }else{
+                            CaixaDeDialogo.obterinstancia().exibirMensagem("Erro ao excluir!");
+                        }
+                    }
+
+                }catch(Exception ex){
+                    CaixaDeDialogo.obterinstancia().exibirMensagem("Erro: " + ex.getMessage());
+                }
+            }else {
+                lblId.setText(codigo);   
+                txtNome.setText(nome);
+            }
+        
+        }catch(Exception ex){
+            CaixaDeDialogo.obterinstancia().exibirMensagem(ex.getMessage(), 'e');
+        }
+        atualizarTabela();
+    }//GEN-LAST:event_jtbAutorMousePressed
+
+     private void limparTela(){
+        try{
+            lblId.setText("ID");
+            txtNome.setText("");
+           
+            btnSalvar.setEnabled(true);
+            
+            atualizarTabela();
+            
+        }catch(Exception ex){
+            CaixaDeDialogo.obterinstancia().exibirMensagem("Erro: " + ex.getMessage());
+        }
+    }
+     
+             private void preencherCampos(){
+        try{
+            lblId.setText(String.valueOf(objAutor.getId_autor()));
+            txtNome.setText(objAutor.getNome());
+           
+            btnSalvar.setEnabled(true);
+            
+            atualizarTabela();
+            
+        }catch(Exception ex){
+            CaixaDeDialogo.obterinstancia().exibirMensagem("Erro: " + ex.getMessage());
+        }
+    } 
+             
     /**
      * @param args the command line arguments
      */
@@ -298,13 +291,12 @@ public class CadastroAutor extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnLimpar;
-    private javax.swing.JButton btnSair;
     private javax.swing.JButton btnSalvar;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jtbCandidatos;
-    private javax.swing.JLabel lblCampos;
+    private javax.swing.JTable jtbAutor;
     private javax.swing.JLabel lblId;
-    private javax.swing.JLabel lblNome;
     private javax.swing.JTextField txtNome;
     // End of variables declaration//GEN-END:variables
 }

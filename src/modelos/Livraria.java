@@ -7,54 +7,36 @@ package modelos;
 
 /**
  *
- * @author karoline.bratz
+ * @author USER
  */
 public class Livraria {
+    
+    private int id_livraria;
+    private int id_cidade;
+    private String bairro;
 
-    private String nome;
-    private int ID;
-    private int bairro;
-    private int cidade;
-    private int uf;
+    public int getId_livraria() {
+        return id_livraria;
+    }
 
-    public int getBairro() {
+    public void setId_livraria(int id_livraria) {
+        this.id_livraria = id_livraria;
+    }
+
+    public int getId_cidade() {
+        return id_cidade;
+    }
+
+    public void setId_cidade(int id_cidade) {
+        this.id_cidade = id_cidade;
+    }
+
+    public String getBairro() {
         return bairro;
     }
 
-    public void setBairro(int bairro) {
+    public void setBairro(String bairro) {
         this.bairro = bairro;
     }
-
-    public int getCidade() {
-        return cidade;
-    }
-
-    public void setCidade(int cidade) {
-        this.cidade = cidade;
-    }
-
-    public int getUf() {
-        return uf;
-    }
-
-    public void setUf(int uf) {
-        this.uf = uf;
-    }
-
-    public String getNome() {
-        return nome;
-    }
-
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
-
-    public int getID() {
-        return ID;
-    }
-
-    public void setID(int ID) {
-        this.ID = ID;
-    }
-
+    
 }

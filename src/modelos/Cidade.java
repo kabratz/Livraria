@@ -5,40 +5,36 @@
  */
 package modelos;
 
-import modelos.*;
-
 /**
  *
- * @author karoline.bratz
+ * @author USER
  */
 public class Cidade {
-    
+    private int id_cidade;
     private String nome;
-    private int Id;
-    private int cep;
+    private String cep;
+
+    public int getId_cidade() {
+        return id_cidade;
+    }
+
+    public void setId_cidade(int id_cidade) {
+        this.id_cidade = id_cidade;
+    }
 
     public String getNome() {
         return nome;
-    }
-
-    public int getCep() {
-        return cep;
-    }
-
-    public void setCep(int cep) {
-        this.cep = cep;
     }
 
     public void setNome(String nome) {
         this.nome = nome;
     }
 
-    public int getId() {
-        return Id;
+    public String getCep() {
+        return cep;
     }
 
-    public void setId(int Id) {
-        this.Id = Id;
+    public void setCep(String cep) {
+        this.cep = cep;
     }
-    
 }

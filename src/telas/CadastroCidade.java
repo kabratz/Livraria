@@ -7,63 +7,33 @@ package telas;
 
 import controles.CidadeController;
 import ferramentas.CaixaDeDialogo;
-import ferramentas.Combos;
-import ferramentas.Consulta;
 import modelos.Cidade;
 
 /**
  *
- * @author karoline.bratz
+ * @author USER
  */
 public class CadastroCidade extends javax.swing.JFrame {
-
-    Cidade objCidade;
-    CidadeController objCidadeController;
-    Consulta objConsulta;
 
     /**
      * Creates new form CadastroCidade
      */
+    
+    Cidade objCidade;
+    CidadeController objCidadeControle;
+    
     public CadastroCidade() {
         initComponents();
+        atualizarTabela();
     }
-
-    private void limparTela() {
-        try {
-            lblId.setText("ID");
-            txtNome.setText("");
-            txtCep.setText("");
-            btnSalvar.setEnabled(true);
-            atualizarTabela();
-
-        } catch (Exception ex) {
-            CaixaDeDialogo.obterinstancia().exibirMensagem("Erro: " + ex.getMessage());
-        }
-    }
-
-    private void preencherCampos() {
-        try {
-            lblId.setText(String.valueOf(objCidade.getId()));
-            txtNome.setText(objCidade.getNome());
-            txtCep.setText(String.valueOf(objCidade.getCep()));
-
-            btnSalvar.setEnabled(true);
-
-            atualizarTabela();
-
-        } catch (Exception ex) {
-            CaixaDeDialogo.obterinstancia().exibirMensagem("Erro: " + ex.getMessage());
-        }
-    }
-
-    private void atualizarTabela() {
-        try {
-
-            objCidadeController = new CidadeController(null, jtbCidade);
-            objCidadeController.preencher();
-            //ola
-
-        } catch (Exception ex) {
+    
+     private void atualizarTabela(){
+        try{
+            
+            objCidadeControle = new CidadeController(null, jtbCidade);
+            objCidadeControle.preencher();
+            
+        }catch(Exception ex){
             CaixaDeDialogo.obterinstancia().exibirMensagem("ERRO:" + ex.getMessage());
         }
     }
@@ -77,28 +47,40 @@ public class CadastroCidade extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        btnSalvar = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jtbCidade = new javax.swing.JTable();
-        lblCampos = new javax.swing.JLabel();
-        btnLimpar = new javax.swing.JButton();
-        jPanel1 = new javax.swing.JPanel();
-        lblTitulo = new javax.swing.JLabel();
-        lblNome = new javax.swing.JLabel();
-        lblId = new javax.swing.JLabel();
-        txtNome = new javax.swing.JTextField();
+        jTable1 = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
-        btnSair = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
+        txtNome = new javax.swing.JTextField();
         txtCep = new javax.swing.JTextField();
+        btnSalvar = new javax.swing.JButton();
+        btnLimpar = new javax.swing.JButton();
+        jLabel3 = new javax.swing.JLabel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jtbCidade = new javax.swing.JTable();
+        lblId = new javax.swing.JLabel();
+
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane1.setViewportView(jTable1);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        addWindowListener(new java.awt.event.WindowAdapter() {
-            public void windowOpened(java.awt.event.WindowEvent evt) {
-                formWindowOpened(evt);
-            }
-        });
 
-        btnSalvar.setBackground(new java.awt.Color(0, 153, 102));
+        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabel1.setText("NOME");
+
+        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabel2.setText("CEP");
+
         btnSalvar.setText("SALVAR");
         btnSalvar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -106,7 +88,16 @@ public class CadastroCidade extends javax.swing.JFrame {
             }
         });
 
-        jtbCidade.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        btnLimpar.setText("LIMPAR");
+        btnLimpar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLimparActionPerformed(evt);
+            }
+        });
+
+        jLabel3.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabel3.setText("CADASTRO DE CANDIDATOS");
+
         jtbCidade.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
@@ -123,206 +114,187 @@ public class CadastroCidade extends javax.swing.JFrame {
                 jtbCidadeMousePressed(evt);
             }
         });
-        jScrollPane1.setViewportView(jtbCidade);
-
-        lblCampos.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        lblCampos.setForeground(new java.awt.Color(255, 51, 0));
-        lblCampos.setText("Campos com * são obrigatórios");
-
-        btnLimpar.setBackground(new java.awt.Color(255, 0, 0));
-        btnLimpar.setText("LIMPAR");
-        btnLimpar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnLimparActionPerformed(evt);
-            }
-        });
-
-        jPanel1.setBackground(new java.awt.Color(0, 153, 102));
-        jPanel1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        lblTitulo.setFont(new java.awt.Font("Verdana", 1, 24)); // NOI18N
-        lblTitulo.setForeground(new java.awt.Color(255, 255, 255));
-        lblTitulo.setText("Cadastro de Cidade");
-        jPanel1.add(lblTitulo, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 20, -1, -1));
-
-        lblNome.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        lblNome.setText("Nome *");
+        jScrollPane2.setViewportView(jtbCidade);
 
         lblId.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         lblId.setText("ID");
-
-        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        jLabel1.setText("CEP *");
-
-        btnSair.setText("Sair");
-        btnSair.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnSairActionPerformed(evt);
-            }
-        });
-
-        txtCep.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtCepActionPerformed(evt);
-            }
-        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jScrollPane1)
             .addGroup(layout.createSequentialGroup()
+                .addGap(69, 69, 69)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(lblCampos)
-                        .addGap(173, 173, 173)
-                        .addComponent(btnSair, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(97, 97, 97)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addComponent(txtNome, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 356, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGroup(layout.createSequentialGroup()
-                                    .addComponent(lblNome)
-                                    .addGap(301, 301, 301)
-                                    .addComponent(lblId)))
-                            .addComponent(jLabel1)
-                            .addComponent(txtCep, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(127, Short.MAX_VALUE))
+                            .addComponent(txtNome, javax.swing.GroupLayout.PREFERRED_SIZE, 221, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtCep, javax.swing.GroupLayout.PREFERRED_SIZE, 221, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btnLimpar, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(119, 119, 119))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel2)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
             .addGroup(layout.createSequentialGroup()
-                .addGap(44, 44, 44)
-                .addComponent(btnSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnLimpar, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(72, 72, 72))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(lblId)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createSequentialGroup()
+                            .addGap(142, 142, 142)
+                            .addComponent(jLabel3))
+                        .addGroup(layout.createSequentialGroup()
+                            .addGap(38, 38, 38)
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 451, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(36, 36, 36)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lblNome)
-                    .addComponent(lblId))
-                .addGap(11, 11, 11)
-                .addComponent(txtNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addContainerGap()
+                .addComponent(jLabel3)
+                .addGap(51, 51, 51)
                 .addComponent(jLabel1)
-                .addGap(3, 3, 3)
-                .addComponent(txtCep, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnSalvar)
-                    .addComponent(btnLimpar))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 35, Short.MAX_VALUE)
+                    .addComponent(txtNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnSalvar))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(lblCampos))
+                        .addGap(19, 19, 19)
+                        .addComponent(jLabel2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(144, 144, 144)
-                        .addComponent(btnSair)
-                        .addContainerGap())))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(lblId)
+                        .addGap(14, 14, 14)))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(txtCep, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnLimpar))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 66, Short.MAX_VALUE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(43, 43, 43))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-
-    private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
-
-        try {
-            boolean retorno;
-            //validar os campos
-            if (txtNome.getText().trim().length() == 0) {
-                CaixaDeDialogo.obterinstancia().exibirMensagem("Informe um candidato corretamente", 'a');
-                return;
-            }
-
-            objCidade = new Cidade();
-
-            if (!lblId.getText().equals("ID")) {
-                objCidade.setId(Integer.parseInt(lblId.getText()));
-                objCidadeController = new CidadeController(objCidade, null);
-                objCidade.setNome(txtNome.getText());
-                objCidade.setCep(Integer.parseInt(txtCep.getText()));
-                retorno = objCidadeController.alterar();
-                atualizarTabela();
-            } else {
-                objCidade = new Cidade();
-                objCidadeController = new CidadeController(objCidade, null);
-                objCidade.setNome(txtNome.getText());
-                objCidade.setCep(Integer.parseInt(txtCep.getText()));
-
-                retorno = objCidadeController.incluir();
-            }
-
-            if (retorno = true) {
-                CaixaDeDialogo.obterinstancia().exibirMensagem("Registro salvo");
-                atualizarTabela();
-            } else {
-                CaixaDeDialogo.obterinstancia().exibirMensagem("Erro ao tentar salvar");
-            }
-
-        } catch (Exception ex) {
-            CaixaDeDialogo.obterinstancia().exibirMensagem("Erro ao tentar incluir");
-            System.out.println("ERRO: " + ex.getMessage().toString());
-        }
-
-
-    }//GEN-LAST:event_btnSalvarActionPerformed
-
-    private void jtbCidadeMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtbCidadeMousePressed
-        try {
-
-            int linhaSelecionada = jtbCidade.getSelectedRow();
-            String codigo = jtbCidade.getModel().getValueAt(linhaSelecionada, 0).toString();
-
-            objCidadeController = new CidadeController(null, null);
-            objCidade = objCidadeController.buscar(codigo);
-            if (objCidade != null && objCidade.getId() > 0) {
-                preencherCampos();
-            } else {
-                CaixaDeDialogo.obterinstancia().exibirMensagem("Erro ao buscar no BD!");
-            }
-
-        } catch (Exception ex) {
-            CaixaDeDialogo.obterinstancia().exibirMensagem(ex.getMessage(), 'e');
-        }
-    }//GEN-LAST:event_jtbCidadeMousePressed
-
     private void btnLimparActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimparActionPerformed
         limparTela();
     }//GEN-LAST:event_btnLimparActionPerformed
 
-    private void btnSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSairActionPerformed
-        dispose();
-    }//GEN-LAST:event_btnSairActionPerformed
-
-    private void txtCepActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCepActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtCepActionPerformed
-
-    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
-        try {
-            atualizarTabela();
-            char c = objConsulta.getConsulta();
-
-            if (c == 's') {
-                btnSalvar.setVisible(false);
-                btnLimpar.setVisible(false);
-                lblCampos.setVisible(false);
+    private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
+        try{
+            boolean retorno;
+            //validar os campos
+            if(txtNome.getText().trim().length() == 0 || txtCep.getText().trim().length() == 0){
+                CaixaDeDialogo.obterinstancia().exibirMensagem("Informe uma cidade ou cep corretamente", 'a');
+                return;
             }
-        } catch (Exception e) {
-            CaixaDeDialogo.obterinstancia().exibirMensagem(e.getMessage(), 'e');
-        }
-    }//GEN-LAST:event_formWindowOpened
 
+            objCidade = new Cidade();
+            objCidade.setNome(txtNome.getText().trim());
+            objCidade.setCep(txtCep.getText().trim());
+            if(!lblId.getText().equals("ID")){
+                objCidade.setId_cidade(Integer.parseInt(lblId.getText()));
+                objCidadeControle = new CidadeController(objCidade, null);
+                retorno = objCidadeControle.alterar();
+            }else{
+                objCidadeControle = new CidadeController(objCidade, null);
+   
+                retorno = objCidadeControle.incluir();
+            }
+            
+            if(retorno = true){
+                CaixaDeDialogo.obterinstancia().exibirMensagem("Registro salvo");
+            }else{
+                CaixaDeDialogo.obterinstancia().exibirMensagem("Erro ao tentar salvar");
+            }
+            
+            atualizarTabela();
+
+        }catch(Exception ex){
+            CaixaDeDialogo.obterinstancia().exibirMensagem("Erro ao tentar incluir");
+            System.out.println("ERRO: " + ex.getMessage().toString());
+        }
+    }//GEN-LAST:event_btnSalvarActionPerformed
+
+    private void jtbCidadeMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtbCidadeMousePressed
+        try{
+            
+            int linhaSelecionada = jtbCidade.getSelectedRow();//pega a linha selecionada
+            String codigo = jtbCidade.getModel().getValueAt(linhaSelecionada, 0).toString(); // Primeira coluna da linha
+            String nome = jtbCidade.getModel().getValueAt(linhaSelecionada, 1).toString();
+            String cep = jtbCidade.getModel().getValueAt(linhaSelecionada, 2).toString();
+            //Verifica se clicou na coluna 2 = EXCLUIR
+            if(jtbCidade.getSelectedColumn() == 3){
+                try{
+                    
+                    boolean wPergunta = CaixaDeDialogo.obterinstancia().pedirConfirmacao("Tem certeza de que deseja excluir?","",'p');
+                    if (wPergunta == true){
+                        lblId.setText(codigo);
+                        objCidade = new Cidade();
+                        objCidade.setId_cidade(Integer.parseInt(lblId.getText()));
+                        
+                        objCidadeControle = new CidadeController(objCidade, null);
+                        boolean wControle = objCidadeControle.excluir();
+                        if (wControle){
+                            CaixaDeDialogo.obterinstancia().exibirMensagem("Excluído com Sucesso!");
+                        }else{
+                            CaixaDeDialogo.obterinstancia().exibirMensagem("Erro ao excluir!");
+                        }
+                    }
+
+                }catch(Exception ex){
+                    CaixaDeDialogo.obterinstancia().exibirMensagem("Erro: " + ex.getMessage());
+                }
+            }else {
+                lblId.setText(codigo);   
+                txtCep.setText(cep); 
+                txtNome.setText(nome);
+            }
+        
+        }catch(Exception ex){
+            CaixaDeDialogo.obterinstancia().exibirMensagem(ex.getMessage(), 'e');
+        }
+        atualizarTabela();
+             
+    }//GEN-LAST:event_jtbCidadeMousePressed
+
+        private void limparTela(){
+        try{
+            lblId.setText("ID");
+            txtNome.setText("");
+            txtCep.setText("");
+           
+            btnSalvar.setEnabled(true);
+            
+            atualizarTabela();
+            
+        }catch(Exception ex){
+            CaixaDeDialogo.obterinstancia().exibirMensagem("Erro: " + ex.getMessage());
+        }
+    }
+        
+        private void preencherCampos(){
+        try{
+            lblId.setText(String.valueOf(objCidade.getId_cidade()));
+            txtNome.setText(objCidade.getNome());
+            txtNome.setText(objCidade.getCep());
+           
+            btnSalvar.setEnabled(true);
+            
+            atualizarTabela();
+            
+        }catch(Exception ex){
+            CaixaDeDialogo.obterinstancia().exibirMensagem("Erro: " + ex.getMessage());
+        }
+    } 
     /**
      * @param args the command line arguments
      */
@@ -360,16 +332,15 @@ public class CadastroCidade extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnLimpar;
-    private javax.swing.JButton btnSair;
     private javax.swing.JButton btnSalvar;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JPanel jPanel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JTable jTable1;
     private javax.swing.JTable jtbCidade;
-    private javax.swing.JLabel lblCampos;
     private javax.swing.JLabel lblId;
-    private javax.swing.JLabel lblNome;
-    private javax.swing.JLabel lblTitulo;
     private javax.swing.JTextField txtCep;
     private javax.swing.JTextField txtNome;
     // End of variables declaration//GEN-END:variables

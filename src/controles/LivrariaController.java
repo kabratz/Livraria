@@ -12,113 +12,114 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.text.ParseException;
 import java.util.Vector;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
+import modelos.Cidade;
 import modelos.Livraria;
 
 /**
  *
- * @author karoline.bratz
+ * @author USER
  */
 public class LivrariaController {
-
+    
+        
     Livraria objLivraria;
     JTable jtbLivraria = null;
-
+    
     public LivrariaController(Livraria objLivraria, JTable jtbLivraria) {
         this.objLivraria = objLivraria;
         this.jtbLivraria = jtbLivraria;
-
     }
-
-    public boolean incluir() throws ParseException {
-        Connection con = Conexao.obterConexao();
-        PreparedStatement stmt = null;
-        try {
-            stmt = con.prepareStatement("INSERT INTO livraria(nome, uf, id_cidade, bairro) VALUES(?, ?, ?, ?)");
-            stmt.setString(1, objLivraria.getNome());
-            stmt.setInt(2, objLivraria.getUf());
-            stmt.setInt(3, objLivraria.getCidade());
-            stmt.setInt(4, objLivraria.getBairro());
-            stmt.executeUpdate();
-
-            return true;
-
-        } catch (SQLException ex) {
-            System.out.println(ex.getMessage());
-            return false;
-        } finally {
-            Conexao.fecharConexao(con, stmt);
-        }
-    }
-
-    public boolean alterar() throws ParseException {
+    
+     public boolean incluir(){
+        
         Conexao.abreConexao();
         Connection con = Conexao.obterConexao();
         PreparedStatement stmt = null;
-
-        try {
-            stmt = con.prepareStatement("UPDATE livraria SET nome=?, uf=?, id_cidade=?, bairro=? WHERE id_livraria=?");
-            stmt.setString(1, objLivraria.getNome());
-            stmt.setInt(2, objLivraria.getUf());
-            stmt.setInt(3, objLivraria.getCidade());
-            stmt.setInt(4, objLivraria.getBairro());
-            stmt.setInt(5, objLivraria.getID());
-
+        
+        try{
+            stmt = con.prepareStatement("INSERT INTO livraria(id_cidade, bairro) VALUES(?, ?)");
+            stmt.setInt(1, objLivraria.getId_cidade());
+            stmt.setString(2, objLivraria.getBairro());
+            
             stmt.executeUpdate();
-
+            
             return true;
-
+            
+        }catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+            return false;
+        }finally{
+            Conexao.fecharConexao(con, stmt);
+        }
+    }
+     
+         public boolean alterar(){
+        
+        Conexao.abreConexao();
+        Connection con = Conexao.obterConexao();
+        PreparedStatement stmt = null;
+        
+        try {
+            stmt = con.prepareStatement("UPDATE livraria SET id_cidade=?, bairro=? WHERE id_livraria=?");
+            stmt.setInt(1, objLivraria.getId_cidade());
+            stmt.setString(2, objLivraria.getBairro());
+            stmt.setInt(3, objLivraria.getId_livraria());
+            
+            stmt.executeUpdate();
+            
+            return true;
+            
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
             return false;
-        } finally {
+        }finally{
             Conexao.fecharConexao(con, stmt);
         }
-
+        
     }
-
+         
     public void preencher() {
 
         Conexao.abreConexao();
-
+        
         Vector<String> cabecalhos = new Vector<String>();
         Vector dadosTabela = new Vector(); //receber os dados do banco
-
+        
         cabecalhos.add("Código");
-        cabecalhos.add("Nome");
-        cabecalhos.add("UF");
-        cabecalhos.add("Cidade");
+        cabecalhos.add("Cidade da Livraria");
         cabecalhos.add("Bairro");
-
+        cabecalhos.add("Excluir");
+        
         ResultSet result = null;
-
+        
         try {
 
             String SQL = "";
-            SQL = " SELECT id_livraria, nome, uf, id_cidade, bairro ";
-            SQL += " FROM livraria";
+            SQL = " SELECT l.id_livraria, c.nome, l.bairro";
+            SQL += " FROM livraria l, cidade c";
+            SQL += " WHERE l.data_exclusao IS NULL AND ";
+            SQL += " l.id_cidade = c.id_cidade ";
             SQL += " ORDER BY id_livraria ";
-
+            
             result = Conexao.stmt.executeQuery(SQL);
 
             Vector<Object> linha;
-            while (result.next()) {
+            while(result.next()) {
                 linha = new Vector<Object>();
-
+                
                 linha.add(result.getInt(1));
                 linha.add(result.getString(2));
-                linha.add(result.getInt(3));
-                linha.add(result.getInt(4));
-                linha.add(result.getInt(5));
-
+                linha.add(result.getString(3));
+                linha.add("X");
+                
                 dadosTabela.add(linha);
             }
-
+            
         } catch (Exception e) {
             System.out.println("problemas para popular tabela...");
             System.out.println(e);
@@ -128,7 +129,7 @@ public class LivrariaController {
 
             @Override
             public boolean isCellEditable(int row, int column) {
-                return false;
+              return false;
             }
             // permite seleção de apenas uma linha da tabela
         });
@@ -152,7 +153,7 @@ public class LivrariaController {
                     break;
             }
         }
-
+        
         jtbLivraria.setDefaultRenderer(Object.class, new DefaultTableCellRenderer() {
 
             @Override
@@ -170,28 +171,35 @@ public class LivrariaController {
         });
         //return (true);
     }
-
-    public Livraria buscar(String id) {
+    
+    public Livraria buscar(String id)
+    {
         try {
             Conexao.abreConexao();
             ResultSet rs = null;
 
             String SQL = "";
-            SQL = " SELECT id_livraria, nome, uf, id_cidade, bairro ";
+            SQL = " SELECT id_livraria, id_cidade, bairro ";
             SQL += " FROM livraria ";
-            SQL += " WHERE id = '" + id + "'";
+            SQL += " WHERE id_livraria = '" + id + "'";
+            SQL += " AND data_exclusao IS NULL ";
 
-            try {
+            try{
                 System.out.println("Vai Executar Conexão em buscar");
                 rs = Conexao.stmt.executeQuery(SQL);
                 System.out.println("Executou Conexão em buscar");
 
                 objLivraria = new Livraria();
-                if (rs.next() == true) {
-                    objLivraria.setID(rs.getInt(1));
-                    objLivraria.setNome(rs.getString(2));
+                if(rs.next() == true)
+                {
+                    objLivraria.setId_livraria(rs.getInt(1));
+                    objLivraria.setId_cidade(rs.getInt(2));
+                    objLivraria.setBairro(rs.getString(3));
                 }
-            } catch (SQLException ex) {
+            }
+
+            catch (SQLException ex )
+            {
                 System.out.println("ERRO de SQL: " + ex.getMessage().toString());
                 return null;
             }
@@ -200,66 +208,32 @@ public class LivrariaController {
             System.out.println("ERRO: " + e.getMessage().toString());
             return null;
         }
-
-        System.out.println("Executou buscar area com sucesso");
+        
+        System.out.println ("Executou buscar area com sucesso");
         return objLivraria;
     }
-
-    public boolean excluir() {
-
+    
+        public boolean excluir(){
+        
         Conexao.abreConexao();
         Connection con = Conexao.obterConexao();
         PreparedStatement stmt = null;
-
+        
         try {
-            stmt = con.prepareStatement("UPDATE candidatos SET data_exclusao= now() WHERE id=?");
-            stmt.setInt(1, objLivraria.getID());
-
+            stmt = con.prepareStatement("UPDATE livraria SET data_exclusao=now() WHERE id_livraria=?");
+            stmt.setInt(1, objLivraria.getId_livraria());
+                        
             stmt.executeUpdate();
-
+            
             return true;
-
+            
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
             return false;
-        } finally {
+        }finally{
             Conexao.fecharConexao(con, stmt);
         }
     }
-
-    public Livraria livraria(String id, String nome) {
-        //INÍCIO CONEXÃO COM O BANCO DE DADOS
-        System.out.println("Vai abrir a conexão com o banco de dados");
-        Conexao.abreConexao();
-
-        Livraria aut = null;
-        ResultSet rs = null;
-
-        StringBuilder comandoSQL = new StringBuilder();
-        comandoSQL.append(" SELECT id_livraria, nome, uf, id_cidade, bairro");
-        comandoSQL.append(" FROM livraria");
-        comandoSQL.append(" WHERE id = '" + id + "'");
-
-        try {
-            System.out.println("Vai Executar Conexão em buscar area");
-            rs = Conexao.stmt.executeQuery(comandoSQL.toString());
-            System.out.println("Executou Conexão em buscar area");
-
-            if (rs.next() == true) {
-                aut = new Livraria();
-                aut.setNome(rs.getString("nome"));
-            }
-        } catch (SQLException ex) {
-            System.out.println("ERRO de SQL: " + ex.getMessage().toString());
-            return aut;
-        } finally {
-            Connection con = Conexao.obterConexao();
-            System.out.println("Vai fechar a conexão com o banco de dados");
-            Conexao.fecharConexao(con);
-        }
-
-        return aut;
-
-    }
-
+        
+        
 }

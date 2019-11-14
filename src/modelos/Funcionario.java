@@ -10,27 +10,27 @@ package modelos;
  * @author USER
  */
 public class Funcionario {
-    private int idFuncionario;
-    private int idLivraria;
+    private int id_funcionario;
+    private int id_livraria;
     private String pis;
-    private String dataNascimento;
+    private String data_nascimento;
     private String cpf;
     private String nome;
 
-    public int getIdFuncionario() {
-        return idFuncionario;
+    public int getId_funcionario() {
+        return id_funcionario;
     }
 
-    public void setIdFuncionario(int idFuncionario) {
-        this.idFuncionario = idFuncionario;
+    public void setId_funcionario(int id_funcionario) {
+        this.id_funcionario = id_funcionario;
     }
 
-    public int getIdLivraria() {
-        return idLivraria;
+    public int getId_livraria() {
+        return id_livraria;
     }
 
-    public void setIdLivraria(int idLivraria) {
-        this.idLivraria = idLivraria;
+    public void setId_livraria(int id_livraria) {
+        this.id_livraria = id_livraria;
     }
 
     public String getPis() {
@@ -41,12 +41,12 @@ public class Funcionario {
         this.pis = pis;
     }
 
-    public String getDataNascimento() {
-        return dataNascimento;
+    public String getData_nascimento() {
+        return data_nascimento;
     }
 
-    public void setDataNascimento(String dataNascimento) {
-        this.dataNascimento = dataNascimento;
+    public void setData_nascimento(String data_nascimento) {
+        this.data_nascimento = data_nascimento;
     }
 
     public String getCpf() {
@@ -64,6 +64,5 @@ public class Funcionario {
     public void setNome(String nome) {
         this.nome = nome;
     }
-    
     
 }

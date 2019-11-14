@@ -5,45 +5,36 @@
  */
 package controles;
 
+
 import banco.Conexao;
-import java.awt.Color;
-import java.awt.Component;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.Vector;
 import javax.swing.JTable;
-import javax.swing.table.DefaultTableCellRenderer;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableColumn;
-import modelos.Cidade;
+import modelos.Usuario;
 
 /**
  *
  * @author USER
  */
-public class CidadeController {
+public class UsuarioController {
+        Usuario objUsuario;
+        JTable jtbUsuario = null;
     
-        
-    Cidade objCidade;
-    JTable jtbCidade = null;
-    
-    public CidadeController(Cidade objCidade, JTable jtbCidade) {
-        this.objCidade = objCidade;
-        this.jtbCidade = jtbCidade;
+    public UsuarioController(Usuario objUsuario, JTable jtbUsuario) {
+        this.objUsuario = objUsuario;
+        this.jtbUsuario = jtbUsuario;
     }
     
-     public boolean incluir(){
+         public boolean incluir(){
         
         Conexao.abreConexao();
         Connection con = Conexao.obterConexao();
         PreparedStatement stmt = null;
         
         try{
-            stmt = con.prepareStatement("INSERT INTO cidade(nome, cep) VALUES(?, ?)");
-            stmt.setString(1, objCidade.getNome());
-            stmt.setString(2, objCidade.getCep());
+            stmt = con.prepareStatement("INSERT INTO autor(nome) VALUES(?)");
+            stmt.setString(1, objAutor.getNome());
+
             
             stmt.executeUpdate();
             
@@ -64,10 +55,9 @@ public class CidadeController {
         PreparedStatement stmt = null;
         
         try {
-            stmt = con.prepareStatement("UPDATE cidade SET nome=?, cep=? WHERE id_cidade=?");
-            stmt.setString(1, objCidade.getNome());
-            stmt.setString(2, objCidade.getCep());
-            stmt.setInt(3, objCidade.getId_cidade());
+            stmt = con.prepareStatement("UPDATE autor SET nome=? WHERE id_autor=?");
+            stmt.setString(1, objAutor.getNome());
+            stmt.setInt(2, objAutor.getId_autor());
             
             stmt.executeUpdate();
             
@@ -82,7 +72,7 @@ public class CidadeController {
         
     }
          
-    public void preencher() {
+         public void preencher() {
 
         Conexao.abreConexao();
         
@@ -91,7 +81,6 @@ public class CidadeController {
         
         cabecalhos.add("Código");
         cabecalhos.add("Nome");
-        cabecalhos.add("Cep");
         cabecalhos.add("Excluir");
         
         ResultSet result = null;
@@ -99,10 +88,10 @@ public class CidadeController {
         try {
 
             String SQL = "";
-            SQL = " SELECT id_cidade, nome, cep ";
-            SQL += " FROM cidade ";
+            SQL = " SELECT id_autor, nome";
+            SQL += " FROM autor ";
             SQL += " WHERE data_exclusao IS NULL ";
-            SQL += " ORDER BY id_cidade ";
+            SQL += " ORDER BY id_autor ";
             
             result = Conexao.stmt.executeQuery(SQL);
 
@@ -112,7 +101,6 @@ public class CidadeController {
                 
                 linha.add(result.getInt(1));
                 linha.add(result.getString(2));
-                linha.add(result.getString(3));
                 linha.add("X");
                 
                 dadosTabela.add(linha);
@@ -123,7 +111,7 @@ public class CidadeController {
             System.out.println(e);
         }
 
-        jtbCidade.setModel(new DefaultTableModel(dadosTabela, cabecalhos) {
+        jtbAutor.setModel(new DefaultTableModel(dadosTabela, cabecalhos) {
 
             @Override
             public boolean isCellEditable(int row, int column) {
@@ -133,12 +121,12 @@ public class CidadeController {
         });
 
         // permite seleção de apenas uma linha da tabela
-        jtbCidade.setSelectionMode(0);
+        jtbAutor.setSelectionMode(0);
 
         // redimensiona as colunas de uma tabela
         TableColumn column = null;
         for (int i = 0; i <= 2; i++) {
-            column = jtbCidade.getColumnModel().getColumn(i);
+            column = jtbAutor.getColumnModel().getColumn(i);
             switch (i) {
                 case 0:
                     column.setPreferredWidth(60);
@@ -152,7 +140,7 @@ public class CidadeController {
             }
         }
         
-        jtbCidade.setDefaultRenderer(Object.class, new DefaultTableCellRenderer() {
+        jtbAutor.setDefaultRenderer(Object.class, new DefaultTableCellRenderer() {
 
             @Override
             public Component getTableCellRendererComponent(JTable table, Object value,
@@ -169,17 +157,17 @@ public class CidadeController {
         });
         //return (true);
     }
-    
-    public Cidade buscar(String id)
+         
+         public Autor buscar(String id)
     {
         try {
             Conexao.abreConexao();
             ResultSet rs = null;
 
             String SQL = "";
-            SQL = " SELECT id_cidade, nome, cep ";
-            SQL += " FROM cidade ";
-            SQL += " WHERE id_cidade = '" + id + "'";
+            SQL = " SELECT id_autor, nome ";
+            SQL += " FROM autor ";
+            SQL += " WHERE id_autor = '" + id + "'";
             SQL += " AND data_exclusao IS NULL ";
 
             try{
@@ -187,13 +175,11 @@ public class CidadeController {
                 rs = Conexao.stmt.executeQuery(SQL);
                 System.out.println("Executou Conexão em buscar");
 
-                objCidade = new Cidade();
+                objAutor = new Autor();
                 if(rs.next() == true)
                 {
-                    objCidade.setId_cidade(rs.getInt(1));
-                    objCidade.setCep(rs.getString(2));
-                    objCidade.setNome(rs.getString(3));
-                    
+                    objAutor.setId_autor(rs.getInt(1));
+                    objAutor.setNome(rs.getString(2));
                 }
             }
 
@@ -209,9 +195,9 @@ public class CidadeController {
         }
         
         System.out.println ("Executou buscar area com sucesso");
-        return objCidade;
+        return objAutor;
     }
-    
+         
         public boolean excluir(){
         
         Conexao.abreConexao();
@@ -219,8 +205,8 @@ public class CidadeController {
         PreparedStatement stmt = null;
         
         try {
-            stmt = con.prepareStatement("UPDATE cidade SET data_exclusao=now() WHERE id_cidade=?");
-            stmt.setInt(1, objCidade.getId_cidade());
+            stmt = con.prepareStatement("UPDATE autor SET data_exclusao=now() WHERE id_autor=?");
+            stmt.setInt(1, objAutor.getId_autor());
                         
             stmt.executeUpdate();
             
