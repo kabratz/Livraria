@@ -115,7 +115,7 @@ public class FuncionarioController {
         try {
 
             String SQL = "";
-            SQL = " SELECT f.id_funcionario, c.nome, f.pis, f.data_nascimento, f.cpf, f.nome, l.bairro ";
+            SQL = " SELECT f.id_funcionario, c.nome, f.pis, f.data_nascimento, f.cpf, f.nome, l.id_bairro ";
             SQL += " FROM livraria l, cidade c, funcionario f";
             SQL += " WHERE f.data_exclusao IS NULL AND ";
             SQL += " l.id_cidade = c.id_cidade AND ";

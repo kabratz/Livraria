@@ -9,15 +9,7 @@ public class Bairro {
     private int id_bairro;
     private String nome;
     private int id_cidade;
-    private int uf;
 
-    public int getUf() {
-        return uf;
-    }
-
-    public void setUf(int uf) {
-        this.uf = uf;
-    }
 
     public int getId_cidade() {
         return id_cidade;

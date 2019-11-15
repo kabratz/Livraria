@@ -61,7 +61,7 @@ public class BairroController {
         PreparedStatement stmt = null;
         
         try {
-            stmt = con.prepareStatement("UPDATE bairros SET id_cidade=?, nome=? WHERE id_bairro=?");
+            stmt = con.prepareStatement("UPDATE bairro SET id_cidade=?, nome=? WHERE id_bairro=?");
             stmt.setInt(1, objBairro.getId_bairro());
             stmt.setString(2, objBairro.getNome());
             stmt.setInt(3, objBairro.getId_bairro());
@@ -96,11 +96,11 @@ public class BairroController {
         try {
 
             String SQL = "";
-            SQL = " SELECT b.id_bairro, b.nome, c.nome ";
-            SQL += " FROM bairro b, cidade c ";
-            SQL += " WHERE b.data_exclusao IS NULL AND ";
+            SQL = "SELECT b.id_bairro, b.nome, c.nome";
+            SQL += " FROM bairro b, cidade c";
+            SQL += " WHERE b.data_exclusao IS NULL AND";
             SQL += " b.id_cidade = c.id_cidade";
-            SQL += " ORDER BY id_cidade ";
+            SQL += " ORDER BY b.id_bairro ";
             
             result = Conexao.stmt.executeQuery(SQL);
 
@@ -176,9 +176,9 @@ public class BairroController {
 
             String SQL = "";
             SQL = " SELECT id_bairro, id_cidade, nome ";
-            SQL += " FROM bairros ";
+            SQL += " FROM bairro ";
             SQL += " WHERE id_bairro = '" + id + "'";
-            SQL += " AND COALESCE(data_exclusao,'') = '' ";
+            SQL += " AND data_exclusao is null ";
 
             try{
                 System.out.println("Vai Executar Conexão em buscar");
@@ -216,7 +216,7 @@ public class BairroController {
         PreparedStatement stmt = null;
         
         try {
-            stmt = con.prepareStatement("UPDATE bairros SET data_exclusao= now() WHERE id_bairro=?");
+            stmt = con.prepareStatement("UPDATE bairro SET data_exclusao= now() WHERE id_bairro=?");
             stmt.setInt(1, objBairro.getId_bairro());
                         
             stmt.executeUpdate();

@@ -19,7 +19,7 @@ public class CadastroFuncionario extends javax.swing.JFrame {
     
     Funcionario objFuncionario;
     FuncionarioController objFuncionarioControle;
-    Combos cbFuncionarios;
+    Combos cbCombosBairro, cbCombosLivraria;
     /**
      * Creates new form CadastroFuncionario
      */
@@ -56,7 +56,6 @@ public class CadastroFuncionario extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         txtPis = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
-        jdcDataNascimento = new com.toedter.calendar.JDateChooser();
         jLabel4 = new javax.swing.JLabel();
         txtCpf = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
@@ -67,6 +66,9 @@ public class CadastroFuncionario extends javax.swing.JFrame {
         jScrollPane2 = new javax.swing.JScrollPane();
         jtbFuncionario = new javax.swing.JTable();
         lblId = new javax.swing.JLabel();
+        jdcDataNascimento = new com.toedter.calendar.JDateChooser();
+        cbBairro = new javax.swing.JComboBox<>();
+        jLabel7 = new javax.swing.JLabel();
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -138,35 +140,30 @@ public class CadastroFuncionario extends javax.swing.JFrame {
         lblId.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         lblId.setText("ID");
 
+        cbBairro.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
+        jLabel7.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabel7.setText("BAIRRO");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane2)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(199, Short.MAX_VALUE)
+            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 718, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(166, 166, 166)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(56, 56, 56)
                         .addComponent(jLabel6))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addGap(101, 101, 101)
-                        .addComponent(jLabel3))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(cbCidadeLivraria, javax.swing.GroupLayout.PREFERRED_SIZE, 198, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(22, 22, 22)
-                        .addComponent(jdcDataNascimento, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jLabel5)
-                    .addComponent(txtNome, javax.swing.GroupLayout.PREFERRED_SIZE, 370, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel4)
                         .addGap(190, 190, 190)
                         .addComponent(jLabel2))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(txtCpf, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(9, 9, 9)
-                        .addComponent(txtPis, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(txtPis, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(190, 190, 190)
                         .addComponent(lblId))
@@ -174,8 +171,20 @@ public class CadastroFuncionario extends javax.swing.JFrame {
                         .addGap(3, 3, 3)
                         .addComponent(btnSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(175, 175, 175)
-                        .addComponent(btnLimpar, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(149, 149, 149))
+                        .addComponent(btnLimpar, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(txtNome)
+                            .addComponent(jLabel1)
+                            .addComponent(jLabel5)
+                            .addComponent(cbCidadeLivraria, 0, 198, Short.MAX_VALUE))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(cbBairro, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jdcDataNascimento, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel7)
+                            .addComponent(jLabel3))))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -183,7 +192,7 @@ public class CadastroFuncionario extends javax.swing.JFrame {
                 .addGap(11, 11, 11)
                 .addComponent(jLabel6)
                 .addGap(47, 47, 47)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(jLabel3))
                 .addGap(6, 6, 6)
@@ -191,9 +200,13 @@ public class CadastroFuncionario extends javax.swing.JFrame {
                     .addComponent(cbCidadeLivraria, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jdcDataNascimento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(10, 10, 10)
-                .addComponent(jLabel5)
-                .addGap(6, 6, 6)
-                .addComponent(txtNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel5)
+                    .addComponent(jLabel7))
+                .addGap(7, 7, 7)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cbBairro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(20, 20, 20)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel4)
@@ -211,7 +224,7 @@ public class CadastroFuncionario extends javax.swing.JFrame {
                         .addComponent(btnSalvar))
                     .addComponent(btnLimpar))
                 .addGap(80, 80, 80)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 117, Short.MAX_VALUE))
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 116, Short.MAX_VALUE))
         );
 
         pack();
@@ -295,6 +308,7 @@ public class CadastroFuncionario extends javax.swing.JFrame {
                 }catch(Exception ex){
                     CaixaDeDialogo.obterinstancia().exibirMensagem("Erro: " + ex.getMessage());
                 }
+                atualizarTabela();
             }else {
                 lblId.setText(codigo);   
                 txtCpf.setText(cpf);
@@ -310,8 +324,11 @@ public class CadastroFuncionario extends javax.swing.JFrame {
 
             private void preencherCombos() {
         try {
-            cbFuncionarios = new Combos(cbCidadeLivraria);        
-            cbFuncionarios.PreencheCombo("SELECT c.id_cidade, c.nome FROM cidade c, livraria l WHERE c.id_cidade = l.id_cidade");
+            cbCombosLivraria = new Combos(cbCidadeLivraria);        
+            cbCombosLivraria.PreencheCombo("SELECT id_livraria, id_livraria FROM livraria");
+            
+            cbCombosBairro = new Combos(cbBairro);        
+            cbCombosBairro.PreencheCombo("SELECT id_bairro, nome FROM bairro");
         } catch (Exception e) {
             CaixaDeDialogo.obterinstancia().exibirMensagem(e.getMessage());
         }
@@ -325,6 +342,7 @@ public class CadastroFuncionario extends javax.swing.JFrame {
             txtPis.setText("");
             jdcDataNascimento.setDate(null);
             cbCidadeLivraria.setSelectedIndex(0);
+            cbBairro.setSelectedIndex(0);
            
             btnSalvar.setEnabled(true);
             
@@ -388,6 +406,7 @@ public class CadastroFuncionario extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnLimpar;
     private javax.swing.JButton btnSalvar;
+    private javax.swing.JComboBox<String> cbBairro;
     private javax.swing.JComboBox<String> cbCidadeLivraria;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -395,6 +414,7 @@ public class CadastroFuncionario extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable jTable1;
