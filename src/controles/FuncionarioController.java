@@ -115,8 +115,8 @@ public class FuncionarioController {
         try {
 
             String SQL = "";
-            SQL = " SELECT f.id_funcionario, c.nome, f.pis, f.data_nascimento, f.cpf, f.nome, l.id_bairro ";
-            SQL += " FROM livraria l, cidade c, funcionario f";
+            SQL = " SELECT f.id_funcionario, c.id_cidade, f.pis, f.data_nascimento, f.cpf, f.nome, b.nome ";
+            SQL += " FROM livraria l, cidade c, funcionario f, bairro b";
             SQL += " WHERE f.data_exclusao IS NULL AND ";
             SQL += " l.id_cidade = c.id_cidade AND ";
             SQL += " f.id_livraria = l.id_livraria ";
@@ -129,7 +129,7 @@ public class FuncionarioController {
                 linha = new Vector<Object>();
                 
                 linha.add(result.getInt(1));
-                linha.add(result.getString(2));
+                linha.add(result.getInt(2));
                 linha.add(result.getString(3));
                 linha.add(result.getString(4));
                 linha.add(result.getString(5));
@@ -244,7 +244,7 @@ public class FuncionarioController {
         
         try {
             stmt = con.prepareStatement("UPDATE funcionario SET data_exclusao=now() WHERE id_funcionario=?");
-            stmt.setInt(1, objFuncionario.getId_livraria());
+            stmt.setInt(1, objFuncionario.getId_funcionario());
                         
             stmt.executeUpdate();
             
