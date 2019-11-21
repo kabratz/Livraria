@@ -7,9 +7,17 @@ package controles;
 
 
 import banco.Conexao;
+import java.awt.Color;
+import java.awt.Component;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.Vector;
 import javax.swing.JTable;
+import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumn;
 import modelos.Usuario;
 
 /**
@@ -32,8 +40,11 @@ public class UsuarioController {
         PreparedStatement stmt = null;
         
         try{
-            stmt = con.prepareStatement("INSERT INTO usuarios(lo) VALUES(?)");
-            stmt.setString(1, objUsuario.getNome());
+            stmt = con.prepareStatement("INSERT INTO usuarios(login, senha, nome, nivel) VALUES(?, ?, ?, ?)");
+            stmt.setString(1, objUsuario.getLogin());
+            stmt.setString(2, objUsuario.getSenha());
+            stmt.setString(3, objUsuario.getNome());
+            stmt.setInt(4, objUsuario.getNivel());
 
             
             stmt.executeUpdate();
@@ -55,9 +66,12 @@ public class UsuarioController {
         PreparedStatement stmt = null;
         
         try {
-            stmt = con.prepareStatement("UPDATE autor SET nome=? WHERE id_autor=?");
-            stmt.setString(1, objAutor.getNome());
-            stmt.setInt(2, objAutor.getId_autor());
+            stmt = con.prepareStatement("UPDATE usuarios SET login=?, senha=?, nome=?, nivel=? WHERE login=?");
+            stmt.setString(1, objUsuario.getLogin());
+            stmt.setString(2, objUsuario.getSenha());
+            stmt.setString(3, objUsuario.getNome());
+            stmt.setInt(4, objUsuario.getNivel());
+            stmt.setString(5, objUsuario.getLogin());
             
             stmt.executeUpdate();
             
@@ -79,8 +93,9 @@ public class UsuarioController {
         Vector<String> cabecalhos = new Vector<String>();
         Vector dadosTabela = new Vector(); //receber os dados do banco
         
-        cabecalhos.add("Código");
+        cabecalhos.add("Login");
         cabecalhos.add("Nome");
+        cabecalhos.add("Nível de acesso");
         cabecalhos.add("Excluir");
         
         ResultSet result = null;
@@ -88,10 +103,10 @@ public class UsuarioController {
         try {
 
             String SQL = "";
-            SQL = " SELECT id_autor, nome";
-            SQL += " FROM autor ";
+            SQL = " SELECT login, nome, nivel";
+            SQL += " FROM usuarios ";
             SQL += " WHERE data_exclusao IS NULL ";
-            SQL += " ORDER BY id_autor ";
+            SQL += " ORDER BY login ";
             
             result = Conexao.stmt.executeQuery(SQL);
 
@@ -99,8 +114,9 @@ public class UsuarioController {
             while(result.next()) {
                 linha = new Vector<Object>();
                 
-                linha.add(result.getInt(1));
+                linha.add(result.getString(1));
                 linha.add(result.getString(2));
+                linha.add(result.getInt(3));
                 linha.add("X");
                 
                 dadosTabela.add(linha);
@@ -111,7 +127,7 @@ public class UsuarioController {
             System.out.println(e);
         }
 
-        jtbAutor.setModel(new DefaultTableModel(dadosTabela, cabecalhos) {
+        jtbUsuario.setModel(new DefaultTableModel(dadosTabela, cabecalhos) {
 
             @Override
             public boolean isCellEditable(int row, int column) {
@@ -121,12 +137,12 @@ public class UsuarioController {
         });
 
         // permite seleção de apenas uma linha da tabela
-        jtbAutor.setSelectionMode(0);
+        jtbUsuario.setSelectionMode(0);
 
         // redimensiona as colunas de uma tabela
         TableColumn column = null;
         for (int i = 0; i <= 2; i++) {
-            column = jtbAutor.getColumnModel().getColumn(i);
+            column = jtbUsuario.getColumnModel().getColumn(i);
             switch (i) {
                 case 0:
                     column.setPreferredWidth(60);
@@ -140,7 +156,7 @@ public class UsuarioController {
             }
         }
         
-        jtbAutor.setDefaultRenderer(Object.class, new DefaultTableCellRenderer() {
+        jtbUsuario.setDefaultRenderer(Object.class, new DefaultTableCellRenderer() {
 
             @Override
             public Component getTableCellRendererComponent(JTable table, Object value,
@@ -158,16 +174,16 @@ public class UsuarioController {
         //return (true);
     }
          
-         public Autor buscar(String id)
+         public Usuario buscar(String login)
     {
         try {
             Conexao.abreConexao();
             ResultSet rs = null;
 
             String SQL = "";
-            SQL = " SELECT id_autor, nome ";
-            SQL += " FROM autor ";
-            SQL += " WHERE id_autor = '" + id + "'";
+            SQL = " SELECT login ,senha, nome, nivel ";
+            SQL += " FROM usuario ";
+            SQL += " WHERE login = '" + login + "'";
             SQL += " AND data_exclusao IS NULL ";
 
             try{
@@ -175,11 +191,13 @@ public class UsuarioController {
                 rs = Conexao.stmt.executeQuery(SQL);
                 System.out.println("Executou Conexão em buscar");
 
-                objAutor = new Autor();
+                objUsuario = new Usuario();
                 if(rs.next() == true)
                 {
-                    objAutor.setId_autor(rs.getInt(1));
-                    objAutor.setNome(rs.getString(2));
+                    objUsuario.setLogin(rs.getString(1));
+                    objUsuario.setSenha(rs.getString(2));
+                    objUsuario.setNome(rs.getString(3));
+                    objUsuario.setNivel(rs.getInt(4));
                 }
             }
 
@@ -195,7 +213,7 @@ public class UsuarioController {
         }
         
         System.out.println ("Executou buscar area com sucesso");
-        return objAutor;
+        return objUsuario;
     }
          
         public boolean excluir(){
@@ -205,8 +223,8 @@ public class UsuarioController {
         PreparedStatement stmt = null;
         
         try {
-            stmt = con.prepareStatement("UPDATE autor SET data_exclusao=now() WHERE id_autor=?");
-            stmt.setInt(1, objAutor.getId_autor());
+            stmt = con.prepareStatement("UPDATE usuarios SET data_exclusao=now() WHERE login=?");
+            stmt.setString(1, objUsuario.getLogin());
                         
             stmt.executeUpdate();
             
