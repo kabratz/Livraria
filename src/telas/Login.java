@@ -105,6 +105,7 @@ public class Login extends javax.swing.JFrame {
             
         }else{ //caso o usuario de retorno seja válido, a tela principal abre
             TelaPrincipal tela = new TelaPrincipal();
+            user.setLogin(usuario);
             tela.setVisible(true);
             this.setVisible(false);//fecha tela de login
         }
