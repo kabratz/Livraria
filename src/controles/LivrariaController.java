@@ -42,9 +42,9 @@ public class LivrariaController {
         PreparedStatement stmt = null;
         
         try{
-            stmt = con.prepareStatement("INSERT INTO livraria(id_cidade, bairro) VALUES(?, ?)");
+            stmt = con.prepareStatement("INSERT INTO livraria(id_cidade, id_bairro) VALUES(?, ?)");
             stmt.setInt(1, objLivraria.getId_cidade());
-            stmt.setString(2, objLivraria.getBairro());
+            stmt.setInt(2, objLivraria.getId_bairro());
             
             stmt.executeUpdate();
             
@@ -65,9 +65,9 @@ public class LivrariaController {
         PreparedStatement stmt = null;
         
         try {
-            stmt = con.prepareStatement("UPDATE livraria SET id_cidade=?, bairro=? WHERE id_livraria=?");
+            stmt = con.prepareStatement("UPDATE livraria SET id_cidade=?, id_bairro=? WHERE id_livraria=?");
             stmt.setInt(1, objLivraria.getId_cidade());
-            stmt.setString(2, objLivraria.getBairro());
+            stmt.setInt(2, objLivraria.getId_bairro());
             stmt.setInt(3, objLivraria.getId_livraria());
             
             stmt.executeUpdate();
@@ -100,10 +100,11 @@ public class LivrariaController {
         try {
 
             String SQL = "";
-            SQL = " SELECT l.id_livraria, c.nome, l.bairro";
-            SQL += " FROM livraria l, cidade c";
+            SQL = " SELECT l.id_livraria, c.nome, b.nome";
+            SQL += " FROM livraria l, cidade c, bairro b";
             SQL += " WHERE l.data_exclusao IS NULL AND ";
-            SQL += " l.id_cidade = c.id_cidade ";
+            SQL += " l.id_cidade = c.id_cidade AND";
+            SQL += " l.id_bairro = b.id_bairro ";
             SQL += " ORDER BY id_livraria ";
             
             result = Conexao.stmt.executeQuery(SQL);
@@ -179,7 +180,7 @@ public class LivrariaController {
             ResultSet rs = null;
 
             String SQL = "";
-            SQL = " SELECT id_livraria, id_cidade, bairro ";
+            SQL = " SELECT id_livraria, id_cidade, id_bairro ";
             SQL += " FROM livraria ";
             SQL += " WHERE id_livraria = '" + id + "'";
             SQL += " AND data_exclusao IS NULL ";
@@ -194,7 +195,7 @@ public class LivrariaController {
                 {
                     objLivraria.setId_livraria(rs.getInt(1));
                     objLivraria.setId_cidade(rs.getInt(2));
-                    objLivraria.setBairro(rs.getString(3));
+                    objLivraria.setId_bairro(rs.getInt(3));
                 }
             }
 

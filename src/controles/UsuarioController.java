@@ -40,7 +40,7 @@ public class UsuarioController {
         PreparedStatement stmt = null;
         
         try{
-            stmt = con.prepareStatement("INSERT INTO usuarios(login, senha, nome, nivel) VALUES(?, ?, ?, ?)");
+            stmt = con.prepareStatement("INSERT INTO usuarios(login, senha, nome, nivel) VALUES(?, MD5(?), ?, ?)");
             stmt.setString(1, objUsuario.getLogin());
             stmt.setString(2, objUsuario.getSenha());
             stmt.setString(3, objUsuario.getNome());

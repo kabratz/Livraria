@@ -1,5 +1,6 @@
 package telas;
 
+import controles.LoginController;
 import controles.RelatorioController;
 import controles.UsuarioController;
 import ferramentas.CaixaDeDialogo;
@@ -20,10 +21,11 @@ import net.sf.jasperreports.view.JasperViewer;
 public class TelaPrincipal extends javax.swing.JFrame {
 
     Usuario objUsuario;
-    UsuarioController objUsuarioController;
-    Login objLogin;
+    UsuarioController objUsuarioControle;
     Character consulta;
     Consulta objConsulta = new Consulta();
+    private static int usuarioNivel;
+    LoginController login;
 
     /**
      * Creates new form TelaPrincipal
@@ -31,6 +33,11 @@ public class TelaPrincipal extends javax.swing.JFrame {
     public TelaPrincipal() {
         initComponents();
         this.setExtendedState(TelaPrincipal.MAXIMIZED_BOTH);
+
+    }
+
+    public void importarNivel(Usuario user) {
+        this.usuarioNivel = user.getNivel();
 
     }
 
@@ -180,6 +187,11 @@ public class TelaPrincipal extends javax.swing.JFrame {
         jMenuBar1.add(mnRelatorio);
 
         mnSair.setText("Sair");
+        mnSair.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                mnSairMousePressed(evt);
+            }
+        });
         mnSair.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 mnSairActionPerformed(evt);
@@ -218,7 +230,9 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
 
     private void mnSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnSairActionPerformed
-        dispose();
+        Login frame = new Login();
+        frame.setVisible(true);
+        this.setVisible(false);
     }//GEN-LAST:event_mnSairActionPerformed
 
     private void mnConsLivrosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnConsLivrosActionPerformed
@@ -271,18 +285,17 @@ public class TelaPrincipal extends javax.swing.JFrame {
         3-funcionário
         4-cliente
          */
-       // String user = usu
+        // String user = usu
         //objUsuarioController.buscar(Usuario.getLogin);
-        
-        int nivel = objUsuario.getNivel();
-        if (nivel == 1) {
 
-        } else if (nivel == 2) {
+        if (usuarioNivel == 1) {
+
+        } else if (usuarioNivel == 2) {
             mnCadFunc.setVisible(false);
-        } else if (nivel == 3) {
+        } else if (usuarioNivel == 3) {
             mnCadLivraria.setVisible(false);
             mnCadFunc.setVisible(false);
-        } else if (nivel == 4) {
+        } else if (usuarioNivel == 4) {
             mnCad.setVisible(false);
             mnConsFunc.setVisible(false);
             mnConsCid.setVisible(false);
@@ -322,6 +335,15 @@ public class TelaPrincipal extends javax.swing.JFrame {
             CaixaDeDialogo.obterinstancia().exibirMensagem("Erro: " + ex.getMessage(), 'e');
         }
     }//GEN-LAST:event_mnRelLivrariaActionPerformed
+
+    private void mnSairMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_mnSairMousePressed
+
+        Login frame = new Login();
+        frame.setVisible(true);
+        this.setVisible(false);
+
+
+    }//GEN-LAST:event_mnSairMousePressed
 
     /**
      * @param args the command line arguments

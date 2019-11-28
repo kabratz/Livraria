@@ -9,6 +9,9 @@ import controles.CidadeController;
 import controles.LivrariaController;
 import ferramentas.CaixaDeDialogo;
 import ferramentas.Combos;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import modelos.Livraria;
 
 /**
@@ -19,7 +22,8 @@ public class CadastroLivraria extends javax.swing.JFrame {
     
     Livraria objLivraria;
     LivrariaController objLivrariaControle;
-    Combos cbCidades;
+    Combos cbCombosCidade;
+    Combos cbCombosBairro;
     /**
      * Creates new form CadastroLivraria
      */
@@ -52,20 +56,25 @@ public class CadastroLivraria extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         cbCidade = new javax.swing.JComboBox<>();
         jLabel2 = new javax.swing.JLabel();
-        txtBairro = new javax.swing.JTextField();
         lblId = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         btnSalvar = new javax.swing.JButton();
         btnLimpar = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jtbLivraria = new javax.swing.JTable();
+        cbBairro = new javax.swing.JComboBox<>();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel1.setText("CIDADE");
 
         cbCidade.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cbCidade.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbCidadeActionPerformed(evt);
+            }
+        });
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel2.setText("BAIRRO");
@@ -108,6 +117,8 @@ public class CadastroLivraria extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(jtbLivraria);
 
+        cbBairro.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -118,23 +129,23 @@ public class CadastroLivraria extends javax.swing.JFrame {
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 423, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                 .addGroup(layout.createSequentialGroup()
                                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                         .addComponent(cbCidade, javax.swing.GroupLayout.PREFERRED_SIZE, 189, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addComponent(jLabel1))
                                     .addGap(43, 43, 43)
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(txtBairro, javax.swing.GroupLayout.PREFERRED_SIZE, 189, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(jLabel2))
-                                    .addGap(2, 2, 2))
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addGroup(layout.createSequentialGroup()
+                                            .addComponent(jLabel2)
+                                            .addGap(147, 147, 147))
+                                        .addComponent(cbBairro, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                                 .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                                     .addComponent(btnSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addGap(71, 71, 71)))
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(207, 207, 207)
-                                .addComponent(lblId)
-                                .addGap(141, 141, 141))
+                                .addComponent(lblId))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                 .addGap(324, 324, 324)
                                 .addComponent(btnLimpar, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -155,7 +166,7 @@ public class CadastroLivraria extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(cbCidade, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtBairro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(cbBairro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(lblId)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -180,7 +191,7 @@ public class CadastroLivraria extends javax.swing.JFrame {
         try{
             boolean retorno;
             //validar os campos
-            if(txtBairro.getText().trim().length() == 0 || cbCidade.getSelectedIndex() == 0){
+            if(cbBairro.getSelectedIndex() == 0 || cbCidade.getSelectedIndex() == 0){
                 CaixaDeDialogo.obterinstancia().exibirMensagem("Informe uma livraria ou cidade corretamente", 'a');
                 return;
             }
@@ -188,8 +199,10 @@ public class CadastroLivraria extends javax.swing.JFrame {
             objLivraria = new Livraria();
             Combos c = (Combos) cbCidade.getSelectedItem();
             String codCidade = c.getCodigo();
+            Combos c2 = (Combos) cbBairro.getSelectedItem();
+            String codBairro = c2.getCodigo();
             objLivraria.setId_cidade(Integer.parseInt(codCidade));
-            objLivraria.setBairro(txtBairro.getText().trim());
+            objLivraria.setId_bairro(Integer.parseInt(codBairro));
             if(!lblId.getText().equals("ID")){
                 objLivraria.setId_livraria(Integer.parseInt(lblId.getText()));
                 objLivrariaControle = new LivrariaController(objLivraria, null);
@@ -244,8 +257,11 @@ public class CadastroLivraria extends javax.swing.JFrame {
                     CaixaDeDialogo.obterinstancia().exibirMensagem("Erro: " + ex.getMessage());
                 }
             }else {
+                objLivrariaControle = new LivrariaController(objLivraria, null);
+                objLivraria = objLivrariaControle.buscar(codigo);
                 lblId.setText(codigo);   
-                txtBairro.setText(bairro);
+                cbCombosBairro.SetaComboBox(String.valueOf(objLivraria.getId_bairro()));
+                cbCombosCidade.SetaComboBox(String.valueOf(objLivraria.getId_cidade()));
             }
         
         }catch(Exception ex){
@@ -254,10 +270,42 @@ public class CadastroLivraria extends javax.swing.JFrame {
         atualizarTabela();
     }//GEN-LAST:event_jtbLivrariaMousePressed
 
+    private void cbCidadeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbCidadeActionPerformed
+       try {
+           
+        atualizarComboBairro();
+       } catch(Exception e) {
+           System.out.println("");
+       }
+    }//GEN-LAST:event_cbCidadeActionPerformed
+        private void atualizarComboBairro() {
+        
+        cbCombosCidade = (Combos) cbCidade.getSelectedItem();
+        String codCidade = cbCombosCidade.getCodigo();
+            
+       
+                   
+        try {
+
+        
+            cbCombosBairro.PreencheCombo("SELECT b.id_bairro, b.nome FROM bairro b, cidade c WHERE b.id_cidade = c.id_cidade AND c.id_cidade =" + codCidade);
+            
+        } catch (SQLException ex) {
+            System.out.println("");
+        }
+            }
         private void preencherCombos() {
         try {
-            cbCidades = new Combos(cbCidade);        
-            cbCidades.PreencheCombo("SELECT id_cidade, nome FROM cidade");
+            
+            cbCombosCidade = new Combos(cbCidade);        
+            cbCombosCidade.PreencheCombo("SELECT id_cidade, nome FROM cidade WHERE data_exclusao IS NULL");
+            
+            cbCombosBairro = new Combos(cbBairro);        
+            cbCombosBairro.PreencheCombo("SELECT id_bairro, nome FROM bairro WHERE data_exclusao IS NULL");
+            
+            cbBairro.setSelectedIndex(1);
+            cbCidade.setSelectedIndex(1);
+            
         } catch (Exception e) {
             CaixaDeDialogo.obterinstancia().exibirMensagem(e.getMessage());
         }
@@ -266,8 +314,8 @@ public class CadastroLivraria extends javax.swing.JFrame {
                 private void limparTela(){
         try{
             lblId.setText("ID");
-            txtBairro.setText("");
-            cbCidade.setSelectedIndex(0);
+            cbBairro.setSelectedIndex(1);
+            cbCidade.setSelectedIndex(1);
            
             btnSalvar.setEnabled(true);
             
@@ -281,7 +329,6 @@ public class CadastroLivraria extends javax.swing.JFrame {
         private void preencherCampos(){
         try{
             lblId.setText(String.valueOf(objLivraria.getId_livraria()));
-            txtBairro.setText(objLivraria.getBairro());
             btnSalvar.setEnabled(true);
             
             atualizarTabela();
@@ -328,6 +375,7 @@ public class CadastroLivraria extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnLimpar;
     private javax.swing.JButton btnSalvar;
+    private javax.swing.JComboBox<String> cbBairro;
     private javax.swing.JComboBox<String> cbCidade;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -335,6 +383,5 @@ public class CadastroLivraria extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jtbLivraria;
     private javax.swing.JLabel lblId;
-    private javax.swing.JTextField txtBairro;
     // End of variables declaration//GEN-END:variables
 }

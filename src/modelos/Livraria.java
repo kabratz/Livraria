@@ -13,7 +13,7 @@ public class Livraria {
     
     private int id_livraria;
     private int id_cidade;
-    private String bairro;
+    private int id_bairro;
 
     public int getId_livraria() {
         return id_livraria;
@@ -31,12 +31,13 @@ public class Livraria {
         this.id_cidade = id_cidade;
     }
 
-    public String getBairro() {
-        return bairro;
+    public int getId_bairro() {
+        return id_bairro;
     }
 
-    public void setBairro(String bairro) {
-        this.bairro = bairro;
+    public void setId_bairro(int id_bairro) {
+        this.id_bairro = id_bairro;
     }
+
     
 }

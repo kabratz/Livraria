@@ -47,12 +47,13 @@ public class FuncionarioController {
         Date parsed = formato.parse(objFuncionario.getData_nascimento());
         java.sql.Date dataFormatada = new java.sql.Date(parsed.getTime());
         try{
-            stmt = con.prepareStatement("INSERT INTO funcionario(id_livraria, pis, data_nascimento, cpf, nome) VALUES(?, ?, ?, ?, ?)");
+            stmt = con.prepareStatement("INSERT INTO funcionario(id_livraria, pis, data_nascimento, cpf, nome, id_bairro) VALUES(?, ?, ?, ?, ?, ?)");
             stmt.setInt(1, objFuncionario.getId_livraria());
             stmt.setString(2, objFuncionario.getPis());
             stmt.setDate(3, dataFormatada);
             stmt.setString(4, objFuncionario.getCpf());
             stmt.setString(5, objFuncionario.getNome());
+            stmt.setInt(6, objFuncionario.getId_bairro());
             
             stmt.executeUpdate();
             
@@ -73,13 +74,14 @@ public class FuncionarioController {
         PreparedStatement stmt = null;
         
         try {
-            stmt = con.prepareStatement("UPDATE funcionario SET id_livraria=?, pis=?, data_nascimento=?, cpf=?, nome=? WHERE id_livraria=?");
+            stmt = con.prepareStatement("UPDATE funcionario SET id_livraria=?, pis=?, data_nascimento=?, cpf=?, nome=?, id_bairro=? WHERE id_livraria=?");
             stmt.setInt(1, objFuncionario.getId_livraria());
             stmt.setString(2, objFuncionario.getPis());
             stmt.setString(3, objFuncionario.getData_nascimento());
             stmt.setString(4, objFuncionario.getCpf());
             stmt.setString(5, objFuncionario.getNome());
-            stmt.setInt(6, objFuncionario.getId_funcionario());
+            stmt.setInt(6, objFuncionario.getId_bairro());
+            stmt.setInt(7, objFuncionario.getId_funcionario());
             
             stmt.executeUpdate();
             
@@ -115,11 +117,12 @@ public class FuncionarioController {
         try {
 
             String SQL = "";
-            SQL = " SELECT f.id_funcionario, c.id_cidade, f.pis, f.data_nascimento, f.cpf, f.nome, b.nome ";
+            SQL = " SELECT f.id_funcionario, l.id_livraria, f.pis, f.data_nascimento, f.cpf, f.nome, b.nome ";
             SQL += " FROM livraria l, cidade c, funcionario f, bairro b";
             SQL += " WHERE f.data_exclusao IS NULL AND ";
             SQL += " l.id_cidade = c.id_cidade AND ";
-            SQL += " f.id_livraria = l.id_livraria ";
+            SQL += " f.id_livraria = l.id_livraria AND ";
+            SQL += " f.id_bairro = b.id_bairro ";
             SQL += " ORDER BY f.id_funcionario ";
             
             result = Conexao.stmt.executeQuery(SQL);
@@ -199,7 +202,7 @@ public class FuncionarioController {
             ResultSet rs = null;
 
             String SQL = "";
-            SQL = " SELECT id_funcionario, id_livraria, pis, data_nascimento, cpf, nome ";
+            SQL = " SELECT id_funcionario, id_livraria, pis, data_nascimento, cpf, nome, id_bairro ";
             SQL += " FROM funcionario ";
             SQL += " WHERE id_funcionario = '" + id + "'";
             SQL += " AND data_exclusao IS NULL ";
@@ -215,9 +218,10 @@ public class FuncionarioController {
                     objFuncionario.setId_funcionario(rs.getInt(1));
                     objFuncionario.setId_livraria(rs.getInt(2));
                     objFuncionario.setPis(rs.getString(3));
-                    objFuncionario.setData_nascimento(rs.getString(4));
+                    objFuncionario.setData_nascimento(String.valueOf(rs.getDate(4)));
                     objFuncionario.setCpf(rs.getString(5));
                     objFuncionario.setNome(rs.getString(6));
+                    objFuncionario.setId_bairro(rs.getInt(7));
                 }
             }
 

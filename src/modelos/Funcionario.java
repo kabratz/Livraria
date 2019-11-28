@@ -16,7 +16,8 @@ public class Funcionario {
     private String data_nascimento;
     private String cpf;
     private String nome;
-
+    private int id_bairro;
+    
     public int getId_funcionario() {
         return id_funcionario;
     }
@@ -63,6 +64,14 @@ public class Funcionario {
 
     public void setNome(String nome) {
         this.nome = nome;
+    }
+
+    public int getId_bairro() {
+        return id_bairro;
+    }
+
+    public void setId_bairro(int id_bairro) {
+        this.id_bairro = id_bairro;
     }
     
 }

@@ -5,10 +5,21 @@
  */
 package telas;
 
+import banco.Conexao;
+import com.toedter.calendar.JCalendar;
+import com.toedter.calendar.JDateChooser;
+import controles.BairroController;
 import controles.FuncionarioController;
 import ferramentas.CaixaDeDialogo;
 import ferramentas.Combos;
+import ferramentas.Validacao;
+import java.sql.SQLException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import modelos.Bairro;
 import modelos.Funcionario;
 
 /**
@@ -17,6 +28,7 @@ import modelos.Funcionario;
  */
 public class CadastroFuncionario extends javax.swing.JFrame {
     
+
     Funcionario objFuncionario;
     FuncionarioController objFuncionarioControle;
     Combos cbCombosBairro, cbCombosLivraria;
@@ -66,9 +78,9 @@ public class CadastroFuncionario extends javax.swing.JFrame {
         jScrollPane2 = new javax.swing.JScrollPane();
         jtbFuncionario = new javax.swing.JTable();
         lblId = new javax.swing.JLabel();
+        jdcDataNascimento = new com.toedter.calendar.JDateChooser();
         cbBairro = new javax.swing.JComboBox<>();
         jLabel7 = new javax.swing.JLabel();
-        jdcDataNascimento = new com.toedter.calendar.JDateChooser();
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -83,12 +95,17 @@ public class CadastroFuncionario extends javax.swing.JFrame {
         ));
         jScrollPane1.setViewportView(jTable1);
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        jLabel1.setText("CIDADE DA LIVRARIA");
+        jLabel1.setText(" LIVRARIA");
 
         cbCidadeLivraria.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cbCidadeLivraria.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbCidadeLivrariaActionPerformed(evt);
+            }
+        });
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel2.setText("PIS");
@@ -181,9 +198,9 @@ public class CadastroFuncionario extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(cbBairro, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jdcDataNascimento, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel7)
-                            .addComponent(jLabel3)
-                            .addComponent(jdcDataNascimento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(jLabel3))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -232,19 +249,23 @@ public class CadastroFuncionario extends javax.swing.JFrame {
 
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
         SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
+        Validacao validacao = new Validacao();
         try{
             boolean retorno;
             //validar os campos
-            if(txtNome.getText().trim().length() == 0 || txtCpf.getText().trim().length() == 0 || txtPis.getText().trim().length() == 0 ||
-                    jdcDataNascimento.getDate() == null){
+            if(txtNome.getText().trim().length() == 0 || txtCpf.getText().trim().length() < 11 || txtCpf.getText().trim().length() > 11 || txtPis.getText().trim().length() < 11 ||
+                    jdcDataNascimento.getDate() == null || txtPis.getText().trim().length() > 13){
                 CaixaDeDialogo.obterinstancia().exibirMensagem("Informe os dados corretamente", 'a');
                 return;
             }
 
             objFuncionario = new Funcionario();
             Combos c = (Combos) cbCidadeLivraria.getSelectedItem();
-            String codCidade = c.getCodigo();
-            objFuncionario.setId_livraria(Integer.parseInt(codCidade));
+            String codLivraria = c.getCodigo();
+            Combos c2 = (Combos) cbBairro.getSelectedItem();
+            String codBairro = c2.getCodigo();
+            objFuncionario.setId_bairro(Integer.parseInt(codBairro));
+            objFuncionario.setId_livraria(Integer.parseInt(codLivraria));
             objFuncionario.setCpf(txtCpf.getText().trim());
             objFuncionario.setPis(txtPis.getText().trim());
             objFuncionario.setData_nascimento(formato.format(jdcDataNascimento.getDate()));
@@ -278,13 +299,16 @@ public class CadastroFuncionario extends javax.swing.JFrame {
     }//GEN-LAST:event_btnLimparActionPerformed
 
     private void jtbFuncionarioMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtbFuncionarioMousePressed
-         try{
+         SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
+        try{
             
             int linhaSelecionada = jtbFuncionario.getSelectedRow();//pega a linha selecionada
             String codigo = jtbFuncionario.getModel().getValueAt(linhaSelecionada, 0).toString(); // Primeira coluna da linha
+            String dataNascimento = jtbFuncionario.getModel().getValueAt(linhaSelecionada, 3).toString();
             String pis = jtbFuncionario.getModel().getValueAt(linhaSelecionada, 2).toString();
             String cpf = jtbFuncionario.getModel().getValueAt(linhaSelecionada, 4).toString();
             String nome = jtbFuncionario.getModel().getValueAt(linhaSelecionada, 5).toString();
+            
 
             //Verifica se clicou na coluna 2 = EXCLUIR
             if(jtbFuncionario.getSelectedColumn() == 7){
@@ -310,10 +334,15 @@ public class CadastroFuncionario extends javax.swing.JFrame {
                 }
                 atualizarTabela();
             }else {
-                lblId.setText(codigo);   
-                txtCpf.setText(cpf);
-                txtNome.setText(nome);
-                txtPis.setText(pis);
+                objFuncionarioControle = new FuncionarioController(objFuncionario, null);
+                objFuncionario = objFuncionarioControle.buscar(codigo);
+                lblId.setText(String.valueOf(objFuncionario.getId_funcionario()));   
+                txtCpf.setText(objFuncionario.getCpf());
+                txtNome.setText(objFuncionario.getNome());
+                txtPis.setText(objFuncionario.getPis());               
+                cbCombosLivraria.SetaComboBox(String.valueOf(objFuncionario.getId_livraria()));
+            btnSalvar.setEnabled(true);
+                
             }
         
         }catch(Exception ex){
@@ -322,17 +351,48 @@ public class CadastroFuncionario extends javax.swing.JFrame {
         atualizarTabela();
     }//GEN-LAST:event_jtbFuncionarioMousePressed
 
+    private void cbCidadeLivrariaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbCidadeLivrariaActionPerformed
+        try {
+            atualizarComboBairro();
+            
+        } catch(Exception e) {
+            System.out.println("");
+        }
+    }//GEN-LAST:event_cbCidadeLivrariaActionPerformed
+
             private void preencherCombos() {
+                
         try {
             cbCombosLivraria = new Combos(cbCidadeLivraria);        
-            cbCombosLivraria.PreencheCombo("SELECT id_livraria, id_livraria FROM livraria");
+            cbCombosLivraria.PreencheCombo("SELECT id_livraria, id_livraria FROM livraria WHERE data_exclusao IS NULL");
             
             cbCombosBairro = new Combos(cbBairro);        
-            cbCombosBairro.PreencheCombo("SELECT id_bairro, nome FROM bairro");
+            cbCombosBairro.PreencheCombo("SELECT id_bairro, nome FROM bairro WHERE data_exclusao IS NULL");
+            
+            cbBairro.setSelectedIndex(1);
+            cbCidadeLivraria.setSelectedIndex(1);
+            
+            atualizarComboBairro();
+            
         } catch (Exception e) {
             CaixaDeDialogo.obterinstancia().exibirMensagem(e.getMessage());
         }
             }
+            
+            private void atualizarComboBairro() {
+        
+        cbCombosLivraria = (Combos) cbCidadeLivraria.getSelectedItem();
+        String codLivraria = cbCombosLivraria.getCodigo();
+            
+                   
+        try {
+            cbCombosBairro.PreencheCombo("SELECT b.id_bairro, b.nome FROM bairro b, livraria l WHERE l.id_bairro = b.id_bairro AND b.data_exclusao is null AND l.id_livraria =" + codLivraria);
+            cbCombosBairro.SetaComboBox(codLivraria);
+        } catch (SQLException ex) {
+            Logger.getLogger(CadastroFuncionario.class.getName()).log(Level.SEVERE, null, ex);
+        }
+            }
+           
         
         private void limparTela(){
         try{
@@ -341,8 +401,8 @@ public class CadastroFuncionario extends javax.swing.JFrame {
             txtNome.setText("");
             txtPis.setText("");
             jdcDataNascimento.setDate(null);
-            cbCidadeLivraria.setSelectedIndex(0);
-            cbBairro.setSelectedIndex(0);
+            cbCidadeLivraria.setSelectedIndex(1);
+            cbBairro.setSelectedIndex(1);
            
             btnSalvar.setEnabled(true);
             
@@ -353,15 +413,11 @@ public class CadastroFuncionario extends javax.swing.JFrame {
         }
     }
                 
-        private void preencherCampos(){
+        private void preencherCampos(String id){
         try{
-            lblId.setText(String.valueOf(objFuncionario.getId_funcionario()));
-            txtCpf.setText(String.valueOf(objFuncionario.getId_livraria()));
-            txtCpf.setText(objFuncionario.getCpf());
-            txtCpf.setText(objFuncionario.getCpf());
-            btnSalvar.setEnabled(true);
+                
             
-            atualizarTabela();
+            
             
         }catch(Exception ex){
             CaixaDeDialogo.obterinstancia().exibirMensagem("Erro: " + ex.getMessage());

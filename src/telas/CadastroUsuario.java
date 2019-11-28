@@ -49,6 +49,7 @@ public class CadastroUsuario extends javax.swing.JFrame {
 
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
+        jOptionPane1 = new javax.swing.JOptionPane();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         txtLogin = new javax.swing.JTextField();
@@ -76,7 +77,7 @@ public class CadastroUsuario extends javax.swing.JFrame {
         ));
         jScrollPane1.setViewportView(jTable1);
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel1.setText("CADASTRO DE USUÁRIO");
@@ -90,7 +91,7 @@ public class CadastroUsuario extends javax.swing.JFrame {
         lblNivel.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         lblNivel.setText("NÍVEL DE ACESSO");
 
-        cbNivel.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1", "2", "3" }));
+        cbNivel.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1", "2", "3", "4" }));
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel4.setText("NOME");
@@ -201,7 +202,7 @@ public class CadastroUsuario extends javax.swing.JFrame {
 
             objUsuario = new Usuario();
             objUsuario.setLogin(txtLogin.getText().trim());
-            objUsuario.setSenha(txtSenha.getPassword().toString());
+            objUsuario.setSenha(txtSenha.getText().toString());
             objUsuario.setNome(txtLogin.getText());            
             String nivel = (String) cbNivel.getSelectedItem();
             objUsuario.setNivel(Integer.parseInt(nivel));
@@ -318,6 +319,7 @@ public class CadastroUsuario extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JOptionPane jOptionPane1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable jTable1;

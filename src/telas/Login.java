@@ -7,6 +7,7 @@ package telas;
 
 import telas.TelaPrincipal;
 import controles.LoginController;
+import controles.UsuarioController;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -18,15 +19,17 @@ import ferramentas.CaixaDeDialogo;
  * @author karoline.bratz
  */
 public class Login extends javax.swing.JFrame {
-
+    private TelaPrincipal telaPrincipal;
+    UsuarioController objUsuarioControle;
+    Usuario objUsuario;
     /**
      * Creates new form login
      */
     public Login() {
-        initComponents();
-        
-        
+        initComponents();     
+        this.telaPrincipal = new TelaPrincipal();
     }
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -99,17 +102,21 @@ public class Login extends javax.swing.JFrame {
         
         Usuario user = login.Login(usuario, senha);
         
+        
         if(user == null){ //verifica se a funcao conseguiu retornar um objeto de usuário válido
             System.out.println("Usuário não existe");
             CaixaDeDialogo.obterinstancia().exibirMensagem("Dados incorretos!");
             
         }else{ //caso o usuario de retorno seja válido, a tela principal abre
-            TelaPrincipal tela = new TelaPrincipal();
-            user.setLogin(usuario);
-            tela.setVisible(true);
+            this.telaPrincipal.setVisible(true);
             this.setVisible(false);//fecha tela de login
         }
+        Usuario log = new Usuario();
+        TelaPrincipal telaPrincipal = new TelaPrincipal();
+        telaPrincipal.importarNivel(user);
+        //System.out.println(user.getNivel());
     }//GEN-LAST:event_btnEntrarActionPerformed
+    
 
     /**
      * @param args the command line arguments
