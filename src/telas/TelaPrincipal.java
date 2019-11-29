@@ -59,6 +59,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         mnCadFunc = new javax.swing.JMenuItem();
         mnCadCid = new javax.swing.JMenuItem();
         CadBairro = new javax.swing.JMenuItem();
+        CadUsuario = new javax.swing.JMenuItem();
         mnConsulta = new javax.swing.JMenu();
         mnConsLivraria = new javax.swing.JMenuItem();
         mnConsLivros = new javax.swing.JMenuItem();
@@ -124,6 +125,14 @@ public class TelaPrincipal extends javax.swing.JFrame {
             }
         });
         mnCad.add(CadBairro);
+
+        CadUsuario.setText("Usuário");
+        CadUsuario.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                CadUsuarioActionPerformed(evt);
+            }
+        });
+        mnCad.add(CadUsuario);
 
         jMenuBar1.add(mnCad);
 
@@ -301,14 +310,14 @@ public class TelaPrincipal extends javax.swing.JFrame {
         if (usuarioNivel == 1) {
 
         } else if (usuarioNivel == 2) {
-            mnCadFunc.setVisible(false);
+            mnCadFunc.setEnabled(false);
         } else if (usuarioNivel == 3) {
-            mnCadLivraria.setVisible(false);
-            mnCadFunc.setVisible(false);
+            mnCadLivraria.setEnabled(false);
+            mnCadFunc.setEnabled(false);
         } else if (usuarioNivel == 4) {
-            mnCad.setVisible(false);
-            mnConsFunc.setVisible(false);
-            mnConsCid.setVisible(false);
+            mnCad.setEnabled(false);
+            mnConsFunc.setEnabled(false);
+            mnConsCid.setEnabled(false);
         }
 
     }//GEN-LAST:event_formWindowOpened
@@ -373,8 +382,14 @@ public class TelaPrincipal extends javax.swing.JFrame {
         } catch (JRException ex) {
             CaixaDeDialogo.obterinstancia().exibirMensagem("Erro: " + ex.getMessage(), 'e');
         }
-        
+
     }//GEN-LAST:event_mnRelLoginActionPerformed
+
+    private void CadUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CadUsuarioActionPerformed
+
+        CadastroUsuario frame = new CadastroUsuario();
+        frame.setVisible(true);
+    }//GEN-LAST:event_CadUsuarioActionPerformed
 
     /**
      * @param args the command line arguments
@@ -424,6 +439,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem CadBairro;
+    private javax.swing.JMenuItem CadUsuario;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
