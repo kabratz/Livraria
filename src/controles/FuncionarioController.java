@@ -29,24 +29,23 @@ import modelos.Livraria;
  * @author USER
  */
 public class FuncionarioController {
-    
-        
+
     Funcionario objFuncionario;
     JTable jtbFuncionario = null;
-    
+
     public FuncionarioController(Funcionario objFuncionario, JTable jtbFuncionario) {
         this.objFuncionario = objFuncionario;
         this.jtbFuncionario = jtbFuncionario;
     }
-    
-     public boolean incluir() throws ParseException{
+
+    public boolean incluir() throws ParseException {
         SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
         Conexao.abreConexao();
         Connection con = Conexao.obterConexao();
         PreparedStatement stmt = null;
         Date parsed = formato.parse(objFuncionario.getData_nascimento());
         java.sql.Date dataFormatada = new java.sql.Date(parsed.getTime());
-        try{
+        try {
             stmt = con.prepareStatement("INSERT INTO funcionario(id_livraria, pis, data_nascimento, cpf, nome, id_bairro) VALUES(?, ?, ?, ?, ?, ?)");
             stmt.setInt(1, objFuncionario.getId_livraria());
             stmt.setString(2, objFuncionario.getPis());
@@ -54,55 +53,59 @@ public class FuncionarioController {
             stmt.setString(4, objFuncionario.getCpf());
             stmt.setString(5, objFuncionario.getNome());
             stmt.setInt(6, objFuncionario.getId_bairro());
-            
+
             stmt.executeUpdate();
-            
+
             return true;
-            
-        }catch (SQLException ex) {
+
+        } catch (SQLException ex) {
             System.out.println(ex.getMessage());
             return false;
-        }finally{
+        } finally {
             Conexao.fecharConexao(con, stmt);
         }
     }
-     
-         public boolean alterar(){
-        
+
+    public boolean alterar() throws ParseException {
+
         Conexao.abreConexao();
         Connection con = Conexao.obterConexao();
         PreparedStatement stmt = null;
-        
+        SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
+        Date parsed = formato.parse(objFuncionario.getData_nascimento());
+        java.sql.Date dataFormatada = new java.sql.Date(parsed.getTime());
+
         try {
+
             stmt = con.prepareStatement("UPDATE funcionario SET id_livraria=?, pis=?, data_nascimento=?, cpf=?, nome=?, id_bairro=? WHERE id_livraria=?");
             stmt.setInt(1, objFuncionario.getId_livraria());
             stmt.setString(2, objFuncionario.getPis());
-            stmt.setString(3, objFuncionario.getData_nascimento());
+            stmt.setDate(3, dataFormatada);
             stmt.setString(4, objFuncionario.getCpf());
             stmt.setString(5, objFuncionario.getNome());
             stmt.setInt(6, objFuncionario.getId_bairro());
             stmt.setInt(7, objFuncionario.getId_funcionario());
-            
+
             stmt.executeUpdate();
-            
+
             return true;
-            
+
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
             return false;
-        }finally{
+        } finally {
             Conexao.fecharConexao(con, stmt);
         }
-        
+
     }
-         
+
     public void preencher() {
 
         Conexao.abreConexao();
-        
+
         Vector<String> cabecalhos = new Vector<String>();
         Vector dadosTabela = new Vector(); //receber os dados do banco
-        
+
         cabecalhos.add("#");
         cabecalhos.add("ID da Livraria");
         cabecalhos.add("PIS");
@@ -111,9 +114,9 @@ public class FuncionarioController {
         cabecalhos.add("Nome");
         cabecalhos.add("Bairro");
         cabecalhos.add("Excluir");
-        
+
         ResultSet result = null;
-        
+
         try {
 
             String SQL = "";
@@ -124,13 +127,13 @@ public class FuncionarioController {
             SQL += " f.id_livraria = l.id_livraria AND ";
             SQL += " f.id_bairro = b.id_bairro ";
             SQL += " ORDER BY f.id_funcionario ";
-            
+
             result = Conexao.stmt.executeQuery(SQL);
 
             Vector<Object> linha;
-            while(result.next()) {
+            while (result.next()) {
                 linha = new Vector<Object>();
-                
+
                 linha.add(result.getInt(1));
                 linha.add(result.getInt(2));
                 linha.add(result.getString(3));
@@ -139,10 +142,10 @@ public class FuncionarioController {
                 linha.add(result.getString(6));
                 linha.add(result.getString(7));
                 linha.add("X");
-                
+
                 dadosTabela.add(linha);
             }
-            
+
         } catch (Exception e) {
             System.out.println("problemas para popular tabela...");
             System.out.println(e);
@@ -152,7 +155,7 @@ public class FuncionarioController {
 
             @Override
             public boolean isCellEditable(int row, int column) {
-              return false;
+                return false;
             }
             // permite seleção de apenas uma linha da tabela
         });
@@ -176,7 +179,7 @@ public class FuncionarioController {
                     break;
             }
         }
-        
+
         jtbFuncionario.setDefaultRenderer(Object.class, new DefaultTableCellRenderer() {
 
             @Override
@@ -194,9 +197,8 @@ public class FuncionarioController {
         });
         //return (true);
     }
-    
-    public Funcionario buscar(String id)
-    {
+
+    public Funcionario buscar(String id) {
         try {
             Conexao.abreConexao();
             ResultSet rs = null;
@@ -207,14 +209,13 @@ public class FuncionarioController {
             SQL += " WHERE id_funcionario = '" + id + "'";
             SQL += " AND data_exclusao IS NULL ";
 
-            try{
+            try {
                 System.out.println("Vai Executar Conexão em buscar");
                 rs = Conexao.stmt.executeQuery(SQL);
                 System.out.println("Executou Conexão em buscar");
 
                 objFuncionario = new Funcionario();
-                if(rs.next() == true)
-                {
+                if (rs.next() == true) {
                     objFuncionario.setId_funcionario(rs.getInt(1));
                     objFuncionario.setId_livraria(rs.getInt(2));
                     objFuncionario.setPis(rs.getString(3));
@@ -223,10 +224,7 @@ public class FuncionarioController {
                     objFuncionario.setNome(rs.getString(6));
                     objFuncionario.setId_bairro(rs.getInt(7));
                 }
-            }
-
-            catch (SQLException ex )
-            {
+            } catch (SQLException ex) {
                 System.out.println("ERRO de SQL: " + ex.getMessage().toString());
                 return null;
             }
@@ -235,32 +233,31 @@ public class FuncionarioController {
             System.out.println("ERRO: " + e.getMessage().toString());
             return null;
         }
-        
-        System.out.println ("Executou buscar area com sucesso");
+
+        System.out.println("Executou buscar area com sucesso");
         return objFuncionario;
     }
-    
-        public boolean excluir(){
-        
+
+    public boolean excluir() {
+
         Conexao.abreConexao();
         Connection con = Conexao.obterConexao();
         PreparedStatement stmt = null;
-        
+
         try {
             stmt = con.prepareStatement("UPDATE funcionario SET data_exclusao=now() WHERE id_funcionario=?");
             stmt.setInt(1, objFuncionario.getId_funcionario());
-                        
+
             stmt.executeUpdate();
-            
+
             return true;
-            
+
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
             return false;
-        }finally{
+        } finally {
             Conexao.fecharConexao(con, stmt);
         }
     }
-        
-        
+
 }

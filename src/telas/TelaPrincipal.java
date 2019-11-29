@@ -67,6 +67,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         mnConsBairro = new javax.swing.JMenuItem();
         mnRelatorio = new javax.swing.JMenu();
         mnRelLivraria = new javax.swing.JMenuItem();
+        mnRelLogin = new javax.swing.JMenuItem();
         mnSair = new javax.swing.JMenu();
 
         jMenu2.setText("jMenu2");
@@ -92,6 +93,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         mnCad.add(mnCadLivraria);
 
         mnCadLivro.setText("Livro");
+        mnCadLivro.setEnabled(false);
         mnCadLivro.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 mnCadLivroActionPerformed(evt);
@@ -183,6 +185,14 @@ public class TelaPrincipal extends javax.swing.JFrame {
             }
         });
         mnRelatorio.add(mnRelLivraria);
+
+        mnRelLogin.setText("Login");
+        mnRelLogin.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mnRelLoginActionPerformed(evt);
+            }
+        });
+        mnRelatorio.add(mnRelLogin);
 
         jMenuBar1.add(mnRelatorio);
 
@@ -345,6 +355,27 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
     }//GEN-LAST:event_mnSairMousePressed
 
+    private void mnRelLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnRelLoginActionPerformed
+        try {
+            String wSelect = " SELECT nivel, nome, login "
+                    + " FROM usuario "
+                    + " GROUP BY nivel";
+
+            RelatorioController objRelController = new RelatorioController();
+            ResultSet resultSet = objRelController.buscarRelatorio(wSelect);//Buscar os dados do relatório
+
+            JRResultSetDataSource relResult = new JRResultSetDataSource(resultSet);//Passa um resultSet para a fonte de dados do relatório
+            JasperPrint jpPrint = JasperFillManager.fillReport("iReport/RelatorioLivraria.jasper", new HashMap(), relResult);//Prepara o relatório para ser impresso, recebe o gerenciador JASPER
+            JasperViewer jpViewer = new JasperViewer(jpPrint, false); //
+            jpViewer.setVisible(true);//abre o relatório para visualização
+            jpViewer.toFront();//define o form a frente da aplicação
+
+        } catch (JRException ex) {
+            CaixaDeDialogo.obterinstancia().exibirMensagem("Erro: " + ex.getMessage(), 'e');
+        }
+        
+    }//GEN-LAST:event_mnRelLoginActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -408,6 +439,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem mnConsLivros;
     private javax.swing.JMenu mnConsulta;
     private javax.swing.JMenuItem mnRelLivraria;
+    private javax.swing.JMenuItem mnRelLogin;
     private javax.swing.JMenu mnRelatorio;
     private javax.swing.JMenu mnSair;
     // End of variables declaration//GEN-END:variables
