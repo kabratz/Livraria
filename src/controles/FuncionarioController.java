@@ -169,13 +169,28 @@ public class FuncionarioController {
             column = jtbFuncionario.getColumnModel().getColumn(i);
             switch (i) {
                 case 0:
-                    column.setPreferredWidth(40);
+                    column.setPreferredWidth(10);
                     break;
                 case 1:
-                    column.setPreferredWidth(230);
+                    column.setPreferredWidth(10);
                     break;
                 case 2:
+                    column.setPreferredWidth(100);
+                    break;
+                case 3:
+                    column.setPreferredWidth(120);
+                    break;
+                case 4:
+                    column.setPreferredWidth(250);
+                    break;
+                case 5:
                     column.setPreferredWidth(50);
+                    break;
+                case 6:
+                    column.setPreferredWidth(50);
+                    break;
+                case 7:
+                    column.setPreferredWidth(10);
                     break;
             }
         }
