@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="RelatorioLivraria1" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="4ed29880-6ed6-48d3-9800-85404bda0b87">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="style1"/>
+	<queryString>
+		<![CDATA[SELECT l.id_livraria as Livraria, c.nome as Cidade, b.nome as Bairro
+FROM livraria l, cidade c, bairro b
+WHERE l.id_bairro = b.id_bairro
+AND l.id_cidade = c.id_cidade
+GROUP BY l.id_livraria, c.nome, b.nome
+ORDER BY l.id_livraria]]>
+	</queryString>
+	<field name="livraria" class="java.lang.Integer"/>
+	<field name="cidade" class="java.lang.String"/>
+	<field name="bairro" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch">
+			<staticText>
+				<reportElement x="206" y="12" width="168" height="38" uuid="251858ec-a32f-4d13-b0af-812b76d25585"/>
+				<textElement>
+					<font size="16" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Relatrório Livraria]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="35" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="23" splitType="Stretch">
+			<staticText>
+				<reportElement x="49" y="2" width="100" height="20" uuid="e008af33-2d51-41a3-8290-1869b54ec327"/>
+				<text><![CDATA[livraria]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="227" y="2" width="100" height="20" uuid="40a01a7d-d427-4c23-888c-c834f879c411"/>
+				<text><![CDATA[cidade]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="389" y="2" width="100" height="20" uuid="8b73598e-2945-4ea3-aa5a-f60d314e87ea"/>
+				<text><![CDATA[bairro]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<textField>
+				<reportElement x="49" y="0" width="100" height="20" uuid="b8c2e866-a47b-41df-bb53-4539eb2ef6cc"/>
+				<textFieldExpression><![CDATA[$F{livraria}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="227" y="0" width="100" height="20" uuid="ab0210d1-bb96-4797-8366-d06b90b78d6a"/>
+				<textFieldExpression><![CDATA[$F{cidade}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="389" y="0" width="100" height="20" uuid="d73cd081-5f6e-44ab-8b27-52275e6f8fd5"/>
+				<textFieldExpression><![CDATA[$F{bairro}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch">
+			<textField>
+				<reportElement x="536" y="22" width="19" height="20" uuid="d4780244-887b-42a0-be34-82c81bac19a1"/>
+				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</summary>
+</jasperReport>
