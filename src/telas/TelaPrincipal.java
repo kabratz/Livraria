@@ -244,7 +244,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private void mnCadLivroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnCadLivroActionPerformed
         // CadastroLivro frame = new CadastroLivro();
         // frame.setVisible(true);
-        objConsulta.setConsulta('n');
+       // objConsulta.setConsulta('n');
     }//GEN-LAST:event_mnCadLivroActionPerformed
 
 
@@ -257,32 +257,32 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private void mnConsLivrosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnConsLivrosActionPerformed
         // CadastroLivro frame = new CadastroLivro();
         // frame.setVisible(true);
-        objConsulta.setConsulta('s');
+       // objConsulta.setConsulta('s');
     }//GEN-LAST:event_mnConsLivrosActionPerformed
 
     private void mnConsLivrariaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnConsLivrariaActionPerformed
         CadastroLivraria frame = new CadastroLivraria();
         frame.setVisible(true);
-        objConsulta.setConsulta('s');
+       // objConsulta.setConsulta('s');
 
     }//GEN-LAST:event_mnConsLivrariaActionPerformed
 
     private void mnCadFuncActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnCadFuncActionPerformed
         CadastroFuncionario frame = new CadastroFuncionario();
         frame.setVisible(true);
-        objConsulta.setConsulta('n');
+        //objConsulta.setConsulta('n');
     }//GEN-LAST:event_mnCadFuncActionPerformed
 
     private void mnCadCidActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnCadCidActionPerformed
         CadastroCidade frame = new CadastroCidade();
         frame.setVisible(true);
-        objConsulta.setConsulta('f');
+      //  objConsulta.setConsulta('f');
     }//GEN-LAST:event_mnCadCidActionPerformed
 
     private void mnConsFuncActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnConsFuncActionPerformed
         CadastroFuncionario frame = new CadastroFuncionario();
         frame.setVisible(true);
-        objConsulta.setConsulta('s');
+     //   objConsulta.setConsulta('s');
     }//GEN-LAST:event_mnConsFuncActionPerformed
 
     private void mnConsCidActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnConsCidActionPerformed
@@ -294,7 +294,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private void CadBairroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CadBairroActionPerformed
         CadastroBairro frame = new CadastroBairro();
         frame.setVisible(true);
-        objConsulta.setConsulta('n');
+      //  objConsulta.setConsulta('n');
     }//GEN-LAST:event_CadBairroActionPerformed
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
@@ -307,14 +307,14 @@ public class TelaPrincipal extends javax.swing.JFrame {
         // String user = usu
         //objUsuarioController.buscar(Usuario.getLogin);
 
-        if (usuarioNivel == 1) {
+        if (importarNivel == 1) {
 
-        } else if (usuarioNivel == 2) {
+        } else if (importarNivel == 2) {
             mnCadFunc.setEnabled(false);
-        } else if (usuarioNivel == 3) {
+        } else if (importarNivel == 3) {
             mnCadLivraria.setEnabled(false);
             mnCadFunc.setEnabled(false);
-        } else if (usuarioNivel == 4) {
+        } else if (importarNivel == 4) {
             mnCad.setEnabled(false);
             mnConsFunc.setEnabled(false);
             mnConsCid.setEnabled(false);
