@@ -20,71 +20,64 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
-import modelos.Cidade;
-import modelos.Funcionario;
-import modelos.Livraria;
+import modelos.Movimento;
 
 /**
  *
  * @author USER
  */
-public class FuncionarioController {
-
-    Funcionario objFuncionario;
-    JTable jtbFuncionario = null;
-
-    public FuncionarioController(Funcionario objFuncionario, JTable jtbFuncionario) {
-        this.objFuncionario = objFuncionario;
-        this.jtbFuncionario = jtbFuncionario;
+public class MovimentoController {
+    Movimento objMovimento;
+    JTable jtbMovimentos = null;
+    
+        public MovimentoController(Movimento objMovimento, JTable jtbMovimentos) {
+        this.objMovimento = objMovimento;
+        this.jtbMovimentos = jtbMovimentos;
     }
-
-    public boolean incluir() throws ParseException {
+        
+            public boolean incluir() throws ParseException, SQLException{
         SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
         Conexao.abreConexao();
         Connection con = Conexao.obterConexao();
         PreparedStatement stmt = null;
-        Date parsed = formato.parse(objFuncionario.getData_nascimento());
+        Date parsed = formato.parse(objMovimento.getData_movimento());
         java.sql.Date dataFormatada = new java.sql.Date(parsed.getTime());
-        try {
-            stmt = con.prepareStatement("INSERT INTO funcionario(id_livraria, pis, data_nascimento, cpf, nome, id_bairro) VALUES(?, ?, ?, ?, ?, ?)");
-            stmt.setInt(1, objFuncionario.getId_livraria());
-            stmt.setString(2, objFuncionario.getPis());
-            stmt.setDate(3, dataFormatada);
-            stmt.setString(4, objFuncionario.getCpf());
-            stmt.setString(5, objFuncionario.getNome());
-            stmt.setInt(6, objFuncionario.getId_bairro());
-
+        try{
+            stmt = con.prepareStatement("INSERT INTO movimento(id_funcionario, data_movimento, id_livraria, tipo) VALUES(?, ?, ?, ?)");
+            stmt.setInt(1, objMovimento.getId_funcionario());
+            stmt.setDate(2, dataFormatada);
+            stmt.setInt(3, objMovimento.getId_livraria());
+            stmt.setString(4, String.valueOf(objMovimento.getTipo()));
             stmt.executeUpdate();
-
+            
             return true;
-
-        } catch (SQLException ex) {
+            
+        }catch (SQLException ex) {
             System.out.println(ex.getMessage());
             return false;
-        } finally {
+        }finally{
             Conexao.fecharConexao(con, stmt);
         }
     }
-
-    public boolean alterar() throws ParseException {
+            
+        public boolean alterar() throws ParseException {
         SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
         Conexao.abreConexao();
         Connection con = Conexao.obterConexao();
         PreparedStatement stmt = null;
         
-        Date parsed = formato.parse(objFuncionario.getData_nascimento());
+        Date parsed = formato.parse(objMovimento.getData_movimento());
         java.sql.Date dataFormatada = new java.sql.Date(parsed.getTime());
 
         try {
 
-            stmt = con.prepareStatement("UPDATE funcionario SET id_livraria=?, pis=?, data_nascimento=?, cpf=?, nome=?, id_bairro=? WHERE id_funcionario=?");
-            stmt.setInt(1, objFuncionario.getId_livraria());
-            stmt.setString(2, objFuncionario.getPis());
-            stmt.setDate(3, dataFormatada);
-            stmt.setString(4, objFuncionario.getCpf());
-            stmt.setString(5, objFuncionario.getNome());
-            stmt.setInt(6, objFuncionario.getId_bairro());
-            stmt.setInt(7, objFuncionario.getId_funcionario());
+            stmt = con.prepareStatement("UPDATE funcionario SET id_funcionario=?, data_movimento=?, id_livraria=?, tipo=? WHERE id_movimento=?");
+            stmt.setInt(1, objMovimento.getId_funcionario());
+            stmt.setDate(2, dataFormatada);
+            stmt.setInt(3, objMovimento.getId_livraria());
+            stmt.setString(4, String.valueOf(objMovimento.getTipo()));
+            stmt.setInt(5, objMovimento.getId_movimento());
+
 
             stmt.executeUpdate();
 
@@ -98,8 +91,8 @@ public class FuncionarioController {
         }
 
     }
-
-    public void preencher() {
+        
+            public void preencher() {
 
         Conexao.abreConexao();
 
@@ -107,26 +100,24 @@ public class FuncionarioController {
         Vector dadosTabela = new Vector(); //receber os dados do banco
 
         cabecalhos.add("#");
-        cabecalhos.add("ID da Livraria");
-        cabecalhos.add("PIS");
-        cabecalhos.add("Data de Nascimento");
-        cabecalhos.add("CPF");
-        cabecalhos.add("Nome");
-        cabecalhos.add("Bairro");
+        cabecalhos.add("Funcionário");
+        cabecalhos.add("Data da movimentação");
+        cabecalhos.add("Livraria");
+        cabecalhos.add("Tipo");
         cabecalhos.add("Excluir");
+
 
         ResultSet result = null;
 
         try {
 
             String SQL = "";
-            SQL = " SELECT f.id_funcionario, l.id_livraria, f.pis, f.data_nascimento, f.cpf, f.nome, b.nome ";
-            SQL += " FROM livraria l, cidade c, funcionario f, bairro b";
-            SQL += " WHERE f.data_exclusao IS NULL AND ";
-            SQL += " l.id_cidade = c.id_cidade AND ";
-            SQL += " f.id_livraria = l.id_livraria AND ";
-            SQL += " f.id_bairro = b.id_bairro ";
-            SQL += " ORDER BY f.id_funcionario ";
+            SQL = " SELECT m.id_movimento, f.nome, m.data_movimento, l.id_livraria, m.tipo";
+            SQL += " FROM movimento m, funcionario f, livraria l";
+            SQL += " WHERE m.data_exclusao IS NULL AND ";
+            SQL += " m.id_funcionario = f.id_funcionario AND ";
+            SQL += " m.id_livraria = l.id_livraria";
+            SQL += " ORDER BY m.data_movimento ";
 
             result = Conexao.stmt.executeQuery(SQL);
 
@@ -135,12 +126,10 @@ public class FuncionarioController {
                 linha = new Vector<Object>();
 
                 linha.add(result.getInt(1));
-                linha.add(result.getInt(2));
-                linha.add(result.getString(3));
-                linha.add(result.getString(4));
+                linha.add(result.getString(2));
+                linha.add(result.getDate(3));
+                linha.add(result.getInt(4));
                 linha.add(result.getString(5));
-                linha.add(result.getString(6));
-                linha.add(result.getString(7));
                 linha.add("X");
 
                 dadosTabela.add(linha);
@@ -151,7 +140,7 @@ public class FuncionarioController {
             System.out.println(e);
         }
 
-        jtbFuncionario.setModel(new DefaultTableModel(dadosTabela, cabecalhos) {
+        jtbMovimentos.setModel(new DefaultTableModel(dadosTabela, cabecalhos) {
 
             @Override
             public boolean isCellEditable(int row, int column) {
@@ -161,12 +150,12 @@ public class FuncionarioController {
         });
 
         // permite seleção de apenas uma linha da tabela
-        jtbFuncionario.setSelectionMode(0);
+        jtbMovimentos.setSelectionMode(0);
 
         // redimensiona as colunas de uma tabela
         TableColumn column = null;
         for (int i = 0; i <= 2; i++) {
-            column = jtbFuncionario.getColumnModel().getColumn(i);
+            column = jtbMovimentos.getColumnModel().getColumn(i);
             switch (i) {
                 case 0:
                     column.setPreferredWidth(10);
@@ -195,7 +184,7 @@ public class FuncionarioController {
             }
         }
 
-        jtbFuncionario.setDefaultRenderer(Object.class, new DefaultTableCellRenderer() {
+        jtbMovimentos.setDefaultRenderer(Object.class, new DefaultTableCellRenderer() {
 
             @Override
             public Component getTableCellRendererComponent(JTable table, Object value,
@@ -212,16 +201,16 @@ public class FuncionarioController {
         });
         //return (true);
     }
-
-    public Funcionario buscar(String id) {
+            
+            public Movimento buscar(String id) {
         try {
             Conexao.abreConexao();
             ResultSet rs = null;
 
             String SQL = "";
-            SQL = " SELECT id_funcionario, id_livraria, pis, data_nascimento, cpf, nome, id_bairro ";
-            SQL += " FROM funcionario ";
-            SQL += " WHERE id_funcionario = '" + id + "'";
+            SQL = " SELECT id_movimento, id_funcionario, data_movimento, id_livraria, tipo ";
+            SQL += " FROM movimento ";
+            SQL += " WHERE id_movimento = '" + id + "'";
             SQL += " AND data_exclusao IS NULL ";
 
             try {
@@ -229,15 +218,14 @@ public class FuncionarioController {
                 rs = Conexao.stmt.executeQuery(SQL);
                 System.out.println("Executou Conexão em buscar");
 
-                objFuncionario = new Funcionario();
+                objMovimento = new Movimento();
                 if (rs.next() == true) {
-                    objFuncionario.setId_funcionario(rs.getInt(1));
-                    objFuncionario.setId_livraria(rs.getInt(2));
-                    objFuncionario.setPis(rs.getString(3));
-                    objFuncionario.setData_nascimento(String.valueOf(rs.getDate(4)));
-                    objFuncionario.setCpf(rs.getString(5));
-                    objFuncionario.setNome(rs.getString(6));
-                    objFuncionario.setId_bairro(rs.getInt(7));
+                    objMovimento.setId_movimento(rs.getInt(1));
+                    objMovimento.setId_funcionario(rs.getInt(2));
+                    objMovimento.setData_movimento(String.valueOf(rs.getDate(3)));
+                    objMovimento.setId_livraria(rs.getInt(4));
+                    objMovimento.setTipo(rs.getString(5).charAt(0));
+
                 }
             } catch (SQLException ex) {
                 System.out.println("ERRO de SQL: " + ex.getMessage().toString());
@@ -250,18 +238,18 @@ public class FuncionarioController {
         }
 
         System.out.println("Executou buscar area com sucesso");
-        return objFuncionario;
+        return objMovimento;
     }
-
-    public boolean excluir() {
+            
+                public boolean excluir() {
 
         Conexao.abreConexao();
         Connection con = Conexao.obterConexao();
         PreparedStatement stmt = null;
 
         try {
-            stmt = con.prepareStatement("UPDATE funcionario SET data_exclusao=now() WHERE id_funcionario=?");
-            stmt.setInt(1, objFuncionario.getId_funcionario());
+            stmt = con.prepareStatement("UPDATE movimento SET data_exclusao=now() WHERE id_movimento=?");
+            stmt.setInt(1, objMovimento.getId_movimento());
 
             stmt.executeUpdate();
 
@@ -274,5 +262,6 @@ public class FuncionarioController {
             Conexao.fecharConexao(con, stmt);
         }
     }
+
 
 }

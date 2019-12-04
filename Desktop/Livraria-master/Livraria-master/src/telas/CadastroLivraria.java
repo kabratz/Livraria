@@ -219,7 +219,7 @@ public class CadastroLivraria extends javax.swing.JFrame {
                 
                 if (objLivraria != null) {
                     lblId.setText(String.valueOf(objLivraria.getId_livraria()));
-                    cbCombosBairro.SetaComboBox(String.valueOf(objLivraria.getId_bairro()));
+                    cbCombosCidade.SetaComboBox(String.valueOf(objLivraria.getId_cidade()));
                 }
             }
         

@@ -74,7 +74,7 @@ public class CadastroFuncionario extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
-        cbCidadeLivraria = new javax.swing.JComboBox<>();
+        cbLivraria = new javax.swing.JComboBox<>();
         jLabel2 = new javax.swing.JLabel();
         txtPis = new javax.swing.JTextField();
         try{
@@ -118,18 +118,18 @@ public class CadastroFuncionario extends javax.swing.JFrame {
         jLabel1.setText(" LIVRARIA");
         getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 120, -1, -1));
 
-        cbCidadeLivraria.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        cbCidadeLivraria.addItemListener(new java.awt.event.ItemListener() {
+        cbLivraria.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cbLivraria.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                cbCidadeLivrariaItemStateChanged(evt);
+                cbLivrariaItemStateChanged(evt);
             }
         });
-        cbCidadeLivraria.addActionListener(new java.awt.event.ActionListener() {
+        cbLivraria.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cbCidadeLivrariaActionPerformed(evt);
+                cbLivrariaActionPerformed(evt);
             }
         });
-        getContentPane().add(cbCidadeLivraria, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 140, 198, -1));
+        getContentPane().add(cbLivraria, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 140, 198, -1));
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel2.setText("PIS");
@@ -138,7 +138,7 @@ public class CadastroFuncionario extends javax.swing.JFrame {
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel3.setText("DATA DE NASCIMENTO");
-        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 60, -1, -1));
+        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 70, -1, -1));
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel4.setText("CPF");
@@ -204,6 +204,7 @@ public class CadastroFuncionario extends javax.swing.JFrame {
         getContentPane().add(jdcDataNascimento, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 90, 127, -1));
 
         cbBairro.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cbBairro.setEnabled(false);
         getContentPane().add(cbBairro, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 140, 127, -1));
 
         jLabel7.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
@@ -227,12 +228,12 @@ public class CadastroFuncionario extends javax.swing.JFrame {
             }
 
             objFuncionario = new Funcionario();
-            Combos c = (Combos) cbCidadeLivraria.getSelectedItem();
+            Combos c = (Combos) cbLivraria.getSelectedItem();
             String codLivraria = c.getCodigo();
             Combos c2 = (Combos) cbBairro.getSelectedItem();
             String codBairro = c2.getCodigo();
-            objFuncionario.setId_bairro(Integer.parseInt(codBairro));
             objFuncionario.setId_livraria(Integer.parseInt(codLivraria));
+            objFuncionario.setId_bairro(Integer.parseInt(codBairro));        
 
             objFuncionario.setCpf(txtCpf.getText());
             objFuncionario.setPis(txtPis.getText());
@@ -269,7 +270,6 @@ public class CadastroFuncionario extends javax.swing.JFrame {
 
     private void jtbFuncionarioMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtbFuncionarioMousePressed
         SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
-        jdcDataNascimento.setDateFormatString("dd-MM-yyyy");
         try {
 
             int linhaSelecionada = jtbFuncionario.getSelectedRow();//pega a linha selecionada
@@ -324,20 +324,20 @@ public class CadastroFuncionario extends javax.swing.JFrame {
         atualizarTabela();
     }//GEN-LAST:event_jtbFuncionarioMousePressed
 
-    private void cbCidadeLivrariaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbCidadeLivrariaActionPerformed
+    private void cbLivrariaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbLivrariaActionPerformed
         try {
             atualizarComboBairro();
 
         } catch (Exception e) {
             System.out.println("");
         }
-    }//GEN-LAST:event_cbCidadeLivrariaActionPerformed
+    }//GEN-LAST:event_cbLivrariaActionPerformed
 
-    private void cbCidadeLivrariaItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbCidadeLivrariaItemStateChanged
+    private void cbLivrariaItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbLivrariaItemStateChanged
         try {
-            if(cbCidadeLivraria.getSelectedIndex() > 0){
+            if(cbLivraria.getSelectedIndex() > 0){
                 
-                Combos c = (Combos) cbCidadeLivraria.getSelectedItem();
+                Combos c = (Combos) cbLivraria.getSelectedItem();
                 String codLivraria = c.getCodigo();
 
                 cbCombosBairro.PreencheCombo("SELECT b.id_bairro, b.nome FROM bairro b, livraria l WHERE l.id_bairro = b.id_bairro AND b.data_exclusao is null AND l.id_livraria =" + codLivraria);
@@ -348,19 +348,19 @@ public class CadastroFuncionario extends javax.swing.JFrame {
         } catch (SQLException ex) {
             Logger.getLogger(CadastroFuncionario.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }//GEN-LAST:event_cbCidadeLivrariaItemStateChanged
+    }//GEN-LAST:event_cbLivrariaItemStateChanged
 
     private void preencherCombos() {
 
         try {
-            cbCombosLivraria = new Combos(cbCidadeLivraria);
+            cbCombosLivraria = new Combos(cbLivraria);
             cbCombosLivraria.PreencheCombo("SELECT id_livraria, id_livraria FROM livraria WHERE data_exclusao IS NULL");
 
             cbCombosBairro = new Combos(cbBairro);
             cbCombosBairro.PreencheCombo("SELECT id_bairro, nome FROM bairro WHERE data_exclusao IS NULL");
 
             cbBairro.setSelectedIndex(1);
-            cbCidadeLivraria.setSelectedIndex(1);
+            cbLivraria.setSelectedIndex(1);
 
             atualizarComboBairro();
 
@@ -381,7 +381,7 @@ public class CadastroFuncionario extends javax.swing.JFrame {
             txtNome.setText("");
             txtPis.setText("");
             jdcDataNascimento.setDate(null);
-            cbCidadeLivraria.setSelectedIndex(1);
+            cbLivraria.setSelectedIndex(1);
             cbBairro.setSelectedIndex(1);
 
             btnSalvar.setEnabled(true);
@@ -482,7 +482,7 @@ public class CadastroFuncionario extends javax.swing.JFrame {
     private javax.swing.JButton btnLimpar;
     private javax.swing.JButton btnSalvar;
     private javax.swing.JComboBox<String> cbBairro;
-    private javax.swing.JComboBox<String> cbCidadeLivraria;
+    private javax.swing.JComboBox<String> cbLivraria;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

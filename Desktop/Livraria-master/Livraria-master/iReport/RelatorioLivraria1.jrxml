@@ -36,15 +36,15 @@ ORDER BY l.id_livraria]]>
 		<band height="23" splitType="Stretch">
 			<staticText>
 				<reportElement x="49" y="2" width="100" height="20" uuid="e008af33-2d51-41a3-8290-1869b54ec327"/>
-				<text><![CDATA[livraria]]></text>
+				<text><![CDATA[Livraria]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="227" y="2" width="100" height="20" uuid="40a01a7d-d427-4c23-888c-c834f879c411"/>
-				<text><![CDATA[cidade]]></text>
+				<text><![CDATA[Cidade]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="389" y="2" width="100" height="20" uuid="8b73598e-2945-4ea3-aa5a-f60d314e87ea"/>
-				<text><![CDATA[bairro]]></text>
+				<text><![CDATA[Bairro]]></text>
 			</staticText>
 		</band>
 	</columnHeader>

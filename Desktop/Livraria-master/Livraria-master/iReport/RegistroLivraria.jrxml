@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="RegistroLivraria" language="groovy" pageWidth="612" pageHeight="792" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="f3069fe7-26bb-45ac-8716-d1d0b7282b9a">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="cpf" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT f.nome, (now() - f.data_nascimento) as idade, l.id_livraria
+ FROM funcionario f, livraria l
+WHERE f.cpf = $P{cpf}
+AND l.id_livraria = f.id_livraria]]>
+	</queryString>
+	<field name="nome" class="java.lang.String"/>
+	<field name="idade" class="org.postgresql.util.PGInterval"/>
+	<field name="id_livraria" class="java.lang.Integer"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band height="35" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="61" splitType="Stretch">
+			<staticText>
+				<reportElement x="108" y="0" width="100" height="20" uuid="c4da41d1-e67a-4245-86ee-fad2548a7586"/>
+				<text><![CDATA[Nome]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="235" y="0" width="100" height="20" uuid="d6767895-a828-446a-bec1-3dc030f24eb8"/>
+				<text><![CDATA[Idade]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="379" y="0" width="100" height="20" uuid="fa28ca88-ab2f-4bc7-be6f-231f5e5357c3"/>
+				<text><![CDATA[Livraria]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="45" splitType="Stretch">
+			<textField>
+				<reportElement x="108" y="0" width="100" height="20" uuid="c8537f8f-8cd0-4705-9fac-6102105da06f"/>
+				<textFieldExpression><![CDATA[$F{nome}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="235" y="0" width="100" height="20" uuid="74a20584-264d-4d51-a4be-0a40e7662d3b"/>
+				<textFieldExpression><![CDATA[""+$F{idade}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="379" y="0" width="100" height="20" uuid="1ee28b3b-db40-4fca-9e57-f832bbbe6cce"/>
+				<textFieldExpression><![CDATA[$F{id_livraria}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

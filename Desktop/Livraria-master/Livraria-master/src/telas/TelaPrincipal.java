@@ -52,6 +52,15 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
         jMenu2 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
+        txtBuscarFuncionario = new javax.swing.JTextField();
+        try{
+            javax.swing.text.MaskFormatter cpf = new javax.swing.text.MaskFormatter("###.###.###-##");
+
+            txtBuscarFuncionario = new javax.swing.JFormattedTextField(cpf);
+        }catch(Exception e){
+        }
+        jLabel1 = new javax.swing.JLabel();
+        btnBuscarFuncionario = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         mnCad = new javax.swing.JMenu();
         mnCadLivraria = new javax.swing.JMenuItem();
@@ -80,6 +89,15 @@ public class TelaPrincipal extends javax.swing.JFrame {
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowOpened(java.awt.event.WindowEvent evt) {
                 formWindowOpened(evt);
+            }
+        });
+
+        jLabel1.setText("CPF do funcionário:");
+
+        btnBuscarFuncionario.setText("Buscar funcionário");
+        btnBuscarFuncionario.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscarFuncionarioActionPerformed(evt);
             }
         });
 
@@ -224,11 +242,24 @@ public class TelaPrincipal extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 618, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(59, 59, 59)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jLabel1)
+                    .addComponent(txtBuscarFuncionario)
+                    .addComponent(btnBuscarFuncionario, javax.swing.GroupLayout.DEFAULT_SIZE, 161, Short.MAX_VALUE))
+                .addContainerGap(398, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 418, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(32, 32, 32)
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(txtBuscarFuncionario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnBuscarFuncionario)
+                .addContainerGap(317, Short.MAX_VALUE))
         );
 
         setSize(new java.awt.Dimension(634, 478));
@@ -392,6 +423,27 @@ public class TelaPrincipal extends javax.swing.JFrame {
         frame.setVisible(true);
     }//GEN-LAST:event_CadUsuarioActionPerformed
 
+    private void btnBuscarFuncionarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarFuncionarioActionPerformed
+        try {
+                String wSelect = " SELECT f.nome, (now() - f.data_nascimento) as idade, l.id_livraria "
+                    + " FROM funcionario f, livraria l "
+                    + " WHERE f.cpf = '" + txtBuscarFuncionario.getText() + "'"
+                    + " AND l.id_livraria = f.id_livraria ";
+
+            RelatorioController objRelController = new RelatorioController();
+            ResultSet resultSet = objRelController.buscarRelatorio(wSelect);//Buscar os dados do relatório
+
+            JRResultSetDataSource relResult = new JRResultSetDataSource(resultSet);//Passa um resultSet para a fonte de dados do relatório
+            JasperPrint jpPrint = JasperFillManager.fillReport("iReport/RegistroLivraria.jasper", new HashMap(), relResult);//Prepara o relatório para ser impresso, recebe o gerenciador JASPER
+            JasperViewer jpViewer = new JasperViewer(jpPrint, false); //
+            jpViewer.setVisible(true);//abre o relatório para visualização
+            jpViewer.toFront();//define o form a frente da aplicação
+
+        } catch (JRException ex) {
+            CaixaDeDialogo.obterinstancia().exibirMensagem("Erro: " + ex.getMessage(), 'e');
+        }
+    }//GEN-LAST:event_btnBuscarFuncionarioActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -441,6 +493,8 @@ public class TelaPrincipal extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem CadBairro;
     private javax.swing.JMenuItem CadUsuario;
+    private javax.swing.JButton btnBuscarFuncionario;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
@@ -459,5 +513,6 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem mnRelLogin;
     private javax.swing.JMenu mnRelatorio;
     private javax.swing.JMenu mnSair;
+    private javax.swing.JTextField txtBuscarFuncionario;
     // End of variables declaration//GEN-END:variables
 }
